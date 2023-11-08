@@ -1,0 +1,12 @@
+/*
+
+!/src
+!/bin
+
+!/.config
+/.config/*
+!/.config/docker
+
+!/.bashrc
+!/.gitignore
+!/README.md

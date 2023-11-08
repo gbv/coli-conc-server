@@ -3,15 +3,18 @@ Home folder, setup, and configuration.
 
 Work in progress.
 
-## Dependencies
-TODO: Add install instructions for each of these
+## To-Dos
+- [ ] Use user "cocoda"
+- [ ] Add install instructions for dependencies
+- [ ] Extend setup section
+- [ ] Fix paths in `server` script
 
+## Dependencies
 - Deno
 - fnm for Node.js
 - Docker (rootless)
 
 ## Setup
-TODO
 
 ```sh
 docker network create nginx

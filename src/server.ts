@@ -104,6 +104,7 @@ if (command === "start") {
       // TODO: What if there is no ecosystem file?
       await $`pm2 startOrReload ecosystem.config.json`
       await $`pm2 save`
+      await updateAndRestartAdditionalService()
       break
   }
 }
@@ -118,6 +119,7 @@ if (command === "restart") {
     case TargetTypes.NodeNoLockfile:
       // TODO: What if there is no ecosystem file?
       await $`pm2 restart ecosystem.config.json`
+      await updateAndRestartAdditionalService()
       break
   }
 }
@@ -131,6 +133,7 @@ if (command === "stop") {
     case TargetTypes.NodeNoLockfile:
       // TODO: What if there is no ecosystem file?
       await $`pm2 stop ecosystem.config.json`
+      await stopAdditionalService()
       break
   }
 }
@@ -145,4 +148,39 @@ if (command === "logs" || command === "log") {
       await $`pm2 logs ${target} --lines 100`
       break
   }
+}
+
+/**
+ * Non-Docker services need to be exposed through the reverse-proxy. For each of those services,
+ * an additional Docker container is managed to forward the port and configure the proxy.
+ */
+async function updateAndRestartAdditionalService() {
+  // Read configuration JSON file
+  const config = await readJson(`${servicePath}/${target}.json`)
+  // Create or update Docker Compose file in `services/.additional/`
+  // TODO: Update extra_hosts, probably by making it configurable
+  const composeFile = `version: "3"
+services:
+  ${target}:
+    image: marcnuri/port-forward
+    extra_hosts:
+      - "host.docker.internal:198.19.249.124"
+    environment:
+      - REMOTE_HOST=host.docker.internal
+${Object.keys(config).map(key => `      - ${key}="${config[key]}"`).join("\n")}
+networks:
+  default:
+    external: true
+    name: nginx`
+    const composeFilePath = `${servicePath}/.additional/${target}.yml`
+  await Deno.writeTextFile(composeFilePath, composeFile)
+  // Start service
+  await $`docker compose -f ${composeFilePath} up -d`
+}
+async function stopAdditionalService() {
+  const composeFilePath = `${servicePath}/.additional/${target}.yml`
+  // Stop service
+  await $`docker compose -f ${composeFilePath} down`
+  // Remove file
+  await Deno.remove(composeFilePath)
 }

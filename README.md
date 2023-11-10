@@ -17,6 +17,7 @@ Work in progress.
 
 ```sh
 docker network create nginx
+docker network create mongo
 ```
 
 ## Service Management

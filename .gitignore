@@ -7,6 +7,18 @@
 /.config/*
 !/.config/docker
 
+!/services
+/services/*
+!/services/.additional/README.md
+!/services/cocoda
+!/services/jskos-server
+!/services/login-server
+!/services/mongo
+!/services/nginx
+!/services/*.json
+
+/services/*/data
+
 !/.bashrc
 !/.gitignore
 !/README.md

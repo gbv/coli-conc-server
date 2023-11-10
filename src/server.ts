@@ -167,7 +167,7 @@ services:
       - "host.docker.internal:198.19.249.124"
     environment:
       - REMOTE_HOST=host.docker.internal
-${Object.keys(config).map(key => `      - ${key}="${config[key]}"`).join("\n")}
+${Object.keys(config).map(key => `      - ${key}=${config[key]}`).join("\n")}
 networks:
   default:
     external: true

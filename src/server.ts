@@ -16,13 +16,14 @@ import { command as _command, target } from "../src/args.ts"
 // We override command in "init"
 let command = _command
 // TODO: Relative or absolute path?
-const targetFolder = `/home/stefan/services/${target}`
+const servicePath = "/home/stefan/services"
+const targetPath = `${servicePath}/${target}`
 
 import { $, cd } from "npm:zx@7"
 import { exists } from "https://deno.land/std/fs/mod.ts"
 import { readJson, writeJson } from "../src/json.ts"
 
-if (!await exists(targetFolder)) {
+if (!await exists(targetPath)) {
   console.error(`Error: Service "${target}" does not exist.`)
   Deno.exit(1)
 }
@@ -36,11 +37,11 @@ enum TargetTypes {
 }
 let targetType = TargetTypes.Unknown
 
-if (await exists(`${targetFolder}/package-lock.json`)) {
+if (await exists(`${targetPath}/package-lock.json`)) {
   targetType = TargetTypes.Node
-} else if (await exists(`${targetFolder}/package.json`)) {
+} else if (await exists(`${targetPath}/package.json`)) {
   targetType = TargetTypes.NodeNoLockfile
-} else if (await exists(`${targetFolder}/docker-compose.yml`)) {
+} else if (await exists(`${targetPath}/docker-compose.yml`)) {
   targetType = TargetTypes.DockerCompose
 }
 
@@ -48,7 +49,7 @@ if (targetType === TargetTypes.Unknown) {
   console.error(`Error: Unsupported target type in "${target}.`)
   Deno.exit(1)
 }
-await cd(`${targetFolder}`)
+await cd(`${targetPath}`)
 
 if (command === "update") {
   // This simply updates Git repositories. Docker Compose services will be updated through "init" anyway which is run afterwards.

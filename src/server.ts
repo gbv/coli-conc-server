@@ -97,7 +97,7 @@ if (command === "init") {
 if (command === "start") {
   switch (targetType) {
     case TargetTypes.DockerCompose:
-      await $`docker compose up -d`
+      await $`env UID="$(id -u)" GID="$(id -g)" docker compose up -d`
       break
     case TargetTypes.Node:
     case TargetTypes.NodeNoLockfile:
@@ -113,7 +113,7 @@ if (command === "restart") {
   switch (targetType) {
     case TargetTypes.DockerCompose:
       await $`docker compose stop`
-      await $`docker compose up -d`
+      await $`env UID="$(id -u)" GID="$(id -g)" docker compose up -d`
       break
     case TargetTypes.Node:
     case TargetTypes.NodeNoLockfile:

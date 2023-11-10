@@ -7,7 +7,6 @@ Work in progress.
 - [ ] Use user "cocoda"
 - [ ] Add install instructions for dependencies
 - [ ] Extend setup section
-- [ ] Fix paths in `server` script
 
 ## Dependencies
 - Deno

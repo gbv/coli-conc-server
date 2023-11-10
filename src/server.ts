@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-env --allow-read --allow-write --allow-run --allow-sys --ext=ts --lock=/home/stefan/src/deno.lock
+#!/usr/bin/env -S deno run --allow-env --allow-read --allow-write --allow-run --allow-sys --ext=ts --lock=/home/${USER}/src/deno.lock
 
 /**
  * Script to manage services.
@@ -16,7 +16,7 @@ import { command as _command, target } from "../src/args.ts"
 // We override command in "init"
 let command = _command
 // TODO: Relative or absolute path?
-const servicePath = "/home/stefan/services"
+const servicePath = `/home/${Deno.env.get("USER")}/services`
 const targetPath = `${servicePath}/${target}`
 
 import { $, cd } from "npm:zx@7"

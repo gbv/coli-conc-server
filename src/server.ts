@@ -118,7 +118,7 @@ if (command === "restart") {
     case TargetTypes.Node:
     case TargetTypes.NodeNoLockfile:
       // TODO: What if there is no ecosystem file?
-      await $`pm2 restart ecosystem.config.json`
+      await $`pm2 restart ${target}`
       await updateAndRestartAdditionalService()
       break
   }
@@ -132,7 +132,8 @@ if (command === "stop") {
     case TargetTypes.Node:
     case TargetTypes.NodeNoLockfile:
       // TODO: What if there is no ecosystem file?
-      await $`pm2 stop ecosystem.config.json`
+      await $`pm2 stop ${target}`
+      await $`pm2 save`
       await stopAdditionalService()
       break
   }

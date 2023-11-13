@@ -27,4 +27,4 @@ _server()
     COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
 }
 
-complete -F _server server
+complete -F _server srv

@@ -49,7 +49,7 @@ if (argsError) {
   console.error(`Error: ${argsError}\n`)
 }
 if (flags.help || argsError) {
-  console.info(`  Usage: ./server <command> <service-name>
+  console.info(`  Usage: srv <command> <service-name>
 
   <service-name> is assumed to be a subfolder under \`services/\`
   that contains a Docker Compose or Node.js service.

@@ -21,7 +21,7 @@ docker network create mongo
 ```
 
 ## Service Management
-Services can be managed through the `server` script. Run `server --help` for instructions.
+Services can be managed through the `srv` script. Run `srv --help` for instructions.
 
 ### Define a Docker Compose Service
 Create a subdirectory in the `services/` folder with a `docker-compose.yml` file. The folder name defines the service name.
@@ -81,7 +81,7 @@ In addition to the environment variables explain above (for Docker Compose servi
 The first time a service is run, it usually needs to be initialize to pull all dependencies:
 
 ```sh
-server init name-of-service
+srv init name-of-service
 ```
 
 This will also start the service.
@@ -89,19 +89,19 @@ This will also start the service.
 Starting, stopping, and restarting a service is just as easy:
 
 ```sh
-server stop name-of-service
-server start name-of-service
-server restart name-of-service
+srv stop name-of-service
+srv start name-of-service
+srv restart name-of-service
 ```
 
 Updating a service pulls updates for a Git repository (if applicable), pulls the latest Docker image, updates dependencies, and restarts the application:
 
 ```sh
-server update name-of-service
+srv update name-of-service
 ```
 
-### `server` Script Dependencies
-Deno will automatically download and cache all dependency when `server` is first run.
+### `srv` Script Dependencies
+Deno will automatically download and cache all dependency when `srv` is first run.
 
 In order to cache dependencies ahead of time, run:
 

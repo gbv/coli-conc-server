@@ -8,6 +8,7 @@ services:
       - 80:80
     volumes:
       - /run/user/$UID/docker.sock:/tmp/docker.sock:ro
+    restart: unless-stopped
 
 networks:
   default:

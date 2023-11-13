@@ -151,6 +151,18 @@ if (command === "logs" || command === "log") {
   }
 }
 
+if (command === "status") {
+  switch (targetType) {
+    case TargetTypes.DockerCompose:
+      await $`docker compose ps`
+      break
+    case TargetTypes.Node:
+    case TargetTypes.NodeNoLockfile:
+      await $`pm2 show ${target}`
+      break
+  }
+}
+
 /**
  * Non-Docker services need to be exposed through the reverse-proxy. For each of those services,
  * an additional Docker container is managed to forward the port and configure the proxy.

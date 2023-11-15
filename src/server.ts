@@ -110,6 +110,13 @@ if (command === "init") {
       try {
         const ecosystem = await readJson("ecosystem.example.json")
         ecosystem.name = target
+        // Add environment if necessary
+        if (config?.env) {
+          ecosystem.env = {
+            ...(ecosystem.env || {}),
+            ...config.env,
+          }
+        }
         // TODO: Consider adjusting Node.js version if necessary
         await writeJson("ecosystem.config.json", ecosystem)
       } catch (_error) {

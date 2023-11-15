@@ -80,6 +80,8 @@ A service configuration file can be provided in `services/name-of-service.json`.
   - Additionally requires `REMOTE_PORT` as the port under which the service is run (might be automatically discovered from a service's configuration in the future).
 - `files`
   - Key-value pairs of files inside the repository folder (keys) that will be symlinked to files in the `configs/` folder (values).
+- `env`
+  - For Node.js-based services. Environment variables added to `ecosystem.config.json`.
 
 Example:
 ```json
@@ -96,6 +98,9 @@ Example:
   },
   "files": {
     "config.json": "name-of-service.json"
+  },
+  "env": {
+    "NODE_ENV": "production"
   }
 }
 ```

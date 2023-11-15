@@ -17,6 +17,8 @@
 !/services/nginx
 !/services/*.json
 
+!/configs
+
 /services/*/data
 
 !/.bashrc

@@ -53,6 +53,7 @@ Explanation of additional environment variables for proxy configuration:
 - `VIRTUAL_PORT`: The port under which the service is run (this can be found in the service's Docker documentation). Default: 80.
 - `VIRTUAL_PATH`: The sub-path under which the service should be accessible. Note that some services, mostly front-end applications, might require a trailing slash to work correctly.
 - `VIRTUAL_DEST`: "This environment variable can be used to rewrite the `VIRTUAL_PATH` part of the requested URL to proxied application." (Please refer to [this section](https://github.com/nginx-proxy/nginx-proxy#path-based-routing) of the nginx-proxy documentation.)
+  - In most cases, this needs to be set to `/`.[^virtual_dest]
 
 ### Define a Non-Docker Service
 Currently, only Node.js services are supported, and it is assumed that they contain a `ecosystem.example.json` file in the repository. This file is adjusted to build the configuration for PM2.
@@ -75,6 +76,7 @@ A service configuration file can be provided in `services/name-of-service.json`.
 - `proxy`
   - Required if the service should be exposed to the outside world through the reverse proxy.
   - Takes the same enviroment variables as explained [above](#Define-a-Docker-Compose-Service).
+  - `VIRTUAL_DEST` will be set to `/` by default because it is necessary for most applications.[^virtual_dest] To override this, provide an empty string.
   - Additionally requires `REMOTE_PORT` as the port under which the service is run (might be automatically discovered from a service's configuration in the future).
 - `files`
   - Key-value pairs of files inside the repository folder (keys) that will be symlinked to files in the `configs/` folder (values).
@@ -89,6 +91,7 @@ Example:
   "proxy": {
     "VIRTUAL_HOST": "coli-conc.gbv.de",
     "VIRTUAL_PATH": "/my-service",
+    "VIRTUAL_DEST": "/",
     "REMOTE_PORT": "2999"
   },
   "files": {
@@ -141,3 +144,5 @@ Make sure everything still works with the updated dependencies, then commit the 
 
 ### VSCode Setup
 Install the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) and set up the workspace (once) by running the `Deno: Initialize Workspace Configuration` command.
+
+[^virtual_dest]: If `VIRTUAL_PATH` is set, but `VIRTUAL_DEST` isn't, the requests forwarded to the application will include the whole path. This means that if an application listens to the root path `/`, `VIRTUAL_DEST` NEEDS to be set to `/` as well for the application to work (which should be the case for most APIs). Another caveat is that when `VIRTUAL_PATH` does not end on a slash, requests to that path with a slash appended will result in a double slash. In most cases, it is better to end `VIRTUAL_PATH` in a slash which adds a 301 redirect from the non-slash version.

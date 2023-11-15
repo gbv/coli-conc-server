@@ -199,6 +199,10 @@ async function updateAndRestartAdditionalService() {
   if (!config?.proxy) {
     return
   }
+  // Set VIRTUAL_DEST to / by default (see README)
+  if (config.proxy.VIRTUAL_DEST === undefined) {
+    config.proxy.VIRTUAL_DEST = "/"
+  }
   // Create or update Docker Compose file in `services/.additional/`
   // TODO: Update extra_hosts, probably by making it configurable
   const composeFile = `version: "3"

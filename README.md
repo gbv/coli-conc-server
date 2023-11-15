@@ -10,7 +10,7 @@ Work in progress.
 
 ## Dependencies
 - Deno
-- fnm for Node.js
+- nvm for Node.js
 - Docker (rootless)
 
 ## Setup

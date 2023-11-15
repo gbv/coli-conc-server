@@ -176,6 +176,7 @@ async function updateAndRestartAdditionalService() {
 services:
   ${target}:
     image: marcnuri/port-forward
+    restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:198.19.249.124"
     environment:

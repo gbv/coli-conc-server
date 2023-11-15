@@ -83,6 +83,8 @@ A service configuration file can be provided in `services/name-of-service.json`.
 - `env`
   - For Node.js-based services. Environment variables added to `ecosystem.config.json`.
 
+The `files` and `env` field also support [secrets](./secrets/README.md).
+
 Example:
 ```json
 {

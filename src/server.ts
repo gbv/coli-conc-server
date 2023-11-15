@@ -29,6 +29,13 @@ const configFile = `${servicePath}/${target}.json`
 let config: any
 if (await exists(configFile)) {
   config = await readJson(configFile)
+  // Replace secrets in provided environment variables
+  for (const key of Object.keys(config.env || {})) {
+    if (config.env[key].startsWith("secret:")) {
+      const secretFile = config.env[key].replace("secret:", "") || key
+      config.env[key] = await Deno.readTextFile(`${homePath}/secrets/${secretFile}`)
+    }
+  }
 }
 
 // Initialize Git repository if necessary
@@ -87,7 +94,12 @@ if (command === "init") {
   // Map files via symlinks
   if (config?.files) {
     for (const targetFile of Object.keys(config.files)) {
-      const sourceFile = `${homePath}/configs/${config.files[targetFile]}`
+      let subfolder = "configs", sourceFile = config.files[targetFile]
+      if (sourceFile.startsWith("secret:")) {
+        sourceFile = sourceFile.replace("secret:", "")
+        subfolder = "secrets"
+      }
+      sourceFile = `${homePath}/${subfolder}/${sourceFile}`
       await $`ln -sf ${sourceFile} ${targetFile}`
     }
   }

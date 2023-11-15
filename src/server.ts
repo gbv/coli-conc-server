@@ -15,13 +15,33 @@ Deno.env.set("FORCE_COLOR", "2")
 import { command as _command, target } from "../src/args.ts"
 // We override command in "init"
 let command = _command
-// TODO: Relative or absolute path?
-const servicePath = `/home/${Deno.env.get("USER")}/services`
+const homePath = `/home/${Deno.env.get("USER")}`
+const servicePath = `${homePath}/services`
 const targetPath = `${servicePath}/${target}`
 
 import { $, cd } from "npm:zx@7"
 import { exists } from "https://deno.land/std/fs/mod.ts"
 import { readJson, writeJson } from "../src/json.ts"
+
+// Read configuration JSON file if it exists
+const configFile = `${servicePath}/${target}.json`
+// deno-lint-ignore no-explicit-any
+let config: any
+if (await exists(configFile)) {
+  config = await readJson(configFile)
+}
+
+// Initialize Git repository if necessary
+if (command === "init" && config?.repo?.url && !await exists(targetPath)) {
+  const args = ["clone", "--single-branch"]
+  if (config.repo.branch) {
+    args.push("-b")
+    args.push(config.repo.branch)
+  }
+  args.push(config.repo.url)
+  args.push(targetPath)
+  await $`git ${args}`
+}
 
 if (!await exists(targetPath)) {
   console.error(`Error: Service "${target}" does not exist.`)
@@ -64,6 +84,14 @@ if (command === "update") {
 }
 
 if (command === "init") {
+  // Map files via symlinks
+  if (config?.files) {
+    for (const targetFile of Object.keys(config.files)) {
+      const sourceFile = `${homePath}/configs/${config.files[targetFile]}`
+      await $`ln -sf ${sourceFile} ${targetFile}`
+    }
+  }
+  // Type-specific setup
   switch (targetType) {
     case TargetTypes.DockerCompose:
       await $`docker compose pull`
@@ -168,8 +196,9 @@ if (command === "status") {
  * an additional Docker container is managed to forward the port and configure the proxy.
  */
 async function updateAndRestartAdditionalService() {
-  // Read configuration JSON file
-  const config = await readJson(`${servicePath}/${target}.json`)
+  if (!config?.proxy) {
+    return
+  }
   // Create or update Docker Compose file in `services/.additional/`
   // TODO: Update extra_hosts, probably by making it configurable
   const composeFile = `version: "3"
@@ -181,7 +210,7 @@ services:
       - "host.docker.internal:198.19.249.124"
     environment:
       - REMOTE_HOST=host.docker.internal
-${Object.keys(config).map(key => `      - ${key}=${config[key]}`).join("\n")}
+${Object.keys(config.proxy).map(key => `      - ${key}=${config.proxy[key]}`).join("\n")}
 networks:
   default:
     external: true

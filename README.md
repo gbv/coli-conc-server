@@ -65,17 +65,37 @@ git checkout https://github.com/user/repo services/name-of-service
 
 In most cases, you will need to create a configuration file for the service itself (please refer to the services docs).
 
-If your service should be exposed to the outside world through the reverse proxy, you'll need to add an additional file in `services/name-of-service.json`:
+Non-Docker services can also be defined through a specific service configuration file:
 
+### Service Configuration File
+A service configuration file can be provided in `services/name-of-service.json`. It contains a JSON object with the following (optional) fields:
+
+- `repo` with subfield `url` (required) and `branch` (optional)
+  - When given, and the service folder in `services/name-of-service/` does not exist yet, `srv init name-of-service` will also clone the Git repository.
+- `proxy`
+  - Required if the service should be exposed to the outside world through the reverse proxy.
+  - Takes the same enviroment variables as explained [above](#Define-a-Docker-Compose-Service).
+  - Additionally requires `REMOTE_PORT` as the port under which the service is run (might be automatically discovered from a service's configuration in the future).
+- `files`
+  - Key-value pairs of files inside the repository folder (keys) that will be symlinked to files in the `configs/` folder (values).
+
+Example:
 ```json
 {
-  "VIRTUAL_HOST": "coli-conc.gbv.de",
-  "VIRTUAL_PATH": "/my-service",
-  "REMOTE_PORT": "2999"
+  "repo": {
+    "url": "https://github.com/gbv/name-of-service.git",
+    "branch": "dev"
+  },
+  "proxy": {
+    "VIRTUAL_HOST": "coli-conc.gbv.de",
+    "VIRTUAL_PATH": "/my-service",
+    "REMOTE_PORT": "2999"
+  },
+  "files": {
+    "config.json": "name-of-service.json"
+  }
 }
 ```
-
-In addition to the environment variables explain above (for Docker Compose services), `REMOTE_PORT` is required as the port under which the service is run. In the future, this port might be automatically discovered from the service's configuration.
 
 ### Initialize, Start, Stop, Restart, or Update a Service
 The first time a service is run, it usually needs to be initialize to pull all dependencies:

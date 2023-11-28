@@ -7,10 +7,11 @@ Work in progress.
 - [ ] Use user "cocoda"
 - [ ] Add install instructions for dependencies
 - [ ] Extend setup section
+- [ ] Document github-webhook-handler
+  - [ ] How to provide secret?
 
 ## Dependencies
 - Deno
-- nvm for Node.js
 - Docker (rootless)
 
 ## Setup
@@ -55,19 +56,6 @@ Explanation of additional environment variables for proxy configuration:
 - `VIRTUAL_DEST`: "This environment variable can be used to rewrite the `VIRTUAL_PATH` part of the requested URL to proxied application." (Please refer to [this section](https://github.com/nginx-proxy/nginx-proxy#path-based-routing) of the nginx-proxy documentation.)
   - In most cases, this needs to be set to `/`.[^virtual_dest]
 
-### Define a Non-Docker Service
-Currently, only Node.js services are supported, and it is assumed that they contain a `ecosystem.example.json` file in the repository. This file is adjusted to build the configuration for PM2.
-
-Non-Docker services also reside in a subdirectory in the `services/` folder. Usually, this is a Git repository, so the initial step will be checking it out:
-
-```sh
-git checkout https://github.com/user/repo services/name-of-service
-```
-
-In most cases, you will need to create a configuration file for the service itself (please refer to the services docs).
-
-Non-Docker services can also be defined through a specific service configuration file:
-
 ### Service Configuration File
 A service configuration file can be provided in `services/name-of-service.json`. It contains a JSON object with the following (optional) fields:
 
@@ -80,10 +68,8 @@ A service configuration file can be provided in `services/name-of-service.json`.
   - Additionally requires `REMOTE_PORT` as the port under which the service is run (might be automatically discovered from a service's configuration in the future).
 - `files`
   - Key-value pairs of files inside the repository folder (keys) that will be symlinked to files in the `configs/` folder (values).
-- `env`
-  - For Node.js-based services. Environment variables added to `ecosystem.config.json`.
 
-The `files` and `env` field also support [secrets](./secrets/README.md).
+The `files` field also supports [secrets](./secrets/README.md).
 
 Example:
 ```json
@@ -100,9 +86,6 @@ Example:
   },
   "files": {
     "config.json": "name-of-service.json"
-  },
-  "env": {
-    "NODE_ENV": "production"
   }
 }
 ```

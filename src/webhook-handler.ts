@@ -14,12 +14,17 @@
  */
 
 import { $, cd } from "npm:zx@7"
+import { TargetTypes, createSymlinks, manageAdditionalService } from "../src/utils.ts"
 
 const user = Deno.env.get("USER"), uid = Deno.env.get("UID")
 const homePath = `/home/${user}`
 const serviceFile = "webhook-handler.service"
 
+export const targetType = TargetTypes.WebhookHandler
+export const target = "webhook-handler"
+
 export async function init() {
+  await createSymlinks(target)
   const servicePath = `${homePath}/.config/systemd/user/`
   const serviceFilePath = `${servicePath}/${serviceFile}`
   const WEBHOOK_SECRET = await Deno.readTextFile(`${homePath}/secrets/WEBHOOK_SECRET`)
@@ -45,28 +50,35 @@ export async function init() {
   await Deno.writeTextFile(serviceFilePath, serviceFileContent)
   await $`systemctl --user daemon-reload`
   await $`systemctl --user enable --now ${serviceFile}`
+  await start()
 }
-
+export async function start() {
+  await $`systemctl --user start ${serviceFile}`
+  await manageAdditionalService(target, "start")
+}
 export async function status() {
   await $`systemctl --user status ${serviceFile}`
 }
 export async function restart() {
+  await createSymlinks(target)
   await $`systemctl --user restart ${serviceFile}`
+  await manageAdditionalService(target, "restart")
 }
 export async function stop() {
   await $`systemctl --user stop ${serviceFile}`
+  await manageAdditionalService(target, "stop")
 }
 export async function logs() {
-  await $`journalctl --user-unit ${serviceFile}`
+  await $`journalctl --user-unit ${serviceFile} -f`
 }
 export async function log() {
   await logs()
 }
 export async function update() {
-  // TODO: Should it stay there?
-  await cd(`${homePath}/services/webhook-handler`)
+  await cd(`${homePath}/services/${target}`)
   await $`git pull`
   await restart()
+  await manageAdditionalService(target, "update")
 }
 
 if (import.meta.main) {

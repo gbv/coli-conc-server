@@ -1,0 +1,12 @@
+{
+  "port": 2999,
+  "verbosity": "all",
+  "webhooks": [
+    {
+      "repository": "gbv/github-webhook-handler",
+      "command": "srv update webhook-handler",
+      "event": "release",
+      "action": "released"
+    }
+  ]
+}

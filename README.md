@@ -89,6 +89,13 @@ srv update name-of-service
 
 You can see logs for a service using `srv logs name-of-service`.
 
+### Special Service: GitHub Webhook Handler
+[GitHub Webhook Handler](https://github.com/gbv/github-webhook-handler) is used to process webhooks from GitHub in order to update services automatically. It is not run via Docker, but defined as a special service with the name `webhook-handler` and run through Deno. Its repository is pulled on `srv init webhook-handler` and it supports the other commands above as well. It has three configuration files:
+
+- `~/configs/webhook-handler.meta.json`: Meta configuration for proxy and Git repo.
+- `~/configs/webhook-handler.json`: Configuration for the service itself (will be symlinked into the repo as `config.json`).
+- `~/secrets/WEBHOOK_SECRET`: File containing the webhook secret required in GitHub Webhook Handler (will be provided as environment variable).
+
 ### `srv` Script Dependencies
 Deno will automatically download and cache all dependency when `srv` is first run.
 

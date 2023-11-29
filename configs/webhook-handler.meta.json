@@ -1,0 +1,10 @@
+{
+  "repo": {
+    "url": "https://github.com/gbv/github-webhook-handler.git"
+  },
+  "proxy": {
+    "VIRTUAL_HOST": "coli-conc.gbv.de",
+    "VIRTUAL_PATH": "/webhook-handler/",
+    "REMOTE_PORT": "2999"
+  }
+}

@@ -4,11 +4,10 @@ Home folder, setup, and configuration.
 Work in progress.
 
 ## To-Dos
-- [ ] Use user "cocoda"
-- [ ] Add install instructions for dependencies
-- [ ] Extend setup section
 - [ ] Document github-webhook-handler
   - [ ] How to provide secret?
+- [ ] Add services
+- [ ] Add data import into jskos-server instances
 
 ## Dependencies
 - Deno
@@ -174,8 +173,8 @@ Add bind volumes to the nginx container in `~/services/nginx/docker-compose.yml`
 ...
     volumes:
       - /run/user/$UID/docker.sock:/tmp/docker.sock:ro
-      - ${HOME}/configs/vhost.d:/etc/nginx/vhost.d:ro
-      - ${HOME}/secrets/htpasswd:/etc/nginx/htpasswd:ro
+      - $HOME/configs/vhost.d:/etc/nginx/vhost.d:ro
+      - $HOME/secrets/htpasswd:/etc/nginx/htpasswd:ro
 ...
 ```
 

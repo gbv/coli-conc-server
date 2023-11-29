@@ -15,10 +15,15 @@
 
 import { $, cd } from "npm:zx@7"
 import { TargetTypes, createSymlinks, manageAdditionalService } from "../src/utils.ts"
+import { readJson } from "../src/json.ts"
 
 const user = Deno.env.get("USER"), uid = Deno.env.get("UID")
 const homePath = `/home/${user}`
 const serviceFile = "webhook-handler.service"
+
+// Load meta configuration
+const metaConfigPath = `${homePath}/config/webhook-handler.meta.json`
+const metaConfig = await readJson(metaConfigPath)
 
 export const targetType = TargetTypes.WebhookHandler
 export const target = "webhook-handler"
@@ -54,7 +59,7 @@ export async function init() {
 }
 export async function start() {
   await $`systemctl --user start ${serviceFile}`
-  await manageAdditionalService(target, "start")
+  await manageAdditionalService(target, "start", metaConfig.proxy)
 }
 export async function status() {
   await $`systemctl --user status ${serviceFile}`
@@ -62,11 +67,11 @@ export async function status() {
 export async function restart() {
   await createSymlinks(target)
   await $`systemctl --user restart ${serviceFile}`
-  await manageAdditionalService(target, "restart")
+  await manageAdditionalService(target, "restart", metaConfig.proxy)
 }
 export async function stop() {
   await $`systemctl --user stop ${serviceFile}`
-  await manageAdditionalService(target, "stop")
+  await manageAdditionalService(target, "stop", metaConfig.proxy)
 }
 export async function logs() {
   await $`journalctl --user-unit ${serviceFile} -f`
@@ -78,7 +83,7 @@ export async function update() {
   await cd(`${homePath}/services/${target}`)
   await $`git pull`
   await restart()
-  await manageAdditionalService(target, "update")
+  await manageAdditionalService(target, "update", metaConfig.proxy)
 }
 
 if (import.meta.main) {

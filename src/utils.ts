@@ -61,20 +61,22 @@ export async function createSymlinks(service: string) {
 /**
  * Non-Docker services need to be exposed through the reverse-proxy. For each of those services,
  * an additional Docker container is managed to forward the port and configure the proxy.
+ * 
+ * This is currently only used for `webhook-handler`.
  */
-export async function manageAdditionalService(service: string, action: string) {
-  const config = await getConfig(service)
+// deno-lint-ignore no-explicit-any
+export async function manageAdditionalService(service: string, action: string, proxy: any) {
   const { servicePath } = getPaths(service)
   const composeFilePath = `${servicePath}/.additional/${service}.yml`
 
   if (action === "start" || action === "update") {
 
-    if (!config?.proxy) {
+    if (!proxy) {
       return
     }
     // Set VIRTUAL_DEST to / by default (see README)
-    if (config.proxy.VIRTUAL_DEST === undefined) {
-      config.proxy.VIRTUAL_DEST = "/"
+    if (proxy.VIRTUAL_DEST === undefined) {
+      proxy.VIRTUAL_DEST = "/"
     }
     // Create or update Docker Compose file in `services/.additional/`
     // TODO: Update extra_hosts, probably by making it configurable
@@ -87,7 +89,7 @@ services:
       - "host.docker.internal:198.19.249.124"
     environment:
       - REMOTE_HOST=host.docker.internal
-${Object.keys(config.proxy).map(key => `      - ${key}=${config.proxy[key]}`).join("\n")}
+${Object.keys(proxy).map(key => `      - ${key}=${proxy[key]}`).join("\n")}
 networks:
   default:
     external: true

@@ -18,7 +18,7 @@ _server()
 
     # If command is already given, match via filename targets
     targets=$(basename -a ~/services/*/)
-    if [[ -n "${prev}" && "${prev}" != "server" && ${prev} != -* ]]; then
+    if [[ -n "${prev}" && "${prev}" != "srv" && ${prev} != -* ]]; then
         COMPREPLY=( $(compgen -W "${targets}" -- ${cur}) )
         return 0
     fi

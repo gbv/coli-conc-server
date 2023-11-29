@@ -3,12 +3,11 @@
  */
 
 import { $ } from "npm:zx@7"
-import { TargetTypes, createSymlinks } from "../src/utils.ts"
+import { TargetTypes } from "../src/utils.ts"
 
 export const targetType = TargetTypes.DockerCompose
 
-export async function init(target: string) {
-  await createSymlinks(target)
+export async function init() {
   await $`docker compose pull`
   await start()
 }
@@ -18,8 +17,7 @@ export async function start() {
 export async function status() {
   await $`docker compose ps`
 }
-export async function restart(target: string) {
-  await createSymlinks(target)
+export async function restart() {
   await $`docker compose stop`
   await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose up -d`
 }
@@ -32,9 +30,9 @@ export async function logs() {
 export async function log() {
   await logs()
 }
-export async function update(target: string) {
+export async function update() {
   await $`docker compose pull`
-  await restart(target)
+  await restart()
 }
 export async function configtest() {
   await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose config`

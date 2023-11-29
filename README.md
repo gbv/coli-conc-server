@@ -64,40 +64,6 @@ As for environment variables, you can either set them directly in the compose fi
 
 Later entries override earlier entries. You can check the resulting compose file by running `srv configtest my-service`.
 
-### Service Configuration File
-A service configuration file can be provided in `services/name-of-service.json`. It contains a JSON object with the following (optional) fields:
-
-- `repo` with subfield `url` (required) and `branch` (optional)
-  - When given, and the service folder in `services/name-of-service/` does not exist yet, `srv init name-of-service` will also clone the Git repository.
-- `proxy`
-  - Required if the service should be exposed to the outside world through the reverse proxy.
-  - Takes the same enviroment variables as explained [above](#Define-a-Docker-Compose-Service).
-  - `VIRTUAL_DEST` will be set to `/` by default because it is necessary for most applications.[^virtual_dest] To override this, provide an empty string.
-  - Additionally requires `REMOTE_PORT` as the port under which the service is run (might be automatically discovered from a service's configuration in the future).
-- `files`
-  - Key-value pairs of files inside the repository folder (keys) that will be symlinked to files in the `configs/` folder (values).
-
-The `files` field also supports [secrets](./secrets/README.md).
-
-Example:
-```json
-{
-  "repo": {
-    "url": "https://github.com/gbv/name-of-service.git",
-    "branch": "dev"
-  },
-  "proxy": {
-    "VIRTUAL_HOST": "coli-conc.gbv.de",
-    "VIRTUAL_PATH": "/my-service",
-    "VIRTUAL_DEST": "/",
-    "REMOTE_PORT": "2999"
-  },
-  "files": {
-    "config.json": "name-of-service.json"
-  }
-}
-```
-
 ### Initialize, Start, Stop, Restart, or Update a Service
 The first time a service is run, it usually needs to be initialize to pull all dependencies:
 

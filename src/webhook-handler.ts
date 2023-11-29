@@ -14,22 +14,44 @@
  */
 
 import { $, cd } from "npm:zx@7"
-import { TargetTypes, createSymlinks, manageAdditionalService } from "../src/utils.ts"
+import { TargetTypes, getPaths, manageAdditionalService } from "../src/utils.ts"
 import { readJson } from "../src/json.ts"
-
-const user = Deno.env.get("USER"), uid = Deno.env.get("UID")
-const homePath = `/home/${user}`
-const serviceFile = "webhook-handler.service"
-
-// Load meta configuration
-const metaConfigPath = `${homePath}/config/webhook-handler.meta.json`
-const metaConfig = await readJson(metaConfigPath)
+import { exists } from "https://deno.land/std/fs/mod.ts"
 
 export const targetType = TargetTypes.WebhookHandler
 export const target = "webhook-handler"
 
+const user = Deno.env.get("USER"), uid = Deno.env.get("UID")
+const { homePath, targetPath } = getPaths(target)
+const serviceFile = `${target}.service`
+
+// Load meta configuration
+const metaConfigPath = `${homePath}/configs/webhook-handler.meta.json`
+const metaConfig = await readJson(metaConfigPath)
+
+async function cloneRepo() {
+  if (metaConfig?.repo?.url && !await exists(targetPath)) {
+    const args = ["clone", "--single-branch"]
+    if (metaConfig.repo.branch) {
+      args.push("-b")
+      args.push(metaConfig.repo.branch)
+    }
+    args.push(metaConfig.repo.url)
+    args.push(targetPath)
+    await $`git ${args}`
+  }
+}
+
+async function createConfigSymlink() {
+  const sourceFile = `${homePath}/configs/webhook-handler.json`
+  const targetFile = "config.json"
+  await cd(targetPath)
+  await $`ln -sf ${sourceFile} ${targetFile}`
+}
+
 export async function init() {
-  await createSymlinks(target)
+  await cloneRepo()
+  await createConfigSymlink()
   const servicePath = `${homePath}/.config/systemd/user/`
   const serviceFilePath = `${servicePath}/${serviceFile}`
   const WEBHOOK_SECRET = await Deno.readTextFile(`${homePath}/secrets/WEBHOOK_SECRET`)
@@ -65,7 +87,6 @@ export async function status() {
   await $`systemctl --user status ${serviceFile}`
 }
 export async function restart() {
-  await createSymlinks(target)
   await $`systemctl --user restart ${serviceFile}`
   await manageAdditionalService(target, "restart", metaConfig.proxy)
 }
@@ -80,7 +101,7 @@ export async function log() {
   await logs()
 }
 export async function update() {
-  await cd(`${homePath}/services/${target}`)
+  await cd(targetPath)
   await $`git pull`
   await restart()
   await manageAdditionalService(target, "update", metaConfig.proxy)

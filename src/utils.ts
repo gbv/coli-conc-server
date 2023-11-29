@@ -1,6 +1,4 @@
-import { exists } from "https://deno.land/std/fs/mod.ts"
-import { readJson } from "../src/json.ts"
-import { $, cd } from "npm:zx@7"
+import { $ } from "npm:zx@7"
 
 export enum TargetTypes {
   DockerCompose,
@@ -17,44 +15,6 @@ export function getPaths(target: string) {
     homePath,
     servicePath,
     targetPath,
-  }
-}
-
-export async function getConfig(target: string) {
-  const { homePath, servicePath } = getPaths(target)
-  // Read configuration JSON file if it exists
-  const configFile = `${servicePath}/${target}.json`
-  // deno-lint-ignore no-explicit-any
-  let config: any
-  if (await exists(configFile)) {
-    config = await readJson(configFile)
-    // Replace secrets in provided environment variables
-    for (const key of Object.keys(config.env || {})) {
-      if (config.env[key].startsWith("secret:")) {
-        const secretFile = config.env[key].replace("secret:", "") || key
-        config.env[key] = await Deno.readTextFile(`${homePath}/secrets/${secretFile}`)
-      }
-    }
-  }
-  return config
-}
-
-export async function createSymlinks(service: string) {
-  const config = await getConfig(service)
-  const { homePath, targetPath } = getPaths(service)
-  await cd(targetPath)
-
-  // Map files via symlinks
-  if (config?.files) {
-    for (const targetFile of Object.keys(config.files)) {
-      let subfolder = "configs", sourceFile = config.files[targetFile]
-      if (sourceFile.startsWith("secret:")) {
-        sourceFile = sourceFile.replace("secret:", "")
-        subfolder = "secrets"
-      }
-      sourceFile = `${homePath}/${subfolder}/${sourceFile}`
-      await $`ln -sf ${sourceFile} ${targetFile}`
-    }
   }
 }
 

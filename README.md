@@ -87,6 +87,8 @@ Updating a service pulls updates for a Git repository (if applicable), pulls the
 srv update name-of-service
 ```
 
+You can see logs for a service using `srv logs name-of-service`.
+
 ### `srv` Script Dependencies
 Deno will automatically download and cache all dependency when `srv` is first run.
 

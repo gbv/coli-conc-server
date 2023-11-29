@@ -53,6 +53,18 @@ Explanation of additional environment variables for proxy configuration:
 - `VIRTUAL_DEST`: "This environment variable can be used to rewrite the `VIRTUAL_PATH` part of the requested URL to proxied application." (Please refer to [this section](https://github.com/nginx-proxy/nginx-proxy#path-based-routing) of the nginx-proxy documentation.)
   - In most cases, this needs to be set to `/`.[^virtual_dest]
 
+As for environment variables, you can either set them directly in the compose file as in the example above, or you can put them into separate files by specifying `env_file`:
+
+```yml
+...
+    env_file:
+      - $HOME/configs/public.env
+      - $HOME/secrets/private.env
+...
+```
+
+Later entries override earlier entries. You can check the resulting compose file by running `srv configtest my-service`.
+
 ### Service Configuration File
 A service configuration file can be provided in `services/name-of-service.json`. It contains a JSON object with the following (optional) fields:
 

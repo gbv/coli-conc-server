@@ -133,3 +133,42 @@ Make sure everything still works with the updated dependencies, then commit the 
 Install the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) and set up the workspace (once) by running the `Deno: Initialize Workspace Configuration` command.
 
 [^virtual_dest]: If `VIRTUAL_PATH` is set, but `VIRTUAL_DEST` isn't, the requests forwarded to the application will include the whole path. This means that if an application listens to the root path `/`, `VIRTUAL_DEST` NEEDS to be set to `/` as well for the application to work (which should be the case for most APIs). Another caveat is that when `VIRTUAL_PATH` does not end on a slash, requests to that path with a slash appended will result in a double slash. In most cases, it is better to end `VIRTUAL_PATH` in a slash which adds a 301 redirect from the non-slash version.
+
+### Restrict Access via Basic Authentication
+Sometimes, it is necessary to restrict access to a certain service with basic authentication. First, we need another dependency if it's not yet installed: `sudo apt install apache2-utils`. Then set up a custom vhost configuration and the password file:
+
+```sh
+mkdir -p ~/configs/vhost.d
+mkdir -p ~/secrets/htpasswd
+htpasswd -cb ~/secrets/htpasswd/my-service some_username some_password
+```
+
+For the custom vhost configuration, substitute `VIRUTAL_HOST` and `VIRTUAL_PATH` in the following command:
+
+```sh
+touch ~/configs/vhost.d/VIRTUAL_HOST_$(echo -n "VIRTUAL_PATH" | sha1sum | awk '{ print $1 }')_location
+```
+
+Add the following content (with your editor of choice), adjusting `my-service` as above:
+
+```
+auth_basic "My Service";
+auth_basic_user_file /etc/nginx/htpasswd/my-service;
+```
+
+Add bind volumes to the nginx container in `~/services/nginx/docker-compose.yml`:
+
+```yml
+...
+    volumes:
+      - /run/user/$UID/docker.sock:/tmp/docker.sock:ro
+      - ${HOME}/configs/vhost.d:/etc/nginx/vhost.d:ro
+      - ${HOME}/secrets/htpasswd:/etc/nginx/htpasswd:ro
+...
+```
+
+Finally, restart the proxy:
+
+```sh
+srv restart nginx
+```

@@ -16,10 +16,7 @@ Work in progress.
 
 ## Setup
 
-```sh
-docker network create nginx
-docker network create mongo
-```
+See [SETUP.md](./SETUP.md).
 
 ## Service Management
 Services can be managed through the `srv` script. Run `srv --help` for instructions.

@@ -7,7 +7,7 @@ const flags = {
 function isValidFlag(k: string): k is keyof typeof flags {
   return k in flags
 }
-const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status"]
+const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status", "configtest"]
 let command = "", target = "", argsError = ""
 
 // Check arguments

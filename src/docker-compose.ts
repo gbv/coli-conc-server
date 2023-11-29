@@ -36,3 +36,6 @@ export async function update(target: string) {
   await $`docker compose pull`
   await restart(target)
 }
+export async function configtest() {
+  await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose config`
+}

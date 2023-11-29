@@ -13,7 +13,7 @@ export async function init(target: string) {
   await start()
 }
 export async function start() {
-  await $`env UID="$(id -u)" GID="$(id -g)" docker compose up -d`
+  await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose up -d`
 }
 export async function status() {
   await $`docker compose ps`
@@ -21,7 +21,7 @@ export async function status() {
 export async function restart(target: string) {
   await createSymlinks(target)
   await $`docker compose stop`
-  await $`env UID="$(id -u)" GID="$(id -g)" docker compose up -d`
+  await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose up -d`
 }
 export async function stop() {
   await $`docker compose stop`

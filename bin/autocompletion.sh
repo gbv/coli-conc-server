@@ -27,4 +27,32 @@ _server()
     COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
 }
 
+# Autocompletion for data script
+_data()
+{
+    local cur prev commands options targets
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev=${#COMP_WORDS[@]}
+
+    # Match commands
+    if [[ "$prev" == "2" ]]; then
+        commands=$(data list-commands)
+        COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
+        return 0
+    fi
+
+    # Match targets
+    if [[ "$prev" == "3" ]]; then
+        targets=$(data list-targets)
+        COMPREPLY=( $(compgen -W "${targets}" -- ${cur}) )
+        return 0
+    fi
+
+    # Fall back to file autocompletion
+    compopt -o default
+    COMPREPLY=()
+}
+
 complete -F _server srv
+complete -F _data data

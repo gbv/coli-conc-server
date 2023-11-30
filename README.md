@@ -4,18 +4,27 @@ Home folder, setup, and configuration.
 Work in progress.
 
 ## To-Dos
-- [ ] Document github-webhook-handler
-  - [ ] How to provide secret?
 - [ ] Add services
 - [ ] Add data import into jskos-server instances
+- [ ] Test Git cloning instructions
+  - [ ] Can we configure our server - safely - so that we can also commit changes right from the server?
 
 ## Dependencies
 - Deno
 - Docker (rootless)
 
 ## Setup
-
 See [SETUP.md](./SETUP.md).
+
+As we are tracking the user's home folder (`/home/cocoda`) with this repository, cloning is not as straight-forward:
+
+```sh
+git init
+git remote add origin https://github.com/gbv/coli-conc-server.git
+git fetch
+git reset origin/main
+git checkout -t origin/main
+```
 
 ## Service Management
 Services can be managed through the `srv` script. Run `srv --help` for instructions.
@@ -114,6 +123,22 @@ cd src; deno cache --lock=deno.lock --lock-write server.ts
 Make sure everything still works with the updated dependencies, then commit the updated `deno.lock`.
 
 ## Other
+
+### Folder Structure
+- `.config/docker/daemon.json` - Docker daemon configuration
+- `bin/`
+  - `bin/autocompletion.sh` - Bash autocompletion for `srv` script
+  - `bin/srv` - Symlink for `srv` script (links to `src/server.ts`)
+- `configs/` - [Folder for configuration files](./configs/README.md)
+  - `configs/webhook-handler.meta.json` - Proxy configuration for [webhook handler](#special-service-github-webhook-handler)
+  - `configs/webhook-handler.json` - Actual configuration for [webhook handler](#special-service-github-webhook-handler)
+- `secrets/` - [Folder for secrets](./secrets/README.md); its contents (except for `README.md`) are not part of the repo
+- `services/` - Folder for services; one subfolder for each service
+- `src/` - Source code for `srv` script (TypeScript, run with Deno)
+- `.bashrc` - Bash configuration and paths
+- `.gitignore` - Files ignored by Git; note that by default, all files are ignored because we expect this repo to be checked out into the home folder
+- `README.md` - The file you are currently reading
+- `SETUP.md` - Server setup instructions
 
 ### VSCode Setup
 Install the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) and set up the workspace (once) by running the `Deno: Initialize Workspace Configuration` command.

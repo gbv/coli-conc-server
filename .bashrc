@@ -116,6 +116,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# ~/bin path for `srv` and `data` scripts
+PATH=$HOME/bin:$PATH
+
 # Docker Stuff
 PATH=/usr/bin:$PATH
 export DOCKER_HOST="unix:///run/user/$(id -u)/docker.sock"

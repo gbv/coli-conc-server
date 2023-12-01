@@ -4,6 +4,7 @@ Home folder, setup, and configuration.
 Work in progress.
 
 ## To-Dos
+- [ ] SETUP.md: Clarify that two terminals, one with sudo user and one with `cocoda`, are necessary
 - [ ] Add services
 - [ ] Add data import into jskos-server instances
 - [ ] Test Git cloning instructions
@@ -15,16 +16,6 @@ Work in progress.
 
 ## Setup
 See [SETUP.md](./SETUP.md).
-
-As we are tracking the user's home folder (`/home/cocoda`) with this repository, cloning is not as straight-forward:
-
-```sh
-git init
-git remote add origin https://github.com/gbv/coli-conc-server.git
-git fetch
-git reset origin/main
-git checkout -t origin/main
-```
 
 ## Service Management
 Services can be managed through the `srv` script. Run `srv --help` for instructions.

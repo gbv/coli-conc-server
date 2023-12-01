@@ -7,6 +7,18 @@
 sudo adduser cocoda
 ```
 
+## Clone Repository
+As we are tracking the user's home folder (`/home/cocoda`) with this repository, cloning is not as straight-forward:
+
+```sh
+git init
+git remote add origin https://github.com/gbv/coli-conc-server.git
+git fetch
+rm .bashrc
+git checkout -b main --track origin/main
+source .bashrc
+```
+
 ## Some Basic Setup
 ```sh
 sudo apt install -y curl wget unzip

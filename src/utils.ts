@@ -59,7 +59,8 @@ networks:
   default:
     external: true
     name: nginx`
-      
+    
+    await Deno.mkdir(`${servicePath}/.additional`, { recursive: true })
     await Deno.writeTextFile(composeFilePath, composeFile)
     // Start service
     await $`docker compose -f ${composeFilePath} up -d`

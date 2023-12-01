@@ -5,6 +5,8 @@
  */
 
 Deno.env.set("FORCE_COLOR", "2")
+import { existsSync } from "https://deno.land/std/fs/mod.ts"
+import { $, cd } from "npm:zx@7"
 
 const [command, target, ...args] = Deno.args
 
@@ -16,7 +18,7 @@ const availableCommands = [
 // Determine available targets by reading docker-compose.yml files in service subfolders
 import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
 import { getEnv } from "../src/utils.ts"
-const { servicePath } = getEnv(target)
+const { servicePath, targetPath } = getEnv(target)
 
 const availableTargets = []
 
@@ -70,4 +72,27 @@ if (!targetService) {
   Deno.exit(1)
 }
 
-console.log(`Running ${command} script for ${targetService.name} (Docker service ${targetService.service}) with params ${args}... TODO`)
+console.log(`Running ${command} script for ${targetService.name} (Docker service ${targetService.service}) with params:`)
+args.forEach(arg => console.log(`    ${arg}`))
+
+// Determine if we are importing a file that needs to be mounted into the target Docker container
+const uuid = crypto.randomUUID()
+const runArgs = []
+if (command === "import" && existsSync(args[args.length - 1])) {
+  const index = args.length - 1, file = args[index]
+  const ext = file.match(/^.*(\.[^\/]*)$/)?.[1] || ""
+  // Use random ID and index to create unique guest filename (in case multiple imports are run simulaneously)
+  const guestfile = `/imports/${uuid}-${index}${ext}`
+  // Use guest file as argument
+  args[index] = guestfile
+  runArgs.push("-v")
+  runArgs.push(`${Deno.realPathSync(file)}:${guestfile}`)
+}
+
+await cd(targetPath)
+try {
+  await $`docker compose run ${runArgs} ${targetService.service} /usr/src/app/bin/import.js ${args}`
+} catch (error) {
+  console.error()
+  console.error(`An error occurred during import attempt. Details should be in the output above. (exit code: ${error.exitCode})`)
+}

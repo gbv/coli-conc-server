@@ -122,6 +122,20 @@ cd src; deno cache --lock=deno.lock --lock-write server.ts
 
 Make sure everything still works with the updated dependencies, then commit the updated `deno.lock`.
 
+## Data Management for JSKOS Server Instances
+Data imports and resets for [JSKOS Server](https://github.com/gbv/jskos-server) instances can be managed through the `data` script. Run `data --help` for instructions.
+
+The basic usage is: `data <command> <service> <arguments for jskos-server import script>` where `<command>` is either "import" or "reset" and `<service>` is any of the services (defined in the `services/` subfolder) that includes a JSKOS Server instance.
+
+Note that local files will be mounted into the container when running the import script. The file argument is expected to be the last argument.
+
+Examples:
+
+```sh
+data import jskos-server schemes my-schemes.ndjson
+data import jskos-server concordances "https://coli-conc.gbv.de/api/concordances/rvk-ddc-4"
+```
+
 ## Other
 
 ### Folder Structure

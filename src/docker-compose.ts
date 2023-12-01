@@ -6,11 +6,12 @@ import { $ } from "npm:zx@7"
 import { TargetTypes, getEnv } from "../src/utils.ts"
 import process from "node:process"
 
-const { uid, gid, homePath } = getEnv("")
+const { uid, gid, homePath, dataPath } = getEnv("")
 // Set environment for `docker compose` calls
 process.env.UID = uid
 process.env.GID = gid
 process.env.HOME = homePath
+process.env.DATA = dataPath
 
 export const targetType = TargetTypes.DockerCompose
 

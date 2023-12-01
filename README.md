@@ -132,6 +132,7 @@ Make sure everything still works with the updated dependencies, then commit the 
 - `configs/` - [Folder for configuration files](./configs/README.md)
   - `configs/webhook-handler.meta.json` - Proxy configuration for [webhook handler](#special-service-github-webhook-handler)
   - `configs/webhook-handler.json` - Actual configuration for [webhook handler](#special-service-github-webhook-handler)
+- `data/` - [Folder with persistent data for Docker containers](./data/README.md)
 - `secrets/` - [Folder for secrets](./secrets/README.md); its contents (except for `README.md`) are not part of the repo
 - `services/` - Folder for services; one subfolder for each service
 - `src/` - Source code for `srv` script (TypeScript, run with Deno)

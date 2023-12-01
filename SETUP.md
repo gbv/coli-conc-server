@@ -83,6 +83,21 @@ docker network create nginx
 docker network create mongo
 ```
 
+### Set Inheritance ACL for Folders used in Bind Mounts
+https://joeeey.com/blog/rootless-docker-avoiding-common-caveats/#storage-fixes
+
+In the default case, the host user won't have access to files created inside containers because they will be mapped to subordinate UIDs/GIDs. To circumvent this issues, we can use an ACL (Access Control List) to give the host user access to all current and future folders and files inside a particular folder:
+
+```sh
+# Install acl package
+sudo apt install acl
+# Always allow rwX permissions for data, configs, and secrets subfolders
+# (adjust username and home folder if necessary)
+sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/data
+sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/configs
+sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/secrets
+```
+
 ## Others
 
 ### Docker "Error response from daemon"

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-env --allow-read --allow-run --allow-sys --ext=ts --lock=/home/${USER}/src/deno.lock
+#!/usr/bin/env -S deno run --allow-env --allow-read --allow-run --allow-sys --ext=ts --lock=${HOME}/src/deno.lock
 
 /**
  * Script to manage data in jskos-server instances.
@@ -15,8 +15,8 @@ const availableCommands = [
 
 // Determine available targets by reading docker-compose.yml files in service subfolders
 import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
-import { getPaths } from "../src/utils.ts"
-const { servicePath } = getPaths(target)
+import { getEnv } from "../src/utils.ts"
+const { servicePath } = getEnv(target)
 
 const availableTargets = []
 

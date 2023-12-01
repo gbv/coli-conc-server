@@ -6,8 +6,8 @@ export enum TargetTypes {
   Unknown,
 }
 
-export function getPaths(target: string) {
-  const homePath = `/home/${Deno.env.get("USER")}`
+export function getEnv(target: string) {
+  const homePath = Deno.env.get("HOME")
   const servicePath = `${homePath}/services`
   const targetPath = `${servicePath}/${target}`
 
@@ -15,6 +15,9 @@ export function getPaths(target: string) {
     homePath,
     servicePath,
     targetPath,
+    user: Deno.env.get("USER"),
+    uid: Deno.uid(),
+    gid: Deno.gid(),
   }
 }
 
@@ -26,7 +29,7 @@ export function getPaths(target: string) {
  */
 // deno-lint-ignore no-explicit-any
 export async function manageAdditionalService(service: string, action: string, proxy: any) {
-  const { servicePath } = getPaths(service)
+  const { servicePath } = getEnv(service)
   const composeFilePath = `${servicePath}/.additional/${service}.yml`
 
   if (action === "start" || action === "update") {

@@ -14,15 +14,14 @@
  */
 
 import { $, cd } from "npm:zx@7"
-import { TargetTypes, getPaths, manageAdditionalService } from "../src/utils.ts"
+import { TargetTypes, getEnv, manageAdditionalService } from "../src/utils.ts"
 import { readJson } from "../src/json.ts"
 import { exists } from "https://deno.land/std/fs/mod.ts"
 
 export const targetType = TargetTypes.WebhookHandler
 export const target = "webhook-handler"
 
-const user = Deno.env.get("USER"), uid = Deno.env.get("UID")
-const { homePath, targetPath } = getPaths(target)
+const { homePath, targetPath, uid } = getEnv(target)
 const serviceFile = `${target}.service`
 
 // Load meta configuration
@@ -63,11 +62,11 @@ export async function init() {
   ExecStart=${homePath}/.deno/bin/deno run --allow-env --allow-read --allow-net --allow-run index.js
   Restart=always
   RestartSec=30
-  Environment=PATH=/home/${user}/.deno/bin:/home/${user}/bin/:/usr/bin
+  Environment=PATH=${homePath}/.deno/bin:${homePath}/bin/:/usr/bin
   Environment=WEBHOOK_SECRET=${WEBHOOK_SECRET}
   Environment=DOCKER_HOST=unix:///run/user/${uid}/docker.sock
   
-  WorkingDirectory=/home/${user}/services/webhook-handler
+  WorkingDirectory=${homePath}/services/webhook-handler
   
   [Install]
   WantedBy=default.target

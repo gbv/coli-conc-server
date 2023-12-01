@@ -3,7 +3,14 @@
  */
 
 import { $ } from "npm:zx@7"
-import { TargetTypes } from "../src/utils.ts"
+import { TargetTypes, getEnv } from "../src/utils.ts"
+import process from "node:process"
+
+const { uid, gid, homePath } = getEnv("")
+// Set environment for `docker compose` calls
+process.env.UID = uid
+process.env.GID = gid
+process.env.HOME = homePath
 
 export const targetType = TargetTypes.DockerCompose
 
@@ -12,14 +19,14 @@ export async function init() {
   await start()
 }
 export async function start() {
-  await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose up -d`
+  await $`docker compose up -d`
 }
 export async function status() {
   await $`docker compose ps`
 }
 export async function restart() {
   await $`docker compose stop`
-  await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose up -d`
+  await $`docker compose up -d`
 }
 export async function stop() {
   await $`docker compose stop`
@@ -35,5 +42,5 @@ export async function update() {
   await restart()
 }
 export async function configtest() {
-  await $`env UID="$(id -u)" GID="$(id -g)" HOME="$HOME" docker compose config`
+  await $`docker compose config`
 }

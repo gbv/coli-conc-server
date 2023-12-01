@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-env --allow-read --allow-write --allow-run --allow-sys --ext=ts --lock=/home/${USER}/src/deno.lock
+#!/usr/bin/env -S deno run --allow-env --allow-read --allow-write --allow-run --allow-sys --ext=ts --lock=${HOME}/src/deno.lock
 
 /**
  * Script to manage services.
@@ -14,8 +14,8 @@ Deno.env.set("FORCE_COLOR", "2")
 
 import { command, target } from "../src/args.ts"
 // We override command in "init"
-import { getPaths } from "../src/utils.ts"
-const { targetPath } = getPaths(target)
+import { getEnv } from "../src/utils.ts"
+const { targetPath } = getEnv(target)
 
 import { cd } from "npm:zx@7"
 import { exists } from "https://deno.land/std/fs/mod.ts"

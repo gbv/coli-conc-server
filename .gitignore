@@ -8,14 +8,8 @@
 !/.config/docker
 
 !/services
-/services/*
+/services/.additional
 !/services/.additional/README.md
-!/services/cocoda
-!/services/jskos-server
-!/services/login-server
-!/services/mongo
-!/services/nginx
-!/services/*.json
 
 !/configs
 

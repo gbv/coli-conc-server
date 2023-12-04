@@ -2,7 +2,8 @@
   "baseUrl": "https://coli-conc.gbv.de/test-api/",
   "title": "JSKOS Server Test",
   "mongo": {
-    "host": "mongo"
+    "host": "mongo",
+    "db": "jskos-server-test"
   },
   "namespace": "1ef498ac-80e5-4d9a-9942-ae4aaee3bcec"
 }

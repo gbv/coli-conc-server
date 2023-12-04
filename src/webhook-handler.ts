@@ -93,7 +93,7 @@ export async function stop() {
   await manageAdditionalService(target, "stop", metaConfig.proxy)
 }
 export async function logs() {
-  await $`journalctl --user-unit ${serviceFile} -fq`
+  await $`journalctl --user-unit ${serviceFile} -fq --lines 100`
 }
 export async function log() {
   await logs()

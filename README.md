@@ -8,8 +8,10 @@ Work in progress.
 - [ ] Add services
 - [x] Add data import into jskos-server instances
   - [ ] Add data dump/restore for MongoDB
-- [ ] Have webhook-handler restart certain services when their configurations are updated
-  - Requires 1) knowing which files were updated on the `git pull` and 2) to which services they belong (for now, simple name matching?)
+- [x] Have webhook-handler restart certain services when their configurations are updated
+  - Currently works by assuming base name (name before first `.`) as service name for config files
+  - [ ] We could run `srv init ...` when a service file is added/updated
+  - [ ] Ideally this would be more fine-grained so that only *running* services are restarted
 - [ ] Test Git cloning instructions
   - [ ] Can we configure our server - safely - so that we can also commit changes right from the server?
 

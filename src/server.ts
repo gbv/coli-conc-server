@@ -22,11 +22,14 @@ import { exists } from "https://deno.land/std/fs/mod.ts"
 
 import * as webhookHandler from "../src/webhook-handler.ts"
 import * as dockerCompose from "../src/docker-compose.ts"
+import * as self from "../src/self.ts"
 // deno-lint-ignore no-explicit-any
 let serviceModule: any
 
 if (target === webhookHandler.target) {
   serviceModule = webhookHandler
+} else if (target === self.target) {
+  serviceModule = self
 } else if (await exists(`${targetPath}/docker-compose.yml`)) {
   serviceModule = dockerCompose
 }
@@ -36,7 +39,7 @@ if (!serviceModule) {
   Deno.exit(1)
 }
 
-if (serviceModule.target !== webhookHandler.target) {
+if (serviceModule.target !== webhookHandler.target && serviceModule.target !== self.target) {
   if (!await exists(targetPath)) {
     console.error(`Error: Service "${target}" does not exist.`)
     Deno.exit(1)

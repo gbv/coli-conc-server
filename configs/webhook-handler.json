@@ -4,7 +4,7 @@
   "webhooks": [
     {
       "repository": "gbv/coli-conc-server",
-      "command": "git pull",
+      "command": "srv update self",
       "ref": "refs/heads/main",
       "event": "push"
     },

@@ -100,7 +100,7 @@ if (command === "import" && existsSync(args[args.length - 1])) {
 
 await cd(targetPath)
 try {
-  await $`docker compose run ${runArgs} ${targetService.service} /usr/src/app/bin/import.js ${args}`
+  await $`docker compose run ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
 } catch (error) {
   console.error()
   console.error(`An error occurred during import attempt. Details should be in the output above. (exit code: ${error.exitCode})`)

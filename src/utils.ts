@@ -11,12 +11,16 @@ export function getEnv(target: string) {
   const servicePath = `${homePath}/services`
   const targetPath = `${servicePath}/${target}`
   const dataPath = `${homePath}/data`
+  const configsPath = `${homePath}/configs`
+  const secretsPath = `${homePath}/secrets`
 
   return {
     homePath,
     servicePath,
     targetPath,
     dataPath,
+    configsPath,
+    secretsPath,
     user: Deno.env.get("USER"),
     uid: Deno.uid(),
     gid: Deno.gid(),

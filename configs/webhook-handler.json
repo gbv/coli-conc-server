@@ -3,6 +3,12 @@
   "verbosity": "all",
   "webhooks": [
     {
+      "repository": "gbv/coli-conc-server",
+      "command": "git pull",
+      "ref": "refs/heads/main",
+      "event": "push"
+    },
+    {
       "repository": "gbv/github-webhook-handler",
       "command": "srv update webhook-handler",
       "event": "release",

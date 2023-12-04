@@ -14,11 +14,10 @@
  */
 
 import { $, cd } from "npm:zx@7"
-import { TargetTypes, getEnv, manageAdditionalService } from "../src/utils.ts"
+import { getEnv, manageAdditionalService } from "../src/utils.ts"
 import { readJson } from "../src/json.ts"
 import { exists } from "https://deno.land/std/fs/mod.ts"
 
-export const targetType = TargetTypes.WebhookHandler
 export const target = "webhook-handler"
 
 const { homePath, targetPath, uid } = getEnv(target)

@@ -32,7 +32,7 @@ if (target === webhookHandler.target) {
 }
 
 if (!serviceModule) {
-  console.error(`Error: Unsupported target type in "${target}.`)
+  console.error(`Error: Unsupported target in "${target}.`)
   Deno.exit(1)
 }
 

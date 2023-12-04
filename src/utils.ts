@@ -1,11 +1,5 @@
 import { $ } from "npm:zx@7"
 
-export enum TargetTypes {
-  DockerCompose,
-  WebhookHandler,
-  Unknown,
-}
-
 export function getEnv(target: string) {
   const homePath = Deno.env.get("HOME")
   const servicePath = `${homePath}/services`

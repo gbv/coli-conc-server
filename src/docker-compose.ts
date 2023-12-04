@@ -3,7 +3,7 @@
  */
 
 import { $ } from "npm:zx@7"
-import { TargetTypes, getEnv } from "../src/utils.ts"
+import { getEnv } from "../src/utils.ts"
 import process from "node:process"
 
 const { uid, gid, homePath, dataPath, configsPath, secretsPath } = getEnv("")
@@ -14,8 +14,6 @@ process.env.HOME = homePath
 process.env.DATA = dataPath
 process.env.CONFIGS = configsPath
 process.env.SECRETS = secretsPath
-
-export const targetType = TargetTypes.DockerCompose
 
 export async function init() {
   await $`docker compose pull`

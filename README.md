@@ -6,7 +6,10 @@ Work in progress.
 ## To-Dos
 - [ ] SETUP.md: Clarify that two terminals, one with sudo user and one with `cocoda`, are necessary
 - [ ] Add services
-- [ ] Add data import into jskos-server instances
+- [x] Add data import into jskos-server instances
+  - [ ] Add data dump/restore for MongoDB
+- [ ] Have webhook-handler restart certain services when their configurations are updated
+  - Requires 1) knowing which files were updated on the `git pull` and 2) to which services they belong (for now, simple name matching?)
 - [ ] Test Git cloning instructions
   - [ ] Can we configure our server - safely - so that we can also commit changes right from the server?
 
@@ -188,4 +191,28 @@ Finally, restart the proxy:
 
 ```sh
 srv restart nginx
+```
+
+```sh
+# on esx-190
+ssh-keygen -t rsa -b 4096
+cat ~/.ssh/id_rsa.pub # copy to esx-206
+
+# on esx-206
+mongodump --db="cocoda_api_dev" --forceTableScan -v --gzip --out ./dump2
+# or
+mongodump --db="cocoda_api_dev" --forceTableScan --gzip --archive=./dump.archive
+
+# back on esx-190
+cd services/mongo
+
+scp -r esx-206.gbv.de:~/dump2 ./
+# or
+scp esx-206.gbv.de:~/dump.archive ./
+
+mongorestore --gzip -v --nsFrom="cocoda_api_dev.*" --nsTo="jskos-server-dev.*" ./dump2
+# or
+mongorestore --gzip -v --nsFrom="cocoda_api_dev.*" --nsTo="jskos-server-dev.*" --archive="dump.archive"
+
+cat dump.archive | docker compose exec -iT mongo sh -c 'exec mongorestore --gzip -v --nsFrom="cocoda_api_dev.*" --nsTo="jskos-server-dev.*" --archive'
 ```

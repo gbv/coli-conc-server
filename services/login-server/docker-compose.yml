@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  login-server:
+    image: ghcr.io/gbv/login-server:0.7
+    networks:
+      - default
+      - nginx
+      - mongo
+    volumes:
+      - $SECRETS/login-server:/config
+      - $DATA/login-server/static:/usr/src/app/static
+    env_file:
+      - $CONFIGS/jskos-server.env
+      - $SECRETS/jskos-server.env
+    restart: unless-stopped
+
+networks:
+  default:
+  nginx:
+    external: true
+    name: nginx
+  mongo:
+    external: true
+    name: mongo

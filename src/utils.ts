@@ -60,6 +60,10 @@ networks:
     
     await Deno.mkdir(`${servicePath}/.additional`, { recursive: true })
     await Deno.writeTextFile(composeFilePath, composeFile)
+    // Pull container for update
+    if (action === "update") {
+      await $`docker compose -f ${composeFilePath} pull`
+    }
     // Start service
     await $`docker compose -f ${composeFilePath} up -d`
   }

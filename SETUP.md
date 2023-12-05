@@ -22,6 +22,8 @@ source .bashrc
 ## Some Basic Setup
 ```sh
 sudo apt install -y curl wget unzip
+# Generate client SSH key if necessary
+ssh-keygen -t rsa -b 4096
 ```
 
 ## Deno

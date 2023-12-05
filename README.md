@@ -6,8 +6,7 @@ Work in progress.
 ## To-Dos
 - [ ] SETUP.md: Clarify that two terminals, one with sudo user and one with `cocoda`, are necessary
 - [ ] Add services
-- [x] Add data import into jskos-server instances
-  - [ ] Add data dump/restore for MongoDB
+- [ ] Consider extending `data` script to support MongoDB as well (instead of having to run docker compose commands manually)
 - [x] Have webhook-handler restart certain services when their configurations are updated
   - Currently works by assuming base name (name before first `.`) as service name for config files
   - [ ] We could run `srv init ...` when a service file is added/updated
@@ -132,6 +131,23 @@ data import jskos-server schemes my-schemes.ndjson
 data import jskos-server concordances "https://coli-conc.gbv.de/api/concordances/rvk-ddc-4"
 ```
 
+## Data Management for MongoDB
+The easiest way to dump and restore data with MongoDB running in Docker is using a single-file archive via `--archive`.
+
+Make sure you change your working directory before running these commands: `cd ~/services/mongo`
+
+### Dump Data
+```sh
+docker compose exec mongo mongodump -d "name-of-database" --forceTableScan --gzip --archive > dump.archive
+```
+
+### Restore Data
+```sh
+cat dump.archive | docker compose exec -iT mongo mongorestore --gzip --nsFrom="name-of-database.*" --nsTo="new-name-of-database-dev.*" --archive
+```
+
+Leave out `--nsFrom` and `--nsTo` if the database name should stay the same.
+
 ## Other
 
 ### Folder Structure
@@ -193,28 +209,4 @@ Finally, restart the proxy:
 
 ```sh
 srv restart nginx
-```
-
-```sh
-# on esx-190
-ssh-keygen -t rsa -b 4096
-cat ~/.ssh/id_rsa.pub # copy to esx-206
-
-# on esx-206
-mongodump --db="cocoda_api_dev" --forceTableScan -v --gzip --out ./dump2
-# or
-mongodump --db="cocoda_api_dev" --forceTableScan --gzip --archive=./dump.archive
-
-# back on esx-190
-cd services/mongo
-
-scp -r esx-206.gbv.de:~/dump2 ./
-# or
-scp esx-206.gbv.de:~/dump.archive ./
-
-mongorestore --gzip -v --nsFrom="cocoda_api_dev.*" --nsTo="jskos-server-dev.*" ./dump2
-# or
-mongorestore --gzip -v --nsFrom="cocoda_api_dev.*" --nsTo="jskos-server-dev.*" --archive="dump.archive"
-
-cat dump.archive | docker compose exec -iT mongo sh -c 'exec mongorestore --gzip -v --nsFrom="cocoda_api_dev.*" --nsTo="jskos-server-dev.*" --archive'
 ```

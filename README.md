@@ -146,7 +146,7 @@ docker compose exec mongo mongodump -d "name-of-database" --forceTableScan --gzi
 cat dump.archive | docker compose exec -iT mongo mongorestore --gzip --nsFrom="name-of-database.*" --nsTo="new-name-of-database-dev.*" --archive
 ```
 
-Leave out `--nsFrom` and `--nsTo` if the database name should stay the same.
+Leave out `--nsFrom` and `--nsTo` if the database name should stay the same. Add `--drop` if you would like to drop the tables before import.
 
 ## Other
 

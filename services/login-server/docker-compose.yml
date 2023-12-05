@@ -11,8 +11,8 @@ services:
       - $SECRETS/login-server:/config
       - $DATA/login-server/static:/usr/src/app/static
     env_file:
-      - $CONFIGS/jskos-server.env
-      - $SECRETS/jskos-server.env
+      - $CONFIGS/login-server.env
+      - $SECRETS/login-server.env
     restart: unless-stopped
 
 networks:

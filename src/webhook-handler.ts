@@ -86,7 +86,8 @@ export async function status() {
 }
 export async function restart() {
   await $`systemctl --user restart ${serviceFile}`
-  await manageAdditionalService(target, "restart", metaConfig.proxy)
+  // We don't need to restart the container, but if the configuration changed, it might need to be recreated
+  await manageAdditionalService(target, "update", metaConfig.proxy)
 }
 export async function stop() {
   await $`systemctl --user stop ${serviceFile}`
@@ -102,7 +103,6 @@ export async function update() {
   await cd(targetPath)
   await $`git pull`
   await restart()
-  await manageAdditionalService(target, "update", metaConfig.proxy)
 }
 
 if (import.meta.main) {

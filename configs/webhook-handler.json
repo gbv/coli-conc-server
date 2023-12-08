@@ -21,7 +21,7 @@
       "action": "completed",
       "filter": {
         "body.workflow_run.head_branch": "dev",
-        "body.workflow_run.workflow_name": "Publish Docker"
+        "body.workflow_run.name": "Publish Docker"
       }
     }
   ]

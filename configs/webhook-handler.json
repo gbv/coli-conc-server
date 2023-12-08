@@ -20,8 +20,8 @@
       "event": "workflow_run",
       "action": "completed",
       "filter": {
-        "body.workflow_job.head_branch": "dev",
-        "body.workflow_job.workflow_name": "Publish Docker"
+        "body.workflow_run.head_branch": "dev",
+        "body.workflow_run.workflow_name": "Publish Docker"
       }
     }
   ]

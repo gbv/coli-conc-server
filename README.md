@@ -100,6 +100,24 @@ You can see logs for a service using `srv logs name-of-service`.
 - `~/configs/webhook-handler.json`: Configuration for the service itself (will be symlinked into the repo as `config.json`).
 - `~/secrets/WEBHOOK_SECRET`: File containing the webhook secret required in GitHub Webhook Handler (will be provided as environment variable).
 
+Note that since we're using Docker for all services, using the `push` event is not advisable as the Docker container for that push will not be deployed yet. Instead, it is possible to use the `workflow_run` event for the completed GitHub workflow that updates the Docker container. For example:
+
+```json
+{
+  "repository": "gbv/jskos-server",
+  "command": "srv update jskos-server-dev",
+  "event": "workflow_run",
+  "action": "completed",
+  "filter": {
+    "body.workflow_run.head_branch": "dev",
+    "body.workflow_run.path": ".github/workflows/docker.yml",
+    "body.workflow_run.conclusion": "success"
+  }
+}
+```
+
+Note that it is not possible to pick out which workflows trigger the `workflow_run` event, so you will get unmatched triggers regularly. For this reason, GitHub Webhook Handler should be configured with `"verbosity": "verbose"` instead of `"verbosity": "all"`.
+
 ### `srv` Script Dependencies
 Deno will automatically download and cache all dependency when `srv` is first run.
 

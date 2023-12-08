@@ -1,6 +1,6 @@
 {
   "port": 2999,
-  "verbosity": "all",
+  "verbosity": "verbose",
   "webhooks": [
     {
       "repository": "gbv/coli-conc-server",

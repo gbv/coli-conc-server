@@ -2,7 +2,7 @@ version: "3"
 
 services:
   jskos-server:
-    image: ghcr.io/gbv/jskos-server:2
+    image: ghcr.io/gbv/jskos-server:dev
     networks:
       - nginx
       - mongo

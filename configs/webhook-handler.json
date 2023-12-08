@@ -17,8 +17,12 @@
     {
       "repository": "gbv/jskos-server",
       "command": "srv update jskos-server-dev",
-      "ref": "refs/heads/dev",
-      "event": "push"
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_job.head_branch": "dev",
+        "body.workflow_job.workflow_name": "Publish Docker"
+      }
     }
   ]
 }

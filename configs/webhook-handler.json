@@ -24,6 +24,12 @@
         "body.workflow_run.path": ".github/workflows/docker.yml",
         "body.workflow_run.conclusion": "success"
       }
+    },
+    {
+      "repository": "gbv/coli-conc.gbv.de",
+      "command": "srv update website",
+      "ref": "refs/heads/main",
+      "event": "push"
     }
   ]
 }

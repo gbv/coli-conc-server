@@ -30,6 +30,11 @@
       "command": "srv update website",
       "ref": "refs/heads/main",
       "event": "push"
+    },
+    {
+      "repository": "gbv/cocoda",
+      "command": "srv exec cocoda cocoda bash setup.sh",
+      "event": "push"
     }
   ]
 }

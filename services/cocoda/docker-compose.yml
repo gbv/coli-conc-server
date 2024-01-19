@@ -12,7 +12,7 @@ services:
       - TAGS=all
       - USE_SUBPATH=true
       - VIRTUAL_HOST=coli-conc.gbv.de
-      - VIRTUAL_PATH=~^/cocoda/.+/
+      - VIRTUAL_PATH=~^/cocoda/.+
 
 networks:
   default:

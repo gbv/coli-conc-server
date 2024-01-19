@@ -1,0 +1,36 @@
+{
+  "title": "Cocoda Mapping Tool (test)",
+  "_branch": "test",
+  "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/test/",
+  "auth": "https://coli-conc.gbv.de/login/",
+  "registries": [
+    {
+      "provider": "MappingsApi",
+      "uri": "http://coli-conc.gbv.de/registry/coli-conc-mappings-dev",
+      "status": "https://coli-conc.gbv.de/dev-api/status",
+      "subject": [
+        {
+          "uri": "http://coli-conc.gbv.de/registry-group/existing-mappings"
+        }
+      ],
+      "notation": [
+        "Cd"
+      ],
+      "prefLabel": {
+        "de": "Konkordanz-Register (dev)",
+        "en": "Concordance Registry (dev)"
+      },
+      "definition": {
+        "en": [
+          "Development concordance registry of coli-conc (mappings will reset at midnight CEST!)"
+        ],
+        "de": [
+          "Entwicklungs-Konkordanz-Datenbank von coli-conc (Mappings werden um Mitternacht zurückgesetzt!)"
+        ]
+      }
+    }
+  ],
+  "conceptLists": [
+    "https://stefandesu.github.io/cocoda-test-lists/test-list.json"
+  ]
+}

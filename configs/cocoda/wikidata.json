@@ -1,0 +1,142 @@
+{
+  "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/wikidata/",
+  "auth": "https://coli-conc.gbv.de/login/",
+  "registries": [
+    {
+      "provider": "ConceptApi",
+      "uri": "http://coli-conc.gbv.de/registry/bartoc",
+      "status": "https://bartoc.org/api/status",
+      "schemes": "https://bartoc.org/api/voc?uri=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18785|http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F430|http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F459|http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F533|http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F313|http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F1940",
+      "notation": [
+        "BARTOC"
+      ],
+      "prefLabel": {
+        "en": "BARTOC API"
+      }
+    },
+    {
+      "provider": "ConceptApi",
+      "uri": "http://coli-conc.gbv.de/registry/gnd-concepts",
+      "data": "https://coli-conc.gbv.de/services/gnd.php",
+      "suggest": "https://ws.gbv.de/suggest/gnd/?searchterm={searchTerms}",
+      "types": "https://ws.gbv.de/suggest/gnd/types",
+      "schemes": [
+        {
+          "uri": "http://bartoc.org/en/node/430",
+          "concepts": [
+            null
+          ],
+          "topConcepts": []
+        }
+      ],
+      "notation": [
+        "G"
+      ],
+      "prefLabel": {
+        "de": "Gemeinsame Normdatei",
+        "en": "Integrated Authority File"
+      },
+      "definition": {
+        "en": [
+          "Access to a copy of GND at VZG"
+        ],
+        "de": [
+          "Zugriff auf eine GND-Kopie an der VZG"
+        ]
+      }
+    },
+    {
+      "provider": "MappingsApi",
+      "uri": "http://coli-conc.gbv.de/registry/wikidata-mappings",
+      "status": "https://coli-conc.gbv.de/services/wikidata/status",
+      "notation": [
+        "W"
+      ],
+      "prefLabel": {
+        "en": "Wikidata-Mappings"
+      },
+      "definition": {
+        "en": [
+          "Access to Wikidata mappings in JSKOS format"
+        ],
+        "de": [
+          "Zugriff auf Wikidata-Mappings im JSKOS-Format"
+        ]
+      }
+    },
+    {
+      "provider": "SearchSuggestion",
+      "uri": "http://coli-conc.gbv.de/registry/coli-conc-recommendations",
+      "excludedSchemes": [
+        {
+          "uri": "http://bartoc.org/en/node/1940"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/430"
+        },
+        {
+          "uri": "http://nomisma.org/id/"
+        }
+      ],
+      "notation": [
+        "CR"
+      ],
+      "prefLabel": {
+        "en": "coli-conc Recommendations",
+        "de": "coli-conc Vorschläge"
+      }
+    },
+    {
+      "provider": "ReconciliationApi",
+      "uri": "http://coli-conc.gbv.de/registry/wikidata-reconciliation",
+      "reconcile": "https://tools.wmflabs.org/openrefine-wikidata/{language}/api",
+      "schemes": [
+        {
+          "uri": "http://bartoc.org/en/node/1940"
+        }
+      ],
+      "notation": [
+        "WR"
+      ],
+      "prefLabel": {
+        "de": "Wikidata-Reconciliation",
+        "en": "Wikidata Reconciliation"
+      },
+      "definition": {
+        "en": [
+          "Wikidata Reconciliation API"
+        ],
+        "de": [
+          "Wikidata-Reconciliation API"
+        ]
+      }
+    },
+    {
+      "provider": "ReconciliationApi",
+      "uri": "http://coli-conc.gbv.de/registry/gnd-reconciliation",
+      "reconcile": "https://lobid.org/gnd/reconcile",
+      "schemes": [
+        {
+          "uri": "http://bartoc.org/en/node/430"
+        }
+      ],
+      "notation": [
+        "GR"
+      ],
+      "prefLabel": {
+        "de": "GND-Reconciliation",
+        "en": "GND Reconciliation"
+      },
+      "definition": {
+        "en": [
+          "GND Reconciliation API (lobid.org)"
+        ],
+        "de": [
+          "GND-Reconciliation API (lobid.org)"
+        ]
+      }
+    }
+  ],
+  "overrideRegistries": true,
+  "title": "Cocoda Mapping Tool (WD)"
+}

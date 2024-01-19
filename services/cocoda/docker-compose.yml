@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  cocoda:
+    image: ghcr.io/gbv/cocoda-versions
+    volumes:
+      - $DATA/cocoda:/www/cocoda
+      - $CONFIGS/cocoda:/configs
+      - $DATA/cocoda.git:/root/cocoda
+    restart: unless-stopped
+    environment:
+      - TAGS=all
+      - USE_SUBPATH=true
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PATH=~^/cocoda/.+/
+
+networks:
+  default:
+    external: true
+    name: nginx

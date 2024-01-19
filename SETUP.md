@@ -112,6 +112,18 @@ sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/configs
 sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/secrets
 ```
 
+## Setup For Specific Services
+
+### Cocoda
+
+Cocoda instances are served via [cocoda-versions](https://github.com/gbv/cocoda-versions). It requires a setup step that both initializes and updates the configured Cocoda instances if necessary. To run the setup:
+
+```sh
+srv exec cocoda cocoda bash setup.sh
+```
+
+As building the old versions can take quite a lot of time, it is recommended that you migrate the built instances from the previous server by copying their folders (anything that is a version number) into `data/cocoda/`. If done before running the setup, it will be able to skip building those versions.
+
 ## Others
 
 ### Docker "Error response from daemon"

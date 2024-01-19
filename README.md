@@ -93,6 +93,8 @@ srv update name-of-service
 
 You can see logs for a service using `srv logs name-of-service`.
 
+To run a `docker compose exec` command for a specific service, you can use `srv exec name-of-service <arguments>`. This is necessary as `srv` defines certain environment variables that are required for running `docker compose` commands. Note that the name of the Compose service will still need to be specified in the argments.
+
 ### Special Service: GitHub Webhook Handler
 [GitHub Webhook Handler](https://github.com/gbv/github-webhook-handler) is used to process webhooks from GitHub in order to update services automatically. It is not run via Docker, but defined as a special service with the name `webhook-handler` and run through Deno. Its repository is pulled on `srv init webhook-handler` and it supports the other commands above as well. It has three configuration files:
 
@@ -152,16 +154,14 @@ data import jskos-server concordances "https://coli-conc.gbv.de/api/concordances
 ## Data Management for MongoDB
 The easiest way to dump and restore data with MongoDB running in Docker is using a single-file archive via `--archive`.
 
-Make sure you change your working directory before running these commands: `cd ~/services/mongo`
-
 ### Dump Data
 ```sh
-docker compose exec mongo mongodump -d "name-of-database" --forceTableScan --gzip --archive > dump.archive
+srv exec mongo mongo mongodump -d "name-of-database" --forceTableScan --gzip --archive > dump.archive
 ```
 
 ### Restore Data
 ```sh
-cat dump.archive | docker compose exec -iT mongo mongorestore --gzip --nsFrom="name-of-database.*" --nsTo="new-name-of-database-dev.*" --archive
+cat dump.archive | srv exec mongo -iT mongo mongorestore --gzip --nsFrom="name-of-database.*" --nsTo="new-name-of-database-dev.*" --archive
 ```
 
 Leave out `--nsFrom` and `--nsTo` if the database name should stay the same. Add `--drop` if you would like to drop the tables before import.

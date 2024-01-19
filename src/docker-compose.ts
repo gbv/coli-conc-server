@@ -45,3 +45,6 @@ export async function update() {
 export async function configtest() {
   await $`docker compose config`
 }
+export async function exec(_target: string, additionalArgs: string[]) {
+  await $`docker compose exec ${additionalArgs}`.stdio("inherit", "inherit", "inherit")
+}

@@ -12,7 +12,7 @@
 
 Deno.env.set("FORCE_COLOR", "2")
 
-import { command, target } from "../src/args.ts"
+import { command, target, additionalArgs } from "../src/args.ts"
 // We override command in "init"
 import { getEnv } from "../src/utils.ts"
 const { targetPath } = getEnv(target)
@@ -51,7 +51,7 @@ try {
   // ? Does this work correctly?
   const _command = command as keyof typeof serviceModule
   const serviceMethod = serviceModule[_command]
-  await serviceMethod(target)
+  await serviceMethod(target, additionalArgs)
 } catch (error) {
   console.error(`Command ${command} for ${target} failed:`)
   console.error(error)

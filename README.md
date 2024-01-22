@@ -228,3 +228,31 @@ Finally, restart the proxy:
 ```sh
 srv restart nginx
 ```
+
+### Serving Static Files
+
+In order to serve static files under a certain sub-path, create a new service (e.g. `static-test`) with a `docker-compose.yml` file like this:
+
+```yml
+version: "3"
+
+services:
+  static-test:
+    image: busybox
+    volumes:
+      # Depending on what kind of static files are served and whether they are part of the repo
+      - $CONFIGS/static:/var/www/
+    environment:
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PATH=/test/
+      - VIRTUAL_DEST=/
+    command: httpd -f -h /var/www/
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx
+```
+
+Then start it like any other service with `srv init static-test`.

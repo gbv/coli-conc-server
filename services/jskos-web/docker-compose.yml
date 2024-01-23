@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  jskos-web:
+    image: ghcr.io/gbv/jskos-web
+    volumes:
+      - $DATA/jskos-web:/usr/src/app/dist
+    environment:
+      - LOGIN_SERVER=https://coli-conc.gbv.de/login/
+      - JSKOS_SERVER=https://coli-conc.gbv.de/api/
+      - BASE=/data/
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PATH=/data/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

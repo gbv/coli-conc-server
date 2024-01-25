@@ -37,6 +37,28 @@
       }
     },
     {
+      "repository": "gbv/coli-ana",
+      "command": "srv update coli-ana",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "main",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
+      "repository": "gbv/coli-ana",
+      "command": "srv update coli-ana-dev",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "dev",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
       "repository": "gbv/cocoda-versions",
       "command": "srv update cocoda",
       "event": "workflow_run",

@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  coli-ana-dev:
+    image: ghcr.io/gbv/coli-ana:dev
+    env_file:
+      - $CONFIGS/coli-ana-dev.env
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

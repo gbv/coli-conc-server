@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  bartoc-dev:
+    image: ghcr.io/gbv/bartoc.org:docker
+    networks:
+      - nginx
+      - mongo
+    volumes:
+      - $CONFIGS/bartoc-dev:/config
+    environment:
+      - BASE_URL=http://dev.bartoc.org/
+      - VIRTUAL_HOST=dev.bartoc.org
+      - VIRTUAL_PATH=/ 
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  nginx:
+    external: true
+    name: nginx
+  mongo:
+    external: true
+    name: mongo

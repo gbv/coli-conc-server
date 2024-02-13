@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  bartoc:
+    image: ghcr.io/gbv/bartoc.org:1
+    networks:
+      - nginx
+      - mongo
+    volumes:
+      - $CONFIGS/bartoc:/config
+      - $DATA/bartoc/dumps:/usr/src/app/bartoc/data/dumps
+      - $DATA/bartoc/reports:/usr/src/app/bartoc/data/reports
+    environment:
+      - BASE_URL=https://bartoc.org/
+      - VIRTUAL_HOST=bartoc.org
+      - VIRTUAL_PATH=/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  nginx:
+    external: true
+    name: nginx
+  mongo:
+    external: true
+    name: mongo

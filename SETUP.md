@@ -124,6 +124,12 @@ srv exec cocoda cocoda bash setup.sh
 
 As building the old versions can take quite a lot of time, it is recommended that you migrate the built instances from the previous server by copying their folders (anything that is a version number) into `data/cocoda/`. If done before running the setup, it will be able to skip building those versions.
 
+### BARTOC
+
+```sh
+srv exec bartoc -it bartoc bash setup.sh
+```
+
 ## Others
 
 ### Docker "Error response from daemon"

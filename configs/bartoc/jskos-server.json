@@ -1,0 +1,59 @@
+{
+  "title": "BARTOC API",
+  "mongo": {
+    "host": "mongo",
+    "db": "bartoc"
+  },
+  "baseUrl": "https://bartoc.org/api/",
+  "auth": {
+    "algorithm": "RS256",
+    "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxQ0PM0Ghui5byBAbmgF+\ndVlN6zaenmqOs9Xj/1r+igMoW5WRxpe9FLNlbbJlAVamAjuAL9SsNme1hr/G6I31\nGrpLhhlvF1hxk7n5qP94BueJ1JF8RuFimUtjhPaclm8KsGsw3QrG+fYoY9P1RYbj\ns0ebuY5b46W4cOjSMchWzMYIBPskNI0rHR/UyfV5caWdziVl6eQpLbmwdttwW2hI\no6683Hgzuml0ww3iLRUClMRSHHfpUGZ3D+C0B1EWrMJEe4kkRyenUOV7H+3H1nro\n51EjYpp27pe39bqoVlRn8bgNHab3uiytzWPb6ds896L5CHSYM3VYJ0+UsL7mJEKg\nVQIDAQAB\n-----END PUBLIC KEY-----"
+  },
+  "verbosity": "log",
+  "mappings": false,
+  "annotations": false,
+  "concordances": false,
+  "concepts": true,
+  "schemes": {
+    "identities": [
+      "https://coli-conc.gbv.de/login/users/c0c1914a-f9d6-4b92-a624-bf44118b6619",
+      "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
+      "https://orcid.org/0000-0001-5920-8672",
+      "https://orcid.org/0000-0001-7677-4158",
+      "https://orcid.org/0000-0001-8796-3923",
+      "https://orcid.org/0000-0001-9915-9721",
+      "https://orcid.org/0000-0002-0629-0446",
+      "https://orcid.org/0000-0002-1019-9151",
+      "https://orcid.org/0000-0002-2026-5570",
+      "https://orcid.org/0000-0002-4087-8227",
+      "https://orcid.org/0000-0002-4721-7448",
+      "https://orcid.org/0000-0002-5049-0808",
+      "https://orcid.org/0000-0002-5200-0075",
+      "https://orcid.org/0000-0002-5205-6669",
+      "https://orcid.org/0000-0002-6189-5958",
+      "https://orcid.org/0000-0002-6801-6151",
+      "https://orcid.org/0000-0002-7613-4123",
+      "https://orcid.org/0000-0002-8985-9991",
+      "https://orcid.org/0000-0003-0034-7867",
+      "https://orcid.org/0000-0003-1562-6922",
+      "https://orcid.org/0000-0003-2653-3799",
+      "https://orcid.org/0000-0003-3059-8202",
+      "https://orcid.org/0000-0003-3935-4642",
+      "https://orcid.org/0000-0003-4093-3393",
+      "https://orcid.org/0000-0003-4560-1478",
+      "https://orcid.org/0000-0001-5737-3906",
+      "https://orcid.org/0000-0001-9377-6294"
+    ],
+    "read": {
+      "auth": false
+    },
+    "create": {
+      "auth": true
+    },
+    "update": {
+      "auth": true,
+      "crossUser": true
+    }
+  },
+  "namespace": "579e7365-32bb-4a30-9e22-fd559c70af45"
+}

@@ -1,6 +1,6 @@
 {
   "name": "BARTOC.org (dev)",
-  "baseUrl": "http://dev.bartoc.org/",
+  "baseUrl": "https://dev.bartoc.org/",
   "port": 80,
   "backend": {
     "provider": "ConceptApi",

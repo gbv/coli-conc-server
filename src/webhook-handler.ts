@@ -20,11 +20,11 @@ import { exists } from "https://deno.land/std/fs/mod.ts"
 
 export const target = "webhook-handler"
 
-const { homePath, targetPath, uid } = getEnv(target)
+const { homePath, basePath, targetPath, uid } = getEnv(target)
 const serviceFile = `${target}.service`
 
 // Load meta configuration
-const metaConfigPath = `${homePath}/configs/webhook-handler.meta.json`
+const metaConfigPath = `${basePath}/configs/webhook-handler.meta.json`
 const metaConfig = await readJson(metaConfigPath)
 
 async function cloneRepo() {
@@ -41,7 +41,7 @@ async function cloneRepo() {
 }
 
 async function createConfigSymlink() {
-  const sourceFile = `${homePath}/configs/webhook-handler.json`
+  const sourceFile = `${basePath}/configs/webhook-handler.json`
   const targetFile = "config.json"
   await cd(targetPath)
   await $`ln -sf ${sourceFile} ${targetFile}`
@@ -52,7 +52,7 @@ export async function init() {
   await createConfigSymlink()
   const servicePath = `${homePath}/.config/systemd/user/`
   const serviceFilePath = `${servicePath}/${serviceFile}`
-  const WEBHOOK_SECRET = await Deno.readTextFile(`${homePath}/secrets/WEBHOOK_SECRET`)
+  const WEBHOOK_SECRET = await Deno.readTextFile(`${basePath}/secrets/WEBHOOK_SECRET`)
   const serviceFileContent = `
   [Unit]
   Description=webhook-handler (Deno Service)
@@ -61,11 +61,12 @@ export async function init() {
   ExecStart=${homePath}/.deno/bin/deno run --allow-env --allow-read --allow-net --allow-run index.js
   Restart=always
   RestartSec=30
-  Environment=PATH=${homePath}/.deno/bin:${homePath}/bin/:/usr/bin
+  Environment=PATH=${homePath}/.deno/bin:${basePath}/bin/:/usr/bin
   Environment=WEBHOOK_SECRET=${WEBHOOK_SECRET}
+  Environment=COLI_CONC_BASE=${basePath}
   Environment=DOCKER_HOST=unix:///run/user/${uid}/docker.sock
   
-  WorkingDirectory=${homePath}/services/webhook-handler
+  WorkingDirectory=${basePath}/services/webhook-handler
   
   [Install]
   WantedBy=default.target

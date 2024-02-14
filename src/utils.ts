@@ -1,15 +1,17 @@
 import { $ } from "npm:zx@7"
 
 export function getEnv(target: string) {
-  const homePath = Deno.env.get("COLI_CONC_BASE")
-  const servicePath = `${homePath}/services`
+  const homePath = Deno.env.get("HOME")
+  const basePath = Deno.env.get("COLI_CONC_BASE")
+  const servicePath = `${basePath}/services`
   const targetPath = `${servicePath}/${target}`
-  const dataPath = `${homePath}/data`
-  const configsPath = `${homePath}/configs`
-  const secretsPath = `${homePath}/secrets`
+  const dataPath = `${basePath}/data`
+  const configsPath = `${basePath}/configs`
+  const secretsPath = `${basePath}/secrets`
 
   return {
     homePath,
+    basePath,
     servicePath,
     targetPath,
     dataPath,

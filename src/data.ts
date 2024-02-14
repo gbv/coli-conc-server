@@ -18,13 +18,13 @@ const availableCommands = [
 // Determine available targets by reading docker-compose.yml files in service subfolders
 import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
 import { getEnv } from "../src/utils.ts"
-const { servicePath, targetPath, uid, gid, homePath, dataPath, configsPath, secretsPath } = getEnv(target)
+const { servicePath, targetPath, uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv(target)
 
 // Set environment for `docker compose` calls
 import process from "node:process"
 process.env.UID = uid
 process.env.GID = gid
-process.env.HOME = homePath
+process.env.HOME = basePath
 process.env.DATA = dataPath
 process.env.CONFIGS = configsPath
 process.env.SECRETS = secretsPath

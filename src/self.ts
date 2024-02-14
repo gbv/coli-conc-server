@@ -5,13 +5,13 @@
 import { $, cd } from "npm:zx@7"
 import { getEnv } from "../src/utils.ts"
 
-const { homePath, configsPath } = getEnv("")
-const absoluteConfigsPath = configsPath.replace(homePath + "/", "") + "/"
+const { basePath, configsPath } = getEnv("")
+const absoluteConfigsPath = configsPath.replace(basePath + "/", "") + "/"
 
 export const target = "self"
 
 export async function update() {
-  await cd(homePath)
+  await cd(basePath)
   // Determine updated files before pulling
   const updatedFiles = (await $`git fetch --quiet && git diff --name-only @ @{u}`.quiet()).stdout.split("\n").filter(Boolean)
   // Update repo

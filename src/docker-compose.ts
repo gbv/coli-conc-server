@@ -10,7 +10,7 @@ const { uid, gid, homePath, dataPath, configsPath, secretsPath } = getEnv("")
 // Set environment for `docker compose` calls
 process.env.UID = uid
 process.env.GID = gid
-process.env.HOME = homePath
+process.env.BASE = homePath
 process.env.DATA = dataPath
 process.env.CONFIGS = configsPath
 process.env.SECRETS = secretsPath

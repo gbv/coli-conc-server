@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-env --allow-read --allow-run --allow-sys --ext=ts --lock=${HOME}/src/deno.lock
+#!/usr/bin/env -S deno run --allow-env --allow-read --allow-run --allow-sys --ext=ts --lock=${COLI_CONC_BASE}/src/deno.lock
 
 /**
  * Script to manage data in jskos-server instances.

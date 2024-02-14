@@ -117,7 +117,10 @@ if ! shopt -oq posix; then
 fi
 
 # ~/bin path for `srv` and `data` scripts
-PATH=$HOME/bin:$PATH
+if [ -z "$COLI_CONC_BASE" ]; then
+    COLI_CONC_BASE=$HOME
+fi
+PATH=$COLI_CONC_BASE/bin:$PATH
 
 # Docker Stuff
 PATH=/usr/bin:$PATH

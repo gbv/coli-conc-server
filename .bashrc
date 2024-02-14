@@ -118,7 +118,7 @@ fi
 
 # ~/bin path for `srv` and `data` scripts
 if [ -z "$COLI_CONC_BASE" ]; then
-    COLI_CONC_BASE=$HOME
+    export COLI_CONC_BASE=$HOME
 fi
 PATH=$COLI_CONC_BASE/bin:$PATH
 

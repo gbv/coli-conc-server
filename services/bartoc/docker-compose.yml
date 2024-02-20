@@ -2,7 +2,7 @@ version: "3"
 
 services:
   bartoc:
-    image: ghcr.io/gbv/bartoc.org:1
+    image: ghcr.io/gbv/bartoc.org:main
     networks:
       - nginx
       - mongo

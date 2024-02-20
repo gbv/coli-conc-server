@@ -47,8 +47,13 @@
     "read": {
       "auth": false
     },
-    "create": false,
-    "update": false
+    "create": {
+      "auth": true
+    },
+    "update": {
+      "auth": true,
+      "crossUser": true
+    }
   },
   "namespace": "579e7365-32bb-4a30-9e22-fd559c70af45"
 }

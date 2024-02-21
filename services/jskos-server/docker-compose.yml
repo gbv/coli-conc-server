@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  jskos-server:
+    image: ghcr.io/gbv/jskos-server:2
+    networks:
+      - nginx
+      - mongo
+    volumes:
+      - $CONFIGS/jskos-server.json:/config/config.json
+    environment:
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_PATH=/api/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  nginx:
+    external: true
+    name: nginx
+  mongo:
+    external: true
+    name: mongo

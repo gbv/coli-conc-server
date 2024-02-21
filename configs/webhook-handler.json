@@ -16,6 +16,17 @@
     },
     {
       "repository": "gbv/jskos-server",
+      "command": "srv update jskos-server",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "master",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
+      "repository": "gbv/jskos-server",
       "command": "srv update jskos-server-dev",
       "event": "workflow_run",
       "action": "completed",

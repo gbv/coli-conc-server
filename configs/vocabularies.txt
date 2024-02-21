@@ -1,0 +1,86 @@
+# This file lists vocabularies and their data
+# that should be imported into our jskos-server instances.
+
+# Format:
+# jskos-server-instance   vocabulary-uri-or-path          concept-data-url-or-path  [concept-data-url-or-path ...]
+
+# Example:
+# jskos-server  http://bartoc.org/en/node/1043      thema/thema-concepts-1.4.ndjson
+
+### Main instance ###
+
+# Import scheme entries for all coli-conc vocabularies (so that they are supported by mappings and concordances)
+jskos-server    https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18926&limit=500
+
+jskos-server    http://bartoc.org/en/node/520       dfg/dfg-2020.concepts.ndjson
+jskos-server    http://bartoc.org/en/node/730       bos/bos-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/742       oesoeb/oesoeb-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1339      htwg/htwg-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1042      fos/fos-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1043      thema/thema-concepts-1.4.ndjson
+jskos-server    http://bartoc.org/en/node/1050      skj/skj-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1094      oefos/oefos-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1232      nomenclature/nomenclature.concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1324      seb/seb-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1822      nomisma/nomisma-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1986      mv/mv-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/18797     ixtheo/ixtheo.ndjson
+jskos-server    http://bartoc.org/en/node/18915     zdb-fgs/zdb-fgs-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/18920     hochschulfaechersystematik/faechersystematik.concepts.ndjson
+jskos-server    http://bartoc.org/en/node/18928     ssg/ssg-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20049     sdnb/sdnb-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20298     nsk/fachgruppen.ndjson nsk/sachschluessel.ndjson
+jskos-server    http://bartoc.org/en/node/20400     bc/bc-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20404     retrohab/retrohab-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20405     gessner/gessner-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20406     brunfels/brunfels-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20407     thuana/thuana-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20430     obv/obv-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20050     fkdigbib/fkdigbib-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1051      ssd/ssd-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/743       essb/essb-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20446     fivs/fivs-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20447     fivr/fivr-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/220       bssc/bssc-concepts.ndjson
+
+# DDC German
+# TODO: Use jskos-data path if possible
+jskos-server    http://bartoc.org/en/node/241       /home/stefanp/ddc/ddc_23_de_2018-07-04_no-notes.ndjson
+
+# MSC 2010+2020
+jskos-server    http://bartoc.org/en/node/20396     msc2020/msc2020-concepts_neu.ndjson
+
+# TODO: Can we handle MSC2020 via BARTOC as well? I think there was an issue with overlapping URIs.
+jskos-server    http://bartoc.org/en/node/474             msc2010/msc2010.ndjson
+jskos-server    msc2020/msc2020-scheme.json    msc2020/msc2020-concepts.ndjson
+
+# GND - scheme data only
+jskos-server    http://bartoc.org/en/node/430
+# BK - scheme data only
+jskos-server    http://bartoc.org/en/node/18785
+# RVK - scheme data only
+jskos-server    http://bartoc.org/en/node/533
+# Wikidata - scheme data only
+jskos-server    http://bartoc.org/en/node/1940
+# STW - scheme data only
+jskos-server    http://bartoc.org/en/node/313
+# EuroVoc - scheme data only
+jskos-server    http://bartoc.org/en/node/15
+# Iconclass - scheme data only
+jskos-server    http://bartoc.org/en/node/459
+# LSCH - scheme data only
+jskos-server    http://bartoc.org/en/node/454
+# LCNAF - scheme data only
+jskos-server    http://bartoc.org/en/node/18536
+
+# TODO: SDNB vs. DDC Sachgruppen. SDNB concepts have the latter as scheme URI.
+jskos-server    http://bartoc.org/en/node/20049     sdnb/sdnb-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/18497
+
+### RVK ###
+jskos-server-rvk  http://bartoc.org/en/node/533     rvk/2022_3/rvko_2022_3.ndjson
+
+### Dev ###
+
+# Import scheme entries for all coli-conc vocabularies (so that they are supported by mappings and concordances)
+jskos-server-dev    https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18926&limit=500

@@ -1,7 +1,14 @@
-#!/usr/bin/env -S deno run --allow-env --allow-read --allow-run --allow-sys --ext=ts --lock=${COLI_CONC_BASE}/src/deno.lock
+#!/usr/bin/env -S deno run --allow-env --allow-read --allow-run --allow-net --allow-sys --ext=ts --lock=${COLI_CONC_BASE}/src/deno.lock
 
 /**
  * Script to manage data in jskos-server instances.
+ */
+
+/**
+ * TODOs:
+ * - Support .env files for determining baseUrl (currently not important)
+ * - Fix issue with reset requiring confirmation for every single entry
+ * - Add filtering
  */
 
 Deno.env.set("FORCE_COLOR", "2")
@@ -18,12 +25,9 @@ const flags = parseArgs(Deno.args, {
     "reset": "r",
     "data": "d",
   },
-  default: {
-    "data": "atasda",
-  },
 })
 
-const [command, target, ...args]: string[] = flags._
+const [command, target]: string[] = flags._
 
 const availableCommands = [
   "import",
@@ -34,6 +38,10 @@ const availableCommands = [
 import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
 import { getEnv } from "../src/utils.ts"
 const { servicePath, targetPath, uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv(target)
+
+if (!flags.data) {
+  flags.data = `${configsPath}/vocabularies.txt`
+}
 
 // Set environment for `docker compose` calls
 import process from "node:process"
@@ -111,6 +119,9 @@ const targetService = availableTargets.find(t => t.name === target)
 
 if (targetService) {
   // ##### Run import/reset script for a particular instance of JSKOS Server #####
+  // Forward all arguments after target
+  const [,, ...args] = Deno.args.slice(Deno.args.findIndex(arg => arg === target) - 1)
+
   console.log(`Running ${command} script for ${targetService.name} (Docker service ${targetService.service}) with params:`)
   args.forEach(arg => console.log(`    ${arg}`))
   
@@ -130,7 +141,7 @@ if (targetService) {
   
   await cd(targetPath)
   try {
-    await $`docker compose run ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
+    await $`docker compose run -it ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
   } catch (error) {
     console.error()
     console.error(`An error occurred during import attempt. Details should be in the output above. (exit code: ${error.exitCode})`)
@@ -143,6 +154,112 @@ if (targetService) {
   Deno.exit(1)
 } else {
   // ##### Run import script that uses config/vocabularies.txt as data basis #####
-  console.warn("Warning: data import (without service) is not yet implemented.")
-  Deno.exit(0)
+  const shouldProceed = confirm("data import (without target) is not fully implemented yet, particularly the filtering option. Continue anyway?")
+  if (!shouldProceed) {
+    Deno.exit(0)
+  }
+
+  const jskosDataPath = `${dataPath}/jskos-data`
+
+  // TODO: Reset script will currently always ask for confirmation. Using `yes` or `stdin.write` do not work.
+  // if (flags.reset && !flags.g) {
+  //   const shouldProceed = confirm("Are you sure you want to reset all vocabularies? There will be no further confirmation.")
+  //   if (!shouldProceed) {
+  //     console.log("Exiting...")
+  //     Deno.exit(0)
+  //   }
+  // }
+
+  const data = (await Deno.readTextFile(flags.data))
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line && !line.startsWith("#"))
+    .map(line => {
+      const lineParts = line.split(/\s+/)
+      for (let i = 1; i < lineParts.length; i += 1) {
+        if (!lineParts[i].startsWith("/") && !lineParts[i].startsWith("http://") && !lineParts[i].startsWith("https://")) {
+          lineParts[i] = `${jskosDataPath}/${lineParts[i]}`
+        }
+      }
+      const [target, scheme, ...conceptPaths] = lineParts
+      return {
+        target,
+        scheme,
+        conceptPaths,
+      }
+    })
+
+  for (let { target, scheme, conceptPaths } of data) {
+    console.log(`==================== Importing ${scheme} into ${target} ====================`)
+    console.log("Target:", target)
+    console.log("Scheme URL/URI:", scheme)
+    if (conceptPaths.length) {
+      console.log("Concept paths/URLs:")
+      conceptPaths.forEach(path => console.log(`- ${path}`))
+    }
+    console.log("Force:", flags.force)
+    console.log("Reset:", flags.reset)
+    console.log()
+    const targetService = availableTargets.find(t => t.name === target)
+    if (!targetService) {
+      console.error(`Error: Target with name \`${target}\` does not exist, skipping.\n`)
+      continue
+    }
+    let uri
+    if (scheme.startsWith("http://bartoc.org")) {
+      uri = scheme
+      scheme = `https://bartoc.org/api/data?uri=${uri}`
+    }
+    if (flags.reset && uri) {
+      await $`data reset ${target} -s ${uri}`
+    }
+    await $`data import ${target} scheme ${scheme}`
+
+    // Check if concepts exist already
+    if (uri && !flags.force && !flags.reset && conceptPaths.length) {
+      const baseUrl = await getBaseUrlForTarget(target)
+      if (!baseUrl) {
+        console.warn(`Warning: Can't check whether concepts for ${uri} in ${target} exist. Importing anyway.`)
+      } else {
+        const response = await fetch(`${baseUrl}/voc?uri=${encodeURIComponent(uri)}`)
+        const json = await response.json()
+        if (json?.[0]?.concepts?.length > 0) {
+          console.warn(`Concept data for ${uri} already exists. Run script with -f to import anyway.`)
+          continue
+        }
+      }
+    }
+
+    for (const path of conceptPaths) {
+      await $`data import ${target} concepts ${path}`
+    }
+
+    console.log()
+  }
+}
+
+async function getBaseUrlForTarget(target: string) {
+  // TODO: Support .env files as well
+  const possiblePaths = [
+    `${configsPath}/${target}.json`,
+    `${configsPath}/${target}/config.json`,
+    `${configsPath}/${target}/jskos-server.json`,
+  ]
+  for (const path of possiblePaths) {
+    try {
+      const config = JSON.parse(await Deno.readTextFile(path))
+      let baseUrl = config.baseUrl
+      if (!baseUrl) {
+        console.error(`getBaseUrlForTarget: Read config file at ${path}, but it does not contain baseUrl`)
+        continue
+      }
+      if (!baseUrl.endsWith("/")) {
+        baseUrl += "/"
+      }
+      return baseUrl
+    } catch (_error) {
+      // Ignore
+    }
+  }
+  return null
 }

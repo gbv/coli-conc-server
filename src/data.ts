@@ -18,12 +18,14 @@ import { $, cd } from "npm:zx@7"
 
 const flags = parseArgs(Deno.args, {
   boolean: ["help", "force", "reset"],
-  string: ["d"],
+  string: ["d", "t", "s"],
   alias: {
     "help": "h",
     "force": "f",
     "reset": "r",
     "data": "d",
+    "target": "t",
+    "scheme": "s",
   },
 })
 
@@ -88,12 +90,13 @@ if (flags.help) {
     reset     Runs the reset script; requires <service> parameter
 
   Options:
-    -h, --help        Shows this help output
+    -h, --help              Shows this help output
     The following options only apply when running \`data import\` without a service:
-    -d, --data <file> Specify alternative data file
-    -f, --force       Force import even if data already exists
-    -r, --reset       Reset a vocabulary's concept data before importing
-    -g <filter>       A grep filter used on vocabularies.txt
+    -d, --data <file>       Specify alternative data file
+    -f, --force             Force import even if data already exists
+    -r, --reset             Reset a vocabulary's concept data before importing
+    -t, --target <target>   Filter by target instance
+    -s, --scheme <uri>      Filter by scheme URI
 `)
   Deno.exit(0)
 }
@@ -154,10 +157,13 @@ if (targetService) {
   Deno.exit(1)
 } else {
   // ##### Run import script that uses config/vocabularies.txt as data basis #####
-  const shouldProceed = confirm("data import (without target) is not fully implemented yet, particularly the filtering option. Continue anyway?")
+  const shouldProceed = confirm("data import (without target) is not fully implemented yet. Continue anyway?")
   if (!shouldProceed) {
     Deno.exit(0)
   }
+  console.log()
+
+  console.log(`Importing vocabularies from ${flags.data} file (target instance: ${flags.target || "all"}, scheme URI: ${flags.scheme || "all"})...`)
 
   const jskosDataPath = `${dataPath}/jskos-data`
 
@@ -187,6 +193,14 @@ if (targetService) {
         scheme,
         conceptPaths,
       }
+    }).filter(({ target, scheme }) => {
+      if (flags.target && target !== flags.target) {
+        return false
+      }
+      if (flags.scheme && scheme !== flags.scheme) {
+        return false
+      }
+      return true
     })
 
   for (let { target, scheme, conceptPaths } of data) {
@@ -235,6 +249,10 @@ if (targetService) {
     }
 
     console.log()
+  }
+
+  if (!data.length) {
+    console.log(`No entries found that match given filters.`)
   }
 }
 

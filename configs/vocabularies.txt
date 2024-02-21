@@ -42,6 +42,7 @@ jskos-server    http://bartoc.org/en/node/743       essb/essb-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20446     fivs/fivs-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20447     fivr/fivr-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/220       bssc/bssc-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20429     mismatch/mismatch-concepts.json
 
 # DDC German
 # TODO: Use jskos-data path if possible
@@ -84,3 +85,4 @@ jskos-server-rvk  http://bartoc.org/en/node/533     rvk/2022_3/rvko_2022_3.ndjso
 
 # Import scheme entries for all coli-conc vocabularies (so that they are supported by mappings and concordances)
 jskos-server-dev    https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18926&limit=500
+jskos-server-dev    http://bartoc.org/en/node/20429     mismatch/mismatch-concepts.json

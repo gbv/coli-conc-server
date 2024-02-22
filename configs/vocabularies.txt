@@ -43,6 +43,7 @@ jskos-server    http://bartoc.org/en/node/20446     fivs/fivs-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20447     fivr/fivr-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/220       bssc/bssc-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20429     mismatch/mismatch-concepts.json
+jskos-server    http://bartoc.org/en/node/1707      ulbb/ulbb-concepts.ndjson
 
 # DDC German
 # TODO: Use jskos-data path if possible

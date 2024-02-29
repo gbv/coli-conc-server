@@ -7,13 +7,13 @@ const flags = {
 function isValidFlag(k: string): k is keyof typeof flags {
   return k in flags
 }
-const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status", "configtest", "exec"]
+const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status", "configtest", "exec", "run"]
 let command = "", target = "", argsError = ""
 const additionalArgs: string[] = []
 
 // Check arguments
 for (let arg of Deno.args) {
-  if (command === "exec" && target) {
+  if (["exec", "run"].includes(command) && target) {
     additionalArgs.push(arg)
   } else if (arg.startsWith("--")) {
     arg = arg.slice(2)
@@ -67,6 +67,7 @@ if (flags.help || argsError) {
     update    Updates a service (via Git repo or Docker Compose)
     logs      Shows log output for a service
     exec      Runs \`docker compose exec\` for a specific Docker Compose service
+    run       Runs \`docker compose run\` for a specific Docker Compose service
 `)
 }
 if (flags.help) {

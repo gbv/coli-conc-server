@@ -130,6 +130,16 @@ As building the old versions can take quite a lot of time, it is recommended tha
 srv exec bartoc -it bartoc bash setup.sh
 ```
 
+### jskos-data
+
+```sh
+srv init jskos-data
+# To build all vocabularies:
+srv run jskos-data -it jskos-data /usr/src/app/build.ts
+# To build some vocabularies:
+srv run jskos-data -it jskos-data /usr/src/app/build.ts bk rvk
+```
+
 ## Others
 
 ### Docker "Error response from daemon"

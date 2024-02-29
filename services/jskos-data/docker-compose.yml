@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  jskos-data:
+    image: ghcr.io/gbv/jskos-data
+    volumes:
+      - $DATA/jskos-data:/jskos-data
+    restart: no

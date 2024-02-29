@@ -1,0 +1,15 @@
+{
+  "baseUrl": "https://coli-conc.gbv.de/rvk/api/",
+  "title": "JSKOS Server RVK",
+  "proxies": ["193.174.240.246", "193.174.240.247"],
+  "mongo": {
+    "host": "mongo",
+    "db": "jskos-server-rvk"
+  },
+  "schemes": true,
+  "concepts": true,
+  "mappings": false,
+  "annotations": false,
+  "verbosity": "warn",
+  "namespace": "caa4a23e-6095-44a0-85c2-5050ba04c51f"
+}

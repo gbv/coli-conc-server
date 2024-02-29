@@ -80,7 +80,7 @@ jskos-server    http://bartoc.org/en/node/20049     sdnb/sdnb-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/18497
 
 ### RVK ###
-jskos-server-rvk  http://bartoc.org/en/node/533     rvk/2022_3/rvko_2022_3.ndjson
+jskos-server-rvk  http://bartoc.org/en/node/533     rvk/2023_4/rvko_2023_4.ndjson
 
 ### Dev ###
 

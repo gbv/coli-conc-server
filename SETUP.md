@@ -130,6 +130,18 @@ As building the old versions can take quite a lot of time, it is recommended tha
 srv exec bartoc -it bartoc bash setup.sh
 ```
 
+### JSKOS Server
+
+Database indexes need to be prepared for all JSKOS server instances:
+
+```sh
+data import jskos-server --indexes
+data import jskos-server-dev --indexes
+data import jskos-server-rvk --indexes
+data import jskos-server-test --indexes
+data import jskos-server-ccmapper --indexes
+```
+
 ### jskos-data
 
 ```sh

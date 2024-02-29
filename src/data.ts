@@ -182,6 +182,8 @@ if (targetService) {
     .filter(line => line && !line.startsWith("#"))
     .map(line => {
       const lineParts = line.split(/\s+/)
+      // Keep original parts
+      const [_target, _scheme, ..._conceptPaths] = lineParts
       for (let i = 1; i < lineParts.length; i += 1) {
         if (!lineParts[i].startsWith("/") && !lineParts[i].startsWith("http://") && !lineParts[i].startsWith("https://")) {
           lineParts[i] = `${jskosDataPath}/${lineParts[i]}`
@@ -189,15 +191,18 @@ if (targetService) {
       }
       const [target, scheme, ...conceptPaths] = lineParts
       return {
+        _target, 
+        _scheme,
+        _conceptPaths,
         target,
         scheme,
         conceptPaths,
       }
-    }).filter(({ target, scheme }) => {
-      if (flags.target && target !== flags.target) {
+    }).filter(({ _target, _scheme }) => {
+      if (flags.target && _target !== flags.target) {
         return false
       }
-      if (flags.scheme && scheme !== flags.scheme) {
+      if (flags.scheme && _scheme !== flags.scheme) {
         return false
       }
       return true

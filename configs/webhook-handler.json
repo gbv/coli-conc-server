@@ -126,7 +126,7 @@
     },
     {
       "repository": "gbv/jskos-data",
-      "command": "srv run jskos-data -it jskos-data /usr/src/app/update.ts",
+      "command": "srv run jskos-data jskos-data /usr/src/app/update.ts",
       "ref": "refs/heads/master",
       "event": "push"
     },

@@ -229,30 +229,34 @@ if (targetService) {
       uri = scheme
       scheme = `https://bartoc.org/api/data?uri=${uri}`
     }
-    if (flags.reset && uri) {
-      await $`data reset ${target} -s ${uri}`
-    }
-    await $`data import ${target} scheme ${scheme}`
 
-    // Check if concepts exist already
-    if (uri && !flags.force && !flags.reset && conceptPaths.length) {
-      const baseUrl = await getBaseUrlForTarget(target)
-      if (!baseUrl) {
-        console.warn(`Warning: Can't check whether concepts for ${uri} in ${target} exist. Importing anyway.`)
-      } else {
-        const response = await fetch(`${baseUrl}/voc?uri=${encodeURIComponent(uri)}`)
-        const json = await response.json()
-        if (json?.[0]?.concepts?.length > 0) {
-          console.warn(`Concept data for ${uri} already exists. Run script with -f to import anyway.`)
-          continue
+    try {
+      if (flags.reset && uri) {
+        await $`data reset ${target} -s ${uri}`
+      }
+      await $`data import ${target} scheme ${scheme}`
+
+      // Check if concepts exist already
+      if (uri && !flags.force && !flags.reset && conceptPaths.length) {
+        const baseUrl = await getBaseUrlForTarget(target)
+        if (!baseUrl) {
+          console.warn(`Warning: Can't check whether concepts for ${uri} in ${target} exist. Importing anyway.`)
+        } else {
+          const response = await fetch(`${baseUrl}/voc?uri=${encodeURIComponent(uri)}`)
+          const json = await response.json()
+          if (json?.[0]?.concepts?.length > 0) {
+            console.warn(`Concept data for ${uri} already exists. Run script with -f to import anyway.`)
+            continue
+          }
         }
       }
-    }
 
-    for (const path of conceptPaths) {
-      await $`data import ${target} concepts ${path}`
+      for (const path of conceptPaths) {
+        await $`data import ${target} concepts ${path}`
+      }
+    } catch (_error) {
+      console.error(`An error occurred with this entry (see above).`)
     }
-
     console.log()
   }
 

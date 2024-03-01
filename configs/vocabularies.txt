@@ -46,8 +46,7 @@ jskos-server    http://bartoc.org/en/node/20429     mismatch/mismatch-concepts.j
 jskos-server    http://bartoc.org/en/node/1707      ulbb/ulbb-concepts.ndjson
 
 # DDC German
-# TODO: Use jskos-data path if possible
-jskos-server    http://bartoc.org/en/node/241       /home/stefanp/ddc/ddc_23_de_2018-07-04_no-notes.ndjson
+jskos-server    http://bartoc.org/en/node/241       ddc/ddc23de.ndjson
 
 # MSC 2010+2020
 jskos-server    http://bartoc.org/en/node/20396     msc2020/msc2020-concepts_neu.ndjson

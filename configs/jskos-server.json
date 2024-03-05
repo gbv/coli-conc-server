@@ -13,16 +13,12 @@
   "verbosity": "warn",
   "namespace": "523c12f0-1de0-4ce2-9d28-e1563e894c69",
   "annotations": {
-    "moderatingIdentities": [
-      "https://github.com/nichtich",
-      "https://github.com/stefandesu",
-      "https://github.com/mfm2015",
-      "https://github.com/pamx",
-      "https://orcid.org/0000-0002-8115-6044",
-      "https://www.wikidata.org/wiki/User:AOKempf",
-      "https://www.wikidata.org/wiki/User:Callmejonah",
-      "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
-    ],
+    "read": {
+      "auth": false
+    },
+    "create": false,
+    "update": false,
+    "delete": false,
     "mismatchTagVocabulary": {
       "uri": "https://uri.gbv.de/terminology/mismatch/"
     }
@@ -31,29 +27,9 @@
     "read": {
       "auth": false
     },
-    "create": {
-      "auth": true
-    },
-    "update": {
-      "auth": true,
-      "crossUser": [
-        "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
-      ]
-    },
-    "delete": {
-      "auth": true,
-      "crossUser": [
-        "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
-      ]
-    },
+    "create": false,
+    "update": false,
+    "delete": false,
     "fromSchemeWhitelist": null,
     "toSchemeWhitelist": null,
     "cardinality": "1-to-n"
@@ -62,36 +38,8 @@
     "read": {
       "auth": false
     },
-    "create": {
-      "auth": true,
-      "identities": [
-        "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
-        "https://github.com/mfm2015"
-      ]
-    },
-    "update": {
-      "auth": true,
-      "crossUser": [
-        "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
-      ]
-    },
-    "delete": {
-      "auth": true,
-      "crossUser": [
-        "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
-      ]
-    }
+    "create": false,
+    "update": false,
+    "delete": false
   }
 }

@@ -1,6 +1,7 @@
 {
   "baseUrl": "https://coli-conc.gbv.de/api/",
   "title": "JSKOS Server",
+  "env": "production",
   "proxies": ["193.174.240.246", "193.174.240.247"],
   "mongo": {
     "host": "mongo",

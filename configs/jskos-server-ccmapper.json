@@ -1,6 +1,7 @@
 {
   "baseUrl": "https://coli-conc.gbv.de/ccmapper/api/",
   "title": "JSKOS Server CCMapper",
+  "env": "production",
   "mongo": {
     "host": "mongo",
     "db": "jskos-server-ccmapper"

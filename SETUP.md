@@ -176,6 +176,17 @@ srv run jskos-data -it jskos-data /usr/src/app/build.ts
 srv run jskos-data -it jskos-data /usr/src/app/build.ts bk rvk
 ```
 
+### Subjects API
+<!-- TODO: Include command to download and extract it as well. -->
+
+First, get the latest kxp-subjects.tsv from https://zenodo.org/records/10477485 and extract it into `~/data/subject-api/`. Then import it:
+
+```sh
+srv exec subjects-api -it subjects-api npm run import -- --full /data/kxp-subjects.tsv
+```
+
+Alternatively, you can copy over the previous database file into `~/data/subject-api/`. Make sure to stop the service before doing this (`srv stop subjects-api`) and start it again when done (`srv start subjects-api`).
+
 ## Others
 
 ### Docker "Error response from daemon"

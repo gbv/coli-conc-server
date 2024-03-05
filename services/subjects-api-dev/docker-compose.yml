@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  subjects-api-dev:
+    image: ghcr.io/gbv/subjects-api:dev
+    volumes:
+      - $DATA/subjects-api-dev:/data
+    environment:
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PORT=3141
+      - VIRTUAL_PATH=/subjects-api-dev/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

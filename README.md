@@ -166,6 +166,10 @@ cat dump.archive | srv exec mongo -iT mongo mongorestore --gzip --nsFrom="name-o
 
 Leave out `--nsFrom` and `--nsTo` if the database name should stay the same. Add `--drop` if you would like to drop the tables before import.
 
+### Access MongoDB from the outside
+
+The MongoDB is not accessible from the outside. However, its port (default port `27017`) is forwarded to `localhost`, so to connect to it from the outside, you could set up an SSH tunnel for port `27017`.
+
 ## Other
 
 ### Folder Structure

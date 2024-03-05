@@ -5,6 +5,7 @@ services:
     image: mongo:7
     volumes:
       - $DATA/mongo:/data/db
+      - $HOME/backup:/backup
     restart: unless-stopped
 
 networks:

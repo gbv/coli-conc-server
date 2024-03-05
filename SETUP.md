@@ -20,10 +20,34 @@ source .bashrc
 ```
 
 ## Some Basic Setup
+With sudo user:
+
 ```sh
 sudo apt install -y curl wget unzip
 # Generate client SSH key if necessary
 ssh-keygen -t rsa -b 4096
+
+# Install mongo-tools needed for MongoDB backup (TODO: Might be able to do this from Docker only)
+MONGOTOOLS=mongodb-database-tools-ubuntu2204-x86_64-100.9.4.deb
+wget https://fastdl.mongodb.org/tools/db/$MONGOTOOLS -O /tmp/$MONGOTOOLS
+sudo apt install /tmp/$MONGOTOOLS
+rm /tmp/$MONGOTOOLS
+```
+
+With user `cocoda`:
+
+```sh
+# Create backup directory (alternative: transfer existing backup repository)
+mkdir ~/backup
+cd ~/backup
+git init .
+# Create log directory (TODO: currently only used for backup log, could be used for more than that)
+mkdir ~/log
+# Setup crontab for backup script
+crontab -e
+# Add line: 
+# 0 * * * * /home/cocoda/scripts/backup.sh >> /home/cocoda/logs/backup.log
+# and save.
 ```
 
 ## Deno

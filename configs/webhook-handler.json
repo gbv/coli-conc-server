@@ -16,7 +16,7 @@
     },
     {
       "repository": "gbv/jskos-server",
-      "command": "srv update jskos-server",
+      "command": "srv update jskos-server; srv update jskos-server-rvk; srv update jskos-server-ccmapper",
       "event": "workflow_run",
       "action": "completed",
       "filter": {

@@ -1,18 +1,21 @@
 {
   "port": 2999,
   "verbosity": "verbose",
+  "delay": 10,
   "webhooks": [
     {
       "repository": "gbv/coli-conc-server",
       "command": "srv update self",
       "ref": "refs/heads/main",
-      "event": "push"
+      "event": "push",
+      "delay": 0
     },
     {
       "repository": "gbv/github-webhook-handler",
       "command": "srv update webhook-handler",
       "event": "release",
-      "action": "released"
+      "action": "released",
+      "delay": 0
     },
     {
       "repository": "gbv/jskos-server",
@@ -128,18 +131,21 @@
       "repository": "gbv/jskos-data",
       "command": "srv run jskos-data jskos-data /usr/src/app/update.ts",
       "ref": "refs/heads/master",
-      "event": "push"
+      "event": "push",
+      "delay": 0
     },
     {
       "repository": "gbv/coli-conc.gbv.de",
       "command": "srv update website",
       "ref": "refs/heads/main",
-      "event": "push"
+      "event": "push",
+      "delay": 0
     },
     {
       "repository": "gbv/cocoda",
       "command": "srv exec cocoda cocoda bash setup.sh",
-      "event": "push"
+      "event": "push",
+      "delay": 0
     }
   ]
 }

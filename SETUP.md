@@ -48,6 +48,10 @@ crontab -e
 # Add line: 
 # 0 * * * * /home/cocoda/scripts/backup.sh >> /home/cocoda/logs/backup.log
 # and save.
+
+# Git setup (required for backup repository)
+git config --global user.email "coli-conc@gbv.de"
+git config --global user.name "coli-conc"
 ```
 
 ## Deno

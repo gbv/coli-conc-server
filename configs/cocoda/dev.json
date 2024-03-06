@@ -9,7 +9,7 @@
       "uri": "http://coli-conc.gbv.de/registry/coli-conc-concepts-dev",
       "status": "https://coli-conc.gbv.de/dev-api/status",
       "notation": [
-        "Jd"
+        "J*"
       ],
       "prefLabel": {
         "en": "JSKOS Server (dev)"
@@ -33,7 +33,7 @@
         }
       ],
       "notation": [
-        "D"
+        "C*"
       ],
       "prefLabel": {
         "de": "Konkordanz-Register (dev)",
@@ -46,6 +46,17 @@
         "de": [
           "Entwicklungs-Konkordanz-Datenbank von coli-conc (Mappings werden um Mitternacht zurückgesetzt!)"
         ]
+      }
+    },
+    {
+      "uri": "http://coli-conc.gbv.de/registry/occurrences",
+      "provider": "OccurrencesApi",
+      "api": "https://coli-conc.gbv.de/subjects-dev/occurrences",
+      "notation": [
+        "CO*"
+      ],
+      "prefLabel": {
+        "en": "Co-Occurrences (dev)"
       }
     }
   ],

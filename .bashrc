@@ -116,23 +116,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# ~/bin path for `srv` and `data` scripts
-if [ -z "$COLI_CONC_BASE" ]; then
-    export COLI_CONC_BASE=$HOME
-fi
-PATH=$COLI_CONC_BASE/bin:$PATH
-
-# Docker Stuff
-PATH=/usr/bin:$PATH
-export DOCKER_HOST="unix:///run/user/$(id -u)/docker.sock"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Deno
-export DENO_INSTALL="$HOME/.deno"
-PATH="$DENO_INSTALL/bin:$PATH"
-
 # Autocompletion for server script
 . ~/bin/autocompletion.sh

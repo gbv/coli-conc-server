@@ -14,9 +14,9 @@ As we are tracking the user's home folder (`/home/cocoda`) with this repository,
 git init
 git remote add origin https://github.com/gbv/coli-conc-server.git
 git fetch
-rm .bashrc
+rm .bashrc .bash_profile
 git checkout -b main --track origin/main
-source .bashrc
+source .bash_profile
 ```
 
 ## Some Basic Setup
@@ -61,7 +61,7 @@ https://docs.deno.com/runtime/manual/getting_started/installation
 curl -fsSL https://deno.land/x/install/install.sh | sh
 ```
 
-Note: Necessary paths are already in `.bashrc`.
+Note: Necessary paths are already in `.bash_profile`.
 
 ## Docker
 
@@ -110,7 +110,7 @@ With user `cocoda`:
 dockerd-rootless-setuptool.sh install
 # => run commands to add subuid/subgid entries for user, then rerun:
 dockerd-rootless-setuptool.sh install
-# Note that .bashrc in this repository already has the corrects paths set, so no changes necessary
+# Note that .bash_profile in this repository already has the corrects paths set, so no changes necessary
 
 systemctl --user start docker
 systemctl --user enable docker

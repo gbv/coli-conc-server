@@ -184,7 +184,7 @@ The MongoDB is not accessible from the outside. However, its port (default port 
 - `secrets/` - [Folder for secrets](./secrets/README.md); its contents (except for `README.md`) are not part of the repo
 - `services/` - Folder for services; one subfolder for each service
 - `src/` - Source code for `srv` script (TypeScript, run with Deno)
-- `.bashrc` - Bash configuration and paths
+- `.bashrc`/`.bash_profile` - Bash configuration and paths
 - `.gitignore` - Files ignored by Git; note that by default, all files are ignored because we expect this repo to be checked out into the home folder
 - `README.md` - The file you are currently reading
 - `SETUP.md` - Server setup instructions

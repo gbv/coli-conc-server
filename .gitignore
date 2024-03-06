@@ -24,6 +24,7 @@
 /services/*/data
 
 !/.bashrc
+!/.bash_profile
 !/.gitignore
 !/README.md
 !/SETUP.md

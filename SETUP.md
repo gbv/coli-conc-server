@@ -46,7 +46,7 @@ mkdir ~/log
 # Setup crontab for backup script
 crontab -e
 # Add line: 
-# 0 * * * * /home/cocoda/scripts/backup.sh >> /home/cocoda/logs/backup.log
+# 0 * * * * /home/cocoda/src/backup.sh >> /home/cocoda/logs/backup.log 2>&1
 # and save.
 
 # Git setup (required for backup repository)

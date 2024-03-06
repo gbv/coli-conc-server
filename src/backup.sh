@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -l
 
 repo=/home/cocoda/backup
 repo_mounted=/backup

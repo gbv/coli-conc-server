@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  jskos-proxy:
+    image: ghcr.io/gbv/jskos-proxy:main
+    environment:
+      - CONFIG=examples/uri.gbv.de
+      - VIRTUAL_HOST=coli-conc.gbv.de,uri.gbv.de
+      - VIRTUAL_PORT=3555
+      - VIRTUAL_PATH=/terminology/
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

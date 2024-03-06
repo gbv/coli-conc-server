@@ -182,6 +182,7 @@ srv run jskos-data -it jskos-data /usr/src/app/build.ts bk rvk
 First, get the latest kxp-subjects.tsv from https://zenodo.org/records/10477485 and extract it into `~/data/subject-api/`. Then import it:
 
 ```sh
+srv init subjects-api
 srv exec subjects-api -it subjects-api npm run import -- --full /data/kxp-subjects.tsv
 ```
 

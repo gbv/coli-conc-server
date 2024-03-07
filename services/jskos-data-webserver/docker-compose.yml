@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  jskos-data-webserver:
+    image: busybox
+    volumes:
+      - $DATA/jskos-data:/var/www/
+    environment:
+      - VIRTUAL_HOST=esx-190.gbv.de
+      - VIRTUAL_PATH=/jskos-data/
+      - VIRTUAL_DEST=/
+    command: httpd -f -h /var/www/
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

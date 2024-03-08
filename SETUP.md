@@ -104,6 +104,9 @@ sudo loginctl enable-linger cocoda
 sudo setcap cap_net_bind_service=ep $(which rootlesskit)
 ```
 
+<!-- TODO: Fix this! -->
+**Note:** For some reason, enabling priviledged ports gets lost (?) after a reboot. The nginx container will refuse to start in that case. To fix it, run `sudo setcap cap_net_bind_service=ep $(which rootlesskit)` again and reboot. 
+
 With user `cocoda`:
 
 ```sh

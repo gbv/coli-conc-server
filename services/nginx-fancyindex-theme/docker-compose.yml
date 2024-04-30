@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  nginx-fancyindex-theme:
+    image: lscr.io/linuxserver/nginx
+    volumes:
+      # nginx www data
+      - $DATA/nginx-fancyindex-theme/Nginx-Fancyindex-Theme-light:/config/www
+      # Required if using fancyindex module
+      - $CONFIGS/nginx-fancyindex-theme.conf:/config/nginx/site-confs/default.conf
+      - $DATA/nginx-fancyindex-theme/Nginx-Fancyindex-Theme-light:/config/Nginx-Fancyindex-Theme-light
+    environment:
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PATH=/Nginx-Fancyindex-Theme-light/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

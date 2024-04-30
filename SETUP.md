@@ -195,6 +195,12 @@ srv exec subjects-api -it subjects-api npm run import -- --full /data/kxp-subjec
 
 Alternatively, you can copy over the previous database file into `~/data/subject-api/`. Make sure to stop the service before doing this (`srv stop subjects-api`) and start it again when done (`srv start subjects-api`).
 
+### nginx-fancyindex-theme
+
+```sh
+git clone https://github.com/stefandesu/Nginx-Fancyindex-Theme.git ~/data/nginx-fancyindex-theme
+```
+
 ## Others
 
 ### Docker "Error response from daemon"

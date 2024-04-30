@@ -242,15 +242,18 @@ version: "3"
 
 services:
   static-test:
-    image: busybox
+    image: lscr.io/linuxserver/nginx
     volumes:
       # Depending on what kind of static files are served and whether they are part of the repo
-      - $CONFIGS/static:/var/www/
+      # nginx www data
+      - $DATA/static-test:/config/www
+      # Required if using fancyindex module
+      - $CONFIGS/nginx-fancyindex-theme.conf:/config/nginx/site-confs/default.conf
+      - $DATA/nginx-fancyindex-theme/Nginx-Fancyindex-Theme-light:/config/Nginx-Fancyindex-Theme-light
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PATH=/test/
       - VIRTUAL_DEST=/
-    command: httpd -f -h /var/www/
     restart: unless-stopped
 
 networks:

@@ -46,6 +46,7 @@ jskos-server    http://bartoc.org/en/node/20429     mismatch/mismatch-concepts.j
 jskos-server    http://bartoc.org/en/node/1707      ulbb/ulbb-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20454     dhb/dhb-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/745       nbc/nbc-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/1644      crm/crm-concepts.ndjson
 
 # DDC German
 jskos-server    http://bartoc.org/en/node/241       ddc/ddc23de.ndjson

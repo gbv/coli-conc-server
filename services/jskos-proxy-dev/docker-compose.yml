@@ -3,6 +3,7 @@ services:
     image: ghcr.io/gbv/jskos-proxy:dev
     environment:
       - CONFIG=uri.gbv.de
+      - BASE=/terminology/
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PORT=3555
       - VIRTUAL_PATH=/terminology/

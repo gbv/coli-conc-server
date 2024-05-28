@@ -168,6 +168,28 @@
       "command": "srv exec cocoda cocoda bash setup.sh",
       "event": "push",
       "delay": 0
+    },
+    {
+      "repository": "gbv/jskos-proxy",
+      "command": "srv update jskos-proxy",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "main",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
+      "repository": "gbv/jskos-proxy",
+      "command": "srv update jskos-proxy-dev",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "dev",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
     }
   ]
 }

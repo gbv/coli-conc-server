@@ -107,6 +107,11 @@ sudo setcap cap_net_bind_service=ep $(which rootlesskit)
 <!-- TODO: Fix this! -->
 **Note:** For some reason, enabling priviledged ports gets lost (?) after a reboot. The nginx container will refuse to start in that case. To fix it, run `sudo setcap cap_net_bind_service=ep $(which rootlesskit)` again and reboot. 
 
+Alternative workaround is to reduce minimum privileged port by adding `net.ipv4.ip_unprivileged_port_start=80` to
+`/etc/sysctl.conf` and run `sudo sysctl --system`.
+
+See also [relevant Docker documentation](https://docs.docker.com/engine/security/rootless/#exposing-privileged-ports).
+
 With user `cocoda`:
 
 ```sh

@@ -150,6 +150,14 @@ sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/secrets
 
 ## Setup For Specific Services
 
+### JSKOS Server
+
+#### Data
+
+```sh
+git clone --depth 1 https://github.com/gbv/jskos-data.git data/jskos-data
+```
+
 ### Cocoda
 
 Cocoda instances are served via [cocoda-versions](https://github.com/gbv/cocoda-versions). It requires a setup step that both initializes and updates the configured Cocoda instances if necessary. To run the setup:

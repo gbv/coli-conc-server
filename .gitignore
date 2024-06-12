@@ -10,6 +10,7 @@
 !/services
 /services/.additional
 !/services/.additional/README.md
+services/webhook-handler
 
 !/configs
 

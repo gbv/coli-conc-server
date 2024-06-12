@@ -51,7 +51,7 @@ services:
     image: marcnuri/port-forward
     restart: unless-stopped
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "host.docker.internal:193.174.240.190"
     environment:
       - REMOTE_HOST=host.docker.internal
 ${Object.keys(proxy).map(key => `      - ${key}=${proxy[key]}`).join("\n")}

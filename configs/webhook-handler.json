@@ -164,6 +164,13 @@
       "delay": 0
     },
     {
+      "repository": "gbv/coli-conc.gbv.de",
+      "command": "srv update website",
+      "ref": "refs/heads/main",
+      "event": "schedule",
+      "delay": 0
+    },
+    {
       "repository": "gbv/cocoda",
       "command": "srv exec cocoda cocoda bash setup.sh",
       "event": "push",

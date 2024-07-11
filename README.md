@@ -32,8 +32,6 @@ Set up the Compose file as usual, but add the additional environment variables `
 Basic example for Cocoda:
 
 ```yml
-version: "3"
-
 services:
   cocoda:
     image: ghcr.io/gbv/cocoda
@@ -238,8 +236,6 @@ srv restart nginx
 In order to serve static files under a certain sub-path, create a new service (e.g. `static-test`) with a `docker-compose.yml` file like this:
 
 ```yml
-version: "3"
-
 services:
   static-test:
     image: lscr.io/linuxserver/nginx

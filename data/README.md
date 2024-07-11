@@ -5,8 +5,6 @@ This folder contains persistent data from containers, such as database files fro
 This folder is exposed as environment variable `$DATA` for Docker Compose files. Usage example:
 
 ```yml
-version: "3"
-
 services:
   mongo:
     image: mongo:7

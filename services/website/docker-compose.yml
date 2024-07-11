@@ -1,4 +1,3 @@
-version: "3"
 services:
   website:
     image: ghcr.io/gbv/coli-conc.gbv.de

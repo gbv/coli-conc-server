@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   wikidata-jskos:
     image: ghcr.io/gbv/wikidata-jskos

@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   bartoc:
     image: ghcr.io/gbv/bartoc.org:main

@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   cocoda:
     image: ghcr.io/gbv/cocoda-versions

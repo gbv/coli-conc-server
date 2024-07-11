@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   jskos-data-webserver:
     image: lscr.io/linuxserver/nginx

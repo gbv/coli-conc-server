@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   coli-rich:
     image: ghcr.io/gbv/coli-rich:main

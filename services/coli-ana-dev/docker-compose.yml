@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   coli-ana-dev:
     image: ghcr.io/gbv/coli-ana:dev

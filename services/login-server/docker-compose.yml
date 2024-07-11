@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   login-server:
     image: ghcr.io/gbv/login-server:0.7

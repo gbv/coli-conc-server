@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   jskos-server:
     image: ghcr.io/gbv/jskos-server:2

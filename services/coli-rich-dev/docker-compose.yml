@@ -8,6 +8,7 @@ services:
       - VIRTUAL_PORT=80
       - VIRTUAL_PATH=/coli-rich/dev/
       - VIRTUAL_DEST=/
+      - BASE=/coli-rich/dev/
     restart: unless-stopped
 
 networks:

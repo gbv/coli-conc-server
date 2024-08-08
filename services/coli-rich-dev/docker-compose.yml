@@ -1,11 +1,11 @@
 services:
   coli-rich-dev:
-    image: ghcr.io/gbv/coli-rich:dev
+    image: ghcr.io/gbv/coli-rich-web
     volumes:
       - $CONFIGS/coli-rich-dev.json:/config/config.json
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
-      - VIRTUAL_PORT=3077
+      - VIRTUAL_PORT=80
       - VIRTUAL_PATH=/coli-rich/dev/
       - VIRTUAL_DEST=/
     restart: unless-stopped

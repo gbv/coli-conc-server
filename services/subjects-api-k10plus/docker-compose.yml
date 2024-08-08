@@ -1,0 +1,11 @@
+services:
+  subjects-api-k10plus:
+    image: ghcr.io/gbv/subjects-api:dev
+    env_file:
+      - $CONFIGS/subjects-api-k10plus.env
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

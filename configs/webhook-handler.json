@@ -150,6 +150,17 @@
       }
     },
     {
+      "repository": "gbv/subjects-api",
+      "command": "srv update subjects-api-k10plus",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "dev",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
       "repository": "gbv/jskos-data",
       "command": "srv run jskos-data jskos-data /usr/src/app/update.ts",
       "ref": "refs/heads/master",

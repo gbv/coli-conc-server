@@ -189,6 +189,13 @@
       "delay": 0
     },
     {
+      "repository": "gbv/coli-rich-web",
+      "command": "srv update coli-rich-dev",
+      "ref": "refs/heads/main",
+      "event": "push",
+      "delay": 0
+    },
+    {
       "repository": "gbv/cocoda",
       "command": "srv exec cocoda cocoda bash setup.sh",
       "event": "push",

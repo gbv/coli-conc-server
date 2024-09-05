@@ -4,8 +4,9 @@ services:
     depends_on:
       - typesense
     volumes:
-      - ./data/config:/config
-      - ./data/cache:/cache
+      # Note that this by default only contains an empty config file + the SQLite cache, so it's in $DATA instead of $CONFIG
+      - $DATA/typesense-suggest/config:/config
+      - $DATA/typesense-suggest/cache:/cache
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PORT=3021
@@ -17,5 +18,5 @@ services:
     image: typesense/typesense:27.0
     entrypoint: sh -c "/opt/typesense-server --data-dir /data --api-key=xyz"
     volumes:
-      - ./data/typesense:/data
+      - $DATA/typesense-suggest/typesense:/data
     restart: unless-stopped

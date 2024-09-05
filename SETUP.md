@@ -150,6 +150,64 @@ sudo setfacl -Rm d:u:cocoda:rwX,u:cocoda:rwX /home/cocoda/secrets
 
 ## Setup For Specific Services
 
+### GitHub Webhook Handler
+
+GitHub webhooks are used to update services automatically whenever a new version is released.
+
+First, in the GitHub page for the service's repository, go to "Settings", then "Webhooks". Click "Add webhook".
+
+- Payload URL: `https://coli-conc.gbv.de/webhook-handler/`
+- Content type: `application/json`
+- Secret: See `secrets/WEBHOOK_HANDLER` on the server (and copy without whitespace)
+
+Depending on the repository, we need the `push` event, `release` event, and/or the `workflow_run` event (under "Let me select individual events." - this is usually used whenever we want to wait for a Docker image to be updated).
+
+Save the webhook.
+
+In `config/webhook-handler.json`, add a new entry under `webhooks`. For webhooks reacting to the push event (usually only if the Docker container manages the application code via Git), add an entry like this:
+
+```json
+{
+  "repository": "gbv/repo-name",
+  "command": "srv update service-name",
+  "ref": "refs/heads/main",
+  "event": "push",
+  "delay": 0
+}
+```
+
+Similar for GitHub releases:
+
+```json
+{
+  "repository": "gbv/repo-name",
+  "command": "srv update service-name",
+  "event": "release",
+  "action": "released",
+  "delay": 0
+}
+```
+
+However, the default cause is that the service only needs to be updated whenever the Docker container is updated (`workflow_run` event). The entry looks like this:
+
+```json
+{
+  "repository": "gbv/repo-name",
+  "command": "srv update service-name",
+  "event": "workflow_run",
+  "action": "completed",
+  "filter": {
+    "body.workflow_run.head_branch": "main",
+    "body.workflow_run.path": ".github/workflows/docker.yml",
+    "body.workflow_run.conclusion": "success"
+  }
+}
+```
+
+This will run the code `srv update service-name` whenever the `docker.yml` workflow in the repo `repo-name` on the `main` branch completed successfully.
+
+To check if a webhook ran as expected, inspect the logs via `srv logs webhook-handler`.
+
 ### JSKOS Server
 
 #### Data

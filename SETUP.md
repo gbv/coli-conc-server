@@ -214,6 +214,16 @@ Alternatively, you can copy over the previous database file into `~/data/subject
 git clone https://github.com/stefandesu/Nginx-Fancyindex-Theme.git ~/data/nginx-fancyindex-theme
 ```
 
+### typesense-suggest
+
+```sh
+srv init typesense-suggest
+# Setup for BK as target
+srv exec typesense-suggest -e CONFIG_FILE=/config/config.json -it typesense-suggest npm run setup "http://bartoc.org/en/node/18785"
+# Setup for RVK as target
+srv exec typesense-suggest -e CONFIG_FILE=/config/config.json -it typesense-suggest npm run setup "http://bartoc.org/en/node/533"
+```
+
 ## Others
 
 ### Docker "Error response from daemon"

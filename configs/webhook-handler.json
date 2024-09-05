@@ -222,6 +222,17 @@
         "body.workflow_run.path": ".github/workflows/docker.yml",
         "body.workflow_run.conclusion": "success"
       }
+    },
+    {
+      "repository": "gbv/typesense-suggest-backend",
+      "command": "srv update typesense-suggest",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "main",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
     }
   ]
 }

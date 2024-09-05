@@ -1,6 +1,8 @@
 services:
   typesense-suggest:
     image: ghcr.io/gbv/typesense-suggest-backend:latest
+    networks:
+      - nginx
     depends_on:
       - typesense
     volumes:
@@ -20,3 +22,8 @@ services:
     volumes:
       - $DATA/typesense-suggest/typesense:/data
     restart: unless-stopped
+
+networks:
+  nginx:
+    external: true
+    name: nginx

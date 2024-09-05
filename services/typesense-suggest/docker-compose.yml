@@ -2,6 +2,7 @@ services:
   typesense-suggest:
     image: ghcr.io/gbv/typesense-suggest-backend:latest
     networks:
+      - default
       - nginx
     depends_on:
       - typesense
@@ -18,12 +19,15 @@ services:
 
   typesense:
     image: typesense/typesense:27.0
+    networks:
+      - default
     entrypoint: sh -c "/opt/typesense-server --data-dir /data --api-key=xyz"
     volumes:
       - $DATA/typesense-suggest/typesense:/data
     restart: unless-stopped
 
 networks:
+  default:
   nginx:
     external: true
     name: nginx

@@ -1,5 +1,5 @@
 services:
-  jskos-data-webserver:
+  rvk-data-webserver:
     image: lscr.io/linuxserver/nginx
     volumes:
       # nginx www data
@@ -8,7 +8,7 @@ services:
       - $CONFIGS/nginx-fancyindex-theme.conf:/config/nginx/site-confs/default.conf
       - $DATA/nginx-fancyindex-theme/Nginx-Fancyindex-Theme-light:/config/Nginx-Fancyindex-Theme-light
     environment:
-      - VIRTUAL_HOST=esx-190.gbv.de
+      - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PATH=/rvk/data/
       - VIRTUAL_DEST=/
     restart: unless-stopped

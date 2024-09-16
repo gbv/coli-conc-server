@@ -1,6 +1,6 @@
 services:
   login-server:
-    image: ghcr.io/gbv/login-server:0.7
+    image: ghcr.io/gbv/login-server:0.8
     networks:
       - default
       - nginx

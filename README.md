@@ -149,6 +149,22 @@ data import jskos-server schemes my-schemes.ndjson
 data import jskos-server concordances "https://coli-conc.gbv.de/api/concordances/rvk-ddc-4"
 ```
 
+In general, vocabulary data for import into one of the JSKOS Server instances should be defined in `configs/vocabularies.txt` in this repository. Running `data import` without the `<service>` parameter then uses this list for importing the data:
+
+```sh
+# This imports all of the defined vocabularies. Only new data will be imported.
+data import
+# This will force all concept data to be imported, even if it already exists.
+# Note that existing concepts will be overridden, but if a concept exists in the database, but not in the new data, it will not be deleted.
+data import -f
+# This RESETS all concept data before import (confirmation needed). It is recommended to run this command only with options `-t` and `-s`.
+data import -r
+# Resets and reimports all data for vocabulary `http://bartoc.org/en/node/1707` in the target instance `jskos-server`.
+data import -t jskos-server -s http://bartoc.org/en/node/1707 -r
+```
+
+Data import is currently not integrated with any webhooks and needs to be manually triggered.
+
 ## Data Management for MongoDB
 The easiest way to dump and restore data with MongoDB running in Docker is using a single-file archive via `--archive`.
 

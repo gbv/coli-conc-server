@@ -1,5 +1,5 @@
 services:
-  jskos-server:
+  jskos-server-test:
     image: ghcr.io/gbv/jskos-server:2
     networks:
       - nginx

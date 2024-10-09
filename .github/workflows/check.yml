@@ -1,0 +1,14 @@
+
+name: Check
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
+    - run: ./src/check.ts

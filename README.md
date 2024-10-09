@@ -66,6 +66,13 @@ As for environment variables, you can either set them directly in the compose fi
 
 Later entries override earlier entries. You can check the resulting compose file by running `srv configtest my-service`.
 
+**Things to note before committing a new or edited service:**
+
+- Make sure the service name is unique. Duplicate names can cause issues with the reverse proxy.
+  - You can run `./src/check.ts` to check for this issue.
+- Make sure all services that need to be accessible via the proxy are in the correct (nginx) network.
+- Ideally, set up a local test environment to check whether things work before actually committing a change.
+
 ### Initialize, Start, Stop, Restart, or Update a Service
 The first time a service is run, it usually needs to be initialize to pull all dependencies:
 

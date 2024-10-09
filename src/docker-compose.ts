@@ -20,14 +20,14 @@ export async function init() {
   await start()
 }
 export async function start() {
-  await $`docker compose up -d`
+  await $`docker compose up -d --remove-orphans`
 }
 export async function status() {
   await $`docker compose ps`
 }
 export async function restart() {
   await $`docker compose stop`
-  await $`docker compose up -d`
+  await $`docker compose up -d --remove-orphans`
 }
 export async function stop() {
   await $`docker compose stop`

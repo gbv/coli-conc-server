@@ -8,9 +8,15 @@ services:
       - $CONFIGS/bartoc-dev:/config
     environment:
       - BASE_URL=https://dev.bartoc.org/
-      - VIRTUAL_HOST=dev.bartoc.org
-      - VIRTUAL_PATH=/
-      - VIRTUAL_DEST=/
+      - |
+        VIRTUAL_HOST_MULTIPORTS=
+          dev.bartoc.org:
+            "/":
+              port: 80
+              dest: "/"
+            "/api/":
+              port: 3000
+              dest: "/"
     restart: unless-stopped
 
 networks:

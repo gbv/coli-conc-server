@@ -10,9 +10,15 @@ services:
       - $DATA/bartoc/reports:/usr/src/app/bartoc/data/reports
     environment:
       - BASE_URL=https://bartoc.org/
-      - VIRTUAL_HOST=bartoc.org
-      - VIRTUAL_PATH=/
-      - VIRTUAL_DEST=/
+      - |
+        VIRTUAL_HOST_MULTIPORTS=
+          bartoc.org:
+            "/":
+              port: 80
+              dest: "/"
+            "/api/":
+              port: 3000
+              dest: "/"
     restart: unless-stopped
 
 networks:

@@ -1,7 +1,13 @@
 {
   "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/nfdi4objects/",
   "title": "NFDI4Objects Mapping-Editor",
-  "logo": "https://graph.nfdi4objects.net/static/nfdi4objects-logo.png",
+  "logos": [
+    { 
+      "file": "https://graph.nfdi4objects.net/static/nfdi4objects-logo.png",
+      "alt": "NFDI4Objects",
+      "url": "https://www.nfdi4objects.net/"
+    }
+  ],
   "auth": "https://coli-conc.gbv.de/login/",
   "overrideRegistries": false,
   "registries": [

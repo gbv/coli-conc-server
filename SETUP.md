@@ -226,6 +226,30 @@ srv exec cocoda cocoda bash setup.sh
 
 As building the old versions can take quite a lot of time, it is recommended that you migrate the built instances from the previous server by copying their folders (anything that is a version number) into `data/cocoda/`. If done before running the setup, it will be able to skip building those versions.
 
+#### Static Files
+
+Static files (e.g. a logo) can be mounted into a Cocoda instance. For that, place the file in the folder `configs/cocoda/` and mount in into a specific instance:
+
+```yml
+volumes:
+  # ...
+  - $CONFIGS/cocoda/nfdi4objects-logo.png:/www/cocoda/nfdi4objects/nfdi4objects-logo.png
+```
+
+This file can now be referenced in the configuration file, e.g.
+
+```json
+{
+  "logos": [
+    {
+      "file": "nfdi4objects-logo.png",
+      "alt": "NFDI4Objects",
+      "url": "https://www.nfdi4objects.net/"
+    }
+  ]
+}
+```
+
 ### BARTOC
 
 ```sh

@@ -189,7 +189,7 @@ Leave out `--nsFrom` and `--nsTo` if the database name should stay the same. Add
 
 ### Access MongoDB from the outside
 
-The MongoDB is not accessible from the outside. However, its port (default port `27017`) is forwarded to `localhost`, so to connect to it from the outside, you could set up an SSH tunnel for port `27017`.
+The MongoDB is not accessible from the outside. However, its port (default port `27017`) is forwarded to `localhost`, so to connect to it from the outside, you could set up an SSH tunnel for port `27017`, e.g.: `ssh -NL 27017:localhost:27017 cocoda@your-server`
 
 ## Other
 

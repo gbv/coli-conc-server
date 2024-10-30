@@ -216,6 +216,18 @@ To check if a webhook ran as expected, inspect the logs via `srv logs webhook-ha
 git clone --depth 1 https://github.com/gbv/jskos-data.git data/jskos-data
 ```
 
+#### Update Scripts
+
+Sometimes, a JSKOS Server update includes an upgrade script that runs adjustments on the database. A note about this will show up on in the logs if one is available. You can run it like this:
+
+```sh
+srv exec jskos-server jskos-server npm run upgrade
+```
+
+Run this for all JSKOS Server instances by replacing `jskos-server` with the respective instance name.
+
+<!-- TODO: This should be easier. Maybe there could be a notification if an upgrade is required, and it should be easy to upgrade all instances at once. -->
+
 ### Cocoda
 
 Cocoda instances are served via [cocoda-versions](https://github.com/gbv/cocoda-versions). It requires a setup step that both initializes and updates the configured Cocoda instances if necessary. To run the setup:

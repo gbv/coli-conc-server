@@ -5,8 +5,6 @@ services:
       - $DATA/cocoda:/www/cocoda
       - $CONFIGS/cocoda:/configs
       - $DATA/cocoda.git:/root/cocoda
-      # nfdi4objects logo
-      - $CONFIGS/cocoda/nfdi4objects-logo.png:/www/cocoda/nfdi4objects/nfdi4objects-logo.png
     restart: unless-stopped
     environment:
       - TAGS=all

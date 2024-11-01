@@ -199,7 +199,7 @@
       "repository": "gbv/cocoda",
       "command": "srv exec cocoda cocoda bash setup.sh",
       "event": "push",
-      "delay": 0
+      "delay": 5
     },
     {
       "repository": "gbv/jskos-proxy",

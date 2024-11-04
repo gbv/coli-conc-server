@@ -7,13 +7,13 @@ const flags = {
 function isValidFlag(k) {
   return k in flags
 }
-const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status", "configtest", "exec", "run"]
+const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status", "configtest", "exec", "run", "raw"]
 let command = "", target = "", argsError = ""
 const additionalArgs = []
 
 // Check arguments
 for (let arg of Deno.args) {
-  if (["exec", "run"].includes(command) && target) {
+  if (["exec", "run", "raw"].includes(command) && target) {
     additionalArgs.push(arg)
   } else if (arg.startsWith("--")) {
     arg = arg.slice(2)

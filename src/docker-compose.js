@@ -56,3 +56,6 @@ export async function exec(_target, additionalArgs) {
 export async function run(_target, additionalArgs) {
   await $`docker compose run ${additionalArgs}`.stdio("inherit", "inherit", "inherit")
 }
+export async function raw(_target, additionalArgs) {
+  await $`docker compose ${additionalArgs}`.stdio("inherit", "inherit", "inherit")
+}

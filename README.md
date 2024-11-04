@@ -100,6 +100,8 @@ You can see logs for a service using `srv logs name-of-service`.
 
 To run a `docker compose exec` command for a specific service, you can use `srv exec name-of-service <arguments>`. This is necessary as `srv` defines certain environment variables that are required for running `docker compose` commands. Note that the name of the Compose service will still need to be specified in the argments. (The equivalent for `docker compose run` is `srv run name-of-service`.)
 
+There is also a wrapper around raw `docker compose` commands: `srv raw name-of-service <arguments>`. For example: `srv raw jskos-server ps`
+
 ### Special Service: GitHub Webhook Handler
 [GitHub Webhook Handler](https://github.com/gbv/github-webhook-handler) is used to process webhooks from GitHub in order to update services automatically. It is not run via Docker, but defined as a special service with the name `webhook-handler` and run through Deno. Its repository is pulled on `srv init webhook-handler` and it supports the other commands above as well. It has three configuration files:
 

@@ -23,7 +23,7 @@ _server()
         return 0
     fi
 
-    commands="init start restart stop update logs status configtest exec"
+    commands="init start restart stop update logs status configtest exec run raw"
     COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
 }
 

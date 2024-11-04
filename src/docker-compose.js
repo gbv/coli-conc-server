@@ -25,9 +25,14 @@ export async function start() {
 export async function status() {
   await $`docker compose ps`
 }
-export async function restart() {
-  await $`docker compose stop`
-  await $`docker compose up -d --remove-orphans`
+export async function restart(_target) {
+  const isRunning = !!`${await $`docker compose ps --services --filter "status=running"`.quiet()}`.trim()
+  if (isRunning) {
+    await $`docker compose stop`
+    await $`docker compose up -d --remove-orphans`
+  } else {
+    console.warn(`Service ${_target} is not running. Please start the service: srv start ${_target}`)
+  }
 }
 export async function stop() {
   await $`docker compose stop`

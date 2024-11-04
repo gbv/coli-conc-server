@@ -3,6 +3,7 @@
  */
 
 import { $, cd, fs } from "npm:zx@7"
+import path from "node:path"
 import { getEnv } from "../src/utils.js"
 import * as hooks from "../configs/hooks.js"
 
@@ -36,7 +37,7 @@ export async function update() {
   // Restart affected services
   for (const service of Object.keys(affectedServices)) {
     // Check if service exists
-    if (!await fs.pathExists(fs.join(servicePath, service))) {
+    if (!await fs.pathExists(path.join(servicePath, service))) {
       continue
     }
     console.log(`Restarting ${service} because the following files changed: ${affectedServices[service].files.join(", ")}`)

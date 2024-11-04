@@ -44,7 +44,7 @@ export async function manageAdditionalService(service, action, proxy) {
     }
     // Create or update Docker Compose file in `services/.additional/`
     // TODO: Update extra_hosts, probably by making it configurable
-    const composeFile = `version: "3"
+    const composeFile = `
 services:
   ${service}:
     image: marcnuri/port-forward

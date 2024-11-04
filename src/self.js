@@ -8,7 +8,7 @@ import { getEnv } from "../src/utils.js"
 import * as hooks from "../configs/hooks.js"
 
 const { basePath, configsPath, servicePath } = getEnv("")
-const absoluteConfigsPath = configsPath.replace(basePath + "/", "") + "/"
+const relevantPaths = [configsPath, servicePath].map(path => path.replace(basePath + "/", "") + "/")
 
 export const target = "self"
 
@@ -21,10 +21,11 @@ export async function update() {
   // Determine affected services by update files
   const affectedServices = {}
   for (const file of updatedFiles) {
-    if (!file.startsWith(absoluteConfigsPath)) {
+    const relevantPath = relevantPaths.find(path => file.startsWith(path))
+    if (!relevantPath) {
       continue
     }
-    const filename = file.replace(absoluteConfigsPath, "")
+    const filename = file.replace(relevantPath, "")
     const [, service] = filename.match(/(.*?)[\.|\/]/) || [, filename]
     if (!affectedServices[service]) {
       affectedServices[service] = {

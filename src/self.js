@@ -3,7 +3,7 @@
  */
 
 import { $, cd } from "npm:zx@7"
-import { getEnv } from "../src/utils.ts"
+import { getEnv } from "../src/utils.js"
 
 const { basePath, configsPath } = getEnv("")
 const absoluteConfigsPath = configsPath.replace(basePath + "/", "") + "/"
@@ -17,7 +17,7 @@ export async function update() {
   // Update repo
   await $`git pull`
   // Determine affected services by update files
-  const affectedServices:any = {}
+  const affectedServices = {}
   for (const file of updatedFiles) {
     if (!file.startsWith(absoluteConfigsPath)) {
       continue

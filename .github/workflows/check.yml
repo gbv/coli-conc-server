@@ -11,4 +11,4 @@ jobs:
     - uses: denoland/setup-deno@v1
       with:
         deno-version: v1.x
-    - run: ./src/check.ts
+    - run: ./src/check.js

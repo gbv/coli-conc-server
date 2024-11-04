@@ -1,6 +1,6 @@
 import { $ } from "npm:zx@7"
 
-export function getEnv(target: string) {
+export function getEnv(target) {
   const homePath = Deno.env.get("HOME")
   const basePath = Deno.env.get("COLI_CONC_BASE")
   const servicePath = `${basePath}/services`
@@ -29,8 +29,7 @@ export function getEnv(target: string) {
  * 
  * This is currently only used for `webhook-handler`.
  */
-// deno-lint-ignore no-explicit-any
-export async function manageAdditionalService(service: string, action: string, proxy: any) {
+export async function manageAdditionalService(service, action, proxy) {
   const { servicePath } = getEnv(service)
   const composeFilePath = `${servicePath}/.additional/${service}.yml`
 

@@ -13,11 +13,10 @@
  */
 
 Deno.env.set("FORCE_COLOR", "2")
-import { existsSync } from "https://deno.land/std/fs/mod.ts"
 
 // Determine available targets by reading docker-compose.yml files in service subfolders
 import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
-import { getEnv } from "../src/utils.ts"
+import { getEnv } from "../src/utils.js"
 const { servicePath } = getEnv("")
 
 const serviceNamesToComposeFiles = {}
@@ -32,7 +31,7 @@ for await (const { name, isDirectory } of Deno.readDir(servicePath)) {
     const file = `${servicePath}/${name}/docker-compose.yml`
     const fileShort = file.replace(servicePath, "")
     const compose = parseYaml(await Deno.readTextFile(file))
-    const errors: String[] = []
+    const errors = []
     for (const service of Object.keys(compose?.services || {})) {
       if (serviceNamesToComposeFiles[service]) {
         errors.push(`!!! Service "${service}" is already defined in ${serviceNamesToComposeFiles[service]}`)

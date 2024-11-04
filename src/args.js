@@ -4,12 +4,12 @@ const flags = {
   help: false,
 }
 // Type guard function (https://stackoverflow.com/a/69458280)
-function isValidFlag(k: string): k is keyof typeof flags {
+function isValidFlag(k) {
   return k in flags
 }
 const commands = ["init", "start", "restart", "stop", "update", "log", "logs", "status", "configtest", "exec", "run"]
 let command = "", target = "", argsError = ""
-const additionalArgs: string[] = []
+const additionalArgs = []
 
 // Check arguments
 for (let arg of Deno.args) {

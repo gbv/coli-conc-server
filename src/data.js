@@ -29,7 +29,7 @@ const flags = parseArgs(Deno.args, {
   },
 })
 
-const [command, target]: string[] = flags._
+const [command, target] = flags._
 
 const availableCommands = [
   "import",
@@ -38,7 +38,7 @@ const availableCommands = [
 
 // Determine available targets by reading docker-compose.yml files in service subfolders
 import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
-import { getEnv } from "../src/utils.ts"
+import { getEnv } from "../src/utils.js"
 const { servicePath, targetPath, uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv(target)
 
 if (!flags.data) {
@@ -265,7 +265,7 @@ if (targetService) {
   }
 }
 
-async function getBaseUrlForTarget(target: string) {
+async function getBaseUrlForTarget(target) {
   // TODO: Support .env files as well
   const possiblePaths = [
     `${configsPath}/${target}.json`,

@@ -3,7 +3,7 @@
  */
 
 import { $ } from "npm:zx@7"
-import { getEnv } from "../src/utils.ts"
+import { getEnv } from "../src/utils.js"
 import process from "node:process"
 
 const { uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv("")
@@ -45,9 +45,9 @@ export async function update() {
 export async function configtest() {
   await $`docker compose config`
 }
-export async function exec(_target: string, additionalArgs: string[]) {
+export async function exec(_target, additionalArgs) {
   await $`docker compose exec ${additionalArgs}`.stdio("inherit", "inherit", "inherit")
 }
-export async function run(_target: string, additionalArgs: string[]) {
+export async function run(_target, additionalArgs) {
   await $`docker compose run ${additionalArgs}`.stdio("inherit", "inherit", "inherit")
 }

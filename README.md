@@ -69,7 +69,7 @@ Later entries override earlier entries. You can check the resulting compose file
 **Things to note before committing a new or edited service:**
 
 - Make sure the service name is unique. Duplicate names can cause issues with the reverse proxy.
-  - You can run `./src/check.ts` to check for this issue.
+  - You can run `./src/check.js` to check for this issue.
 - Make sure all services that need to be accessible via the proxy are in the correct (nginx) network.
 - Ideally, set up a local test environment to check whether things work before actually committing a change.
 
@@ -131,13 +131,13 @@ Deno will automatically download and cache all dependency when `srv` is first ru
 In order to cache dependencies ahead of time, run:
 
 ```sh
-cd src; deno cache --reload --lock=deno.lock server.ts
+cd src; deno cache --reload --lock=deno.lock server.js
 ```
 
 In order to update the dependencies (and therefore the lockfile), run:
 
 ```sh
-cd src; deno cache --lock=deno.lock --lock-write server.ts
+cd src; deno cache --lock=deno.lock --lock-write server.js
 ```
 
 Make sure everything still works with the updated dependencies, then commit the updated `deno.lock`.
@@ -197,7 +197,7 @@ The MongoDB is not accessible from the outside. However, its port (default port 
 - `.config/docker/daemon.json` - Docker daemon configuration
 - `bin/`
   - `bin/autocompletion.sh` - Bash autocompletion for `srv` script
-  - `bin/srv` - Symlink for `srv` script (links to `src/server.ts`)
+  - `bin/srv` - Symlink for `srv` script (links to `src/server.js`)
 - `configs/` - [Folder for configuration files](./configs/README.md)
   - `configs/webhook-handler.meta.json` - Proxy configuration for [webhook handler](#special-service-github-webhook-handler)
   - `configs/webhook-handler.json` - Actual configuration for [webhook handler](#special-service-github-webhook-handler)

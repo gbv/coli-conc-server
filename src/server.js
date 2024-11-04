@@ -12,19 +12,18 @@
 
 Deno.env.set("FORCE_COLOR", "2")
 
-import { command, target, additionalArgs } from "../src/args.ts"
+import { command, target, additionalArgs } from "../src/args.js"
 // We override command in "init"
-import { getEnv } from "../src/utils.ts"
+import { getEnv } from "../src/utils.js"
 const { targetPath } = getEnv(target)
 
 import { cd } from "npm:zx@7"
 import { exists } from "https://deno.land/std/fs/mod.ts"
 
-import * as webhookHandler from "../src/webhook-handler.ts"
-import * as dockerCompose from "../src/docker-compose.ts"
-import * as self from "../src/self.ts"
-// deno-lint-ignore no-explicit-any
-let serviceModule: any
+import * as webhookHandler from "../src/webhook-handler.js"
+import * as dockerCompose from "../src/docker-compose.js"
+import * as self from "../src/self.js"
+let serviceModule
 
 if (target === webhookHandler.target) {
   serviceModule = webhookHandler
@@ -49,8 +48,7 @@ if (serviceModule.target !== webhookHandler.target && serviceModule.target !== s
 
 try {
   // ? Does this work correctly?
-  const _command = command as keyof typeof serviceModule
-  const serviceMethod = serviceModule[_command]
+  const serviceMethod = serviceModule[command]
   await serviceMethod(target, additionalArgs)
 } catch (error) {
   console.error(`Command ${command} for ${target} failed:`)

@@ -1,6 +1,6 @@
 /**
  * For initial setup, run with:
- * env UID="$(id -u)" deno run --allow-env --allow-run --allow-sys --allow-read --allow-write src/webhook-handler.ts
+ * env UID="$(id -u)" deno run --allow-env --allow-run --allow-sys --allow-read --allow-write src/webhook-handler.js
  * or easier:
  * srv init webhook-handler
  * 
@@ -10,12 +10,12 @@
  * - We need the port forward Docker container for nginx-proxy
  * - Automatically manage configuration file?
  *   - Might be difficult because we'd need to automatically determine the Git repo for every Docker Container.
- * - Remove support for non-Docker services from server.ts
+ * - Remove support for non-Docker services from server.js
  */
 
 import { $, cd } from "npm:zx@7"
-import { getEnv, manageAdditionalService } from "../src/utils.ts"
-import { readJson } from "../src/json.ts"
+import { getEnv, manageAdditionalService } from "../src/utils.js"
+import { readJson } from "../src/json.js"
 import { exists } from "https://deno.land/std/fs/mod.ts"
 
 export const target = "webhook-handler"

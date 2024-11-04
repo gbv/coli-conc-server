@@ -2,11 +2,11 @@
  * Note: Expects to be in the correct folder (use `cd` from zx).
  */
 
-import { $, cd } from "npm:zx@7"
+import { $, cd, fs } from "npm:zx@7"
 import { getEnv } from "../src/utils.js"
 import * as hooks from "../configs/hooks.js"
 
-const { basePath, configsPath } = getEnv("")
+const { basePath, configsPath, servicePath } = getEnv("")
 const absoluteConfigsPath = configsPath.replace(basePath + "/", "") + "/"
 
 export const target = "self"
@@ -35,6 +35,10 @@ export async function update() {
   }
   // Restart affected services
   for (const service of Object.keys(affectedServices)) {
+    // Check if service exists
+    if (!await fs.pathExists(fs.join(servicePath, service))) {
+      continue
+    }
     console.log(`Restarting ${service} because the following files changed: ${affectedServices[service].files.join(", ")}`)
     try {
       await $`srv restart ${service}`

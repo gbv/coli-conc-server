@@ -4,6 +4,7 @@
 
 import { $, cd } from "npm:zx@7"
 import { getEnv } from "../src/utils.js"
+import * as hooks from "../configs/hooks.js"
 
 const { basePath, configsPath } = getEnv("")
 const absoluteConfigsPath = configsPath.replace(basePath + "/", "") + "/"
@@ -37,7 +38,8 @@ export async function update() {
     console.log(`Restarting ${service} because the following files changed: ${affectedServices[service].files.join(", ")}`)
     try {
       await $`srv restart ${service}`
-      console.log(`→ Successfully restarted ${service}.`)
+      console.log(`→ Successfully restarted ${service}, calling configUpdate hook...`)
+      await hooks.configUpdate({ service, updatedFiles: affectedServices[service].files })
     } catch (_) {
       console.error(`→ Failed to restart ${service}. Maybe automatic name detection failed. Consider adjusting the config file's base name to match its associated service.`)
     }

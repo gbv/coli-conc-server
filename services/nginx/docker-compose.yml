@@ -6,7 +6,7 @@ services:
       - 80:80
     volumes:
       - /run/user/$UID/docker.sock:/tmp/docker.sock:ro
-      - $CONFIGS/nginx-proxy.conf:/etc/nginx/conf.d/nginx-proxy.conf:ro
+      - $CONFIGS/nginx.conf:/etc/nginx/conf.d/nginx-proxy.conf:ro
       - $CONFIGS/nginx/vhost.d:/etc/nginx/vhost.d:ro
     environment:
      - TRUST_DOWNSTREAM_PROXY=true

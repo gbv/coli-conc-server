@@ -5,5 +5,9 @@
   "backend": {
     "provider": "ConceptApi",
     "api": "http://localhost:3000/"
+  },
+  "login": {
+    "api": "bartoc.org/login/",
+    "ssl": true
   }
 }

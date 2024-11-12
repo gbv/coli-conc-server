@@ -7,7 +7,7 @@
   "baseUrl": "https://bartoc.org/api/",
   "auth": {
     "algorithm": "RS256",
-    "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxQ0PM0Ghui5byBAbmgF+\ndVlN6zaenmqOs9Xj/1r+igMoW5WRxpe9FLNlbbJlAVamAjuAL9SsNme1hr/G6I31\nGrpLhhlvF1hxk7n5qP94BueJ1JF8RuFimUtjhPaclm8KsGsw3QrG+fYoY9P1RYbj\ns0ebuY5b46W4cOjSMchWzMYIBPskNI0rHR/UyfV5caWdziVl6eQpLbmwdttwW2hI\no6683Hgzuml0ww3iLRUClMRSHHfpUGZ3D+C0B1EWrMJEe4kkRyenUOV7H+3H1nro\n51EjYpp27pe39bqoVlRn8bgNHab3uiytzWPb6ds896L5CHSYM3VYJ0+UsL7mJEKg\nVQIDAQAB\n-----END PUBLIC KEY-----"
+    "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjXZ51rQgM8+37EtRWT94\nHIpV2B5uJNmnTFP8nu/xw17JYSO6Qo4ZC4jYNq0df6h2y4jnpEQNtehtDWFnvaOh\nEwJdaqvQ/0kzyxiHkCbT243vRhppgKIdMTBQ/RsXLlC1qrzquBVA9xz/okoIkN5x\nhR0WpD2hXSGu4lmB5qYFMGUKGCrHmw5OW2OnSoenMo3EFbRNZ/I0vp4ar2QBrFbA\nxrsQPgUJmWsrMSvrNcd9fDzj3/zpWMN5YtMnmwPNfI76pk+Pz1giEVxJ6PoWlJ2M\n9tGmSkti/CcKq833p0yknkfgPRgiI+5gFK4PEUur1h9gAdgMJ+OOO7QuOHHO7q3i\nSQIDAQAB\n-----END PUBLIC KEY-----"
   },
   "verbosity": "warn",
   "mappings": false,
@@ -16,8 +16,6 @@
   "concepts": true,
   "schemes": {
     "identities": [
-      "https://coli-conc.gbv.de/login/users/c0c1914a-f9d6-4b92-a624-bf44118b6619",
-      "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
       "https://orcid.org/0000-0001-5920-8672",
       "https://orcid.org/0000-0001-7677-4158",
       "https://orcid.org/0000-0001-8796-3923",

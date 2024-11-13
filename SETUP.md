@@ -312,10 +312,8 @@ git clone https://github.com/stefandesu/Nginx-Fancyindex-Theme.git ~/data/nginx-
 
 ```sh
 srv init typesense-suggest
-# Setup for BK as target
-srv exec typesense-suggest -e CONFIG_FILE=/config/config.json -it typesense-suggest npm run setup "http://bartoc.org/en/node/18785"
-# Setup for RVK as target
-srv exec typesense-suggest -e CONFIG_FILE=/config/config.json -it typesense-suggest npm run setup "http://bartoc.org/en/node/533"
+# Setup for specified vocabularies in configuration as targets
+srv exec typesense-suggest -it typesense-suggest npm run setup
 ```
 
 ## Others

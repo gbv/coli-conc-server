@@ -17,6 +17,7 @@ services:
       - VIRTUAL_PORT=3021
       - VIRTUAL_PATH=/test/typesense-suggest-backend/
       - VIRTUAL_DEST=/
+      - CONFIG_FILE=/config/config.json
     restart: unless-stopped
 
   typesense:

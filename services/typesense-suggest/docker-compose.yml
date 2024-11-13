@@ -11,7 +11,7 @@ services:
       - $DATA/typesense-suggest/config:/config
       - $DATA/typesense-suggest/cache:/cache
       # Mount configuration separately
-      - $CONFIG/typesense-suggest.json:/config/config.json
+      - $CONFIGS/typesense-suggest.json:/config/config.json
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PORT=3021

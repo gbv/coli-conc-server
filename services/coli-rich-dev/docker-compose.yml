@@ -9,6 +9,7 @@ services:
       - VIRTUAL_PATH=/coli-rich/dev/
       - VIRTUAL_DEST=/
       - BASE=/coli-rich/dev/
+      - LOGIN=https://coli-conc.gbv.de/login
     restart: unless-stopped
 
 networks:

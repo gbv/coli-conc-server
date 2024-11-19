@@ -5,7 +5,7 @@ services:
       - $CONFIGS/coli-rich-dev.json:/config/config.json
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
-      - VIRTUAL_PORT=80
+      - VIRTUAL_PORT=3454
       - VIRTUAL_PATH=/coli-rich/dev/
       - VIRTUAL_DEST=/
       - BASE=/coli-rich/dev/

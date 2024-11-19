@@ -190,7 +190,7 @@
     },
     {
       "repository": "gbv/coli-rich-web",
-      "command": "srv update coli-rich-web",
+      "command": "srv update coli-rich-dev",
       "event": "workflow_run",
       "action": "completed",
       "filter": {

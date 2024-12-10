@@ -1,8 +1,8 @@
 services:
   coli-rich-dev:
+    # TODO: Adjust tag after we introduced semver to project.
     image: ghcr.io/gbv/coli-rich-web
     volumes:
-      - $CONFIGS/coli-rich-dev.json:/config/config.json
       - $DATA/coli-rich-dev/enrichments:/enrichments
     env_file:
       - $CONFIGS/coli-rich-dev.env

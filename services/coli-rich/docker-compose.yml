@@ -1,0 +1,14 @@
+services:
+  coli-rich:
+    # TODO: Adjust tag after we introduced semver to project.
+    image: ghcr.io/gbv/coli-rich-web
+    volumes:
+      - $DATA/coli-rich/enrichments:/enrichments
+    env_file:
+      - $CONFIGS/coli-rich.env
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: nginx

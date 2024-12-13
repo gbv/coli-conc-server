@@ -43,10 +43,11 @@ cd ~/backup
 git init .
 # Create log directory (TODO: currently only used for backup log, could be used for more than that)
 mkdir ~/log
-# Setup crontab for backup script
-crontab -e
-# Add line: 
+# Setup crontab
+# Add lines:
 # 0 * * * * /home/cocoda/src/backup.sh >> /home/cocoda/logs/backup.log 2>&1
+# 0 0 * * * rm /home/cocoda/data/coli-rich-dev/enrichments/*
+# if required, also add regular pings to the monitoring system
 # and save.
 
 # Git setup (required for backup repository)

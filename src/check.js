@@ -1,4 +1,4 @@
-#!/usr/bin/env -S COLI_CONC_BASE=. deno run --allow-env --allow-read --allow-sys --ext=ts
+#!/usr/bin/env -S COLI_CONC_BASE=. deno run --allow-env --allow-read --allow-sys
 
 /**
  * Checks docker-compose.yml files for issues:

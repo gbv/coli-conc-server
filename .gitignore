@@ -31,3 +31,5 @@ services/webhook-handler
 !/SETUP.md
 
 !.github
+
+!deno*

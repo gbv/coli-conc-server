@@ -15,7 +15,7 @@ Work in progress.
   - [ ] Can we configure our server - safely - so that we can also commit changes right from the server?
 
 ## Dependencies
-- Deno
+- Deno (v2)
 - Docker (rootless)
 
 ## Setup

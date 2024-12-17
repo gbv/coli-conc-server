@@ -212,6 +212,18 @@ The MongoDB is not accessible from the outside. However, its port (default port 
 - `README.md` - The file you are currently reading
 - `SETUP.md` - Server setup instructions
 
+### Docker Troubleshooting
+Some useful Docker commands for troubleshooting:
+
+- `srv configtest <name-of-service>` - show the full Compose project, including expanded environment variables
+- `docker compose ls` - list all running Docker Compose projects/services
+- `docker ps` - list all running Docker containers
+- `srv raw <name-of-service> ps` - list all running containers related to a service (i.e. inside a Docker Compose project)
+  - e.g. `srv raw jskos-server ps`
+- `srv raw <name-of-service> <compose-command>` - runs [Docker Compose commands](https://docs.docker.com/reference/cli/docker/compose/) for a specific service
+  - Note that the `srv` script adds important environment variables without which some commands will not work as expected.
+  - e.g. `srv raw jskos-server restart` (this is different from `srv restart jskos-server` which will run `docker compose stop && docker compose up -d --remove-orphans`)
+
 ### VSCode Setup
 Install the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) and set up the workspace (once) by running the `Deno: Initialize Workspace Configuration` command.
 

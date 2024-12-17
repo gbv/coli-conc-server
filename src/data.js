@@ -12,8 +12,8 @@
  */
 
 Deno.env.set("FORCE_COLOR", "2")
-import { existsSync } from "https://deno.land/std/fs/mod.ts"
-import { parseArgs } from "https://deno.land/std@0.207.0/cli/parse_args.ts"
+import { existsSync } from "jsr:@std/fs@1"
+import { parseArgs } from "jsr:@std/cli@1"
 import { $, cd } from "npm:zx@7"
 
 const flags = parseArgs(Deno.args, {
@@ -37,7 +37,7 @@ const availableCommands = [
 ]
 
 // Determine available targets by reading docker-compose.yml files in service subfolders
-import { parse as parseYaml } from "https://deno.land/std@0.207.0/yaml/mod.ts"
+import { parse as parseYaml } from "jsr:@std/yaml@1"
 import { getEnv } from "../src/utils.js"
 const { servicePath, targetPath, uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv(target)
 

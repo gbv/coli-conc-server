@@ -1,4 +1,4 @@
-import { basename } from "https://deno.land/std/path/mod.ts"
+import { basename } from "jsr:@std/path@1"
 
 const flags = {
   help: false,

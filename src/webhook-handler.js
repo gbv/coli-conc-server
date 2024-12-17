@@ -16,7 +16,7 @@
 import { $, cd } from "npm:zx@7"
 import { getEnv, manageAdditionalService } from "../src/utils.js"
 import { readJson } from "../src/json.js"
-import { exists } from "https://deno.land/std/fs/mod.ts"
+import { exists } from "jsr:@std/fs@1"
 
 export const target = "webhook-handler"
 

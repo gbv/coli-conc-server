@@ -18,7 +18,7 @@ import { getEnv } from "../src/utils.js"
 const { targetPath } = getEnv(target)
 
 import { cd } from "npm:zx@7"
-import { exists } from "https://deno.land/std/fs/mod.ts"
+import { exists } from "jsr:@std/fs@1"
 
 import * as webhookHandler from "../src/webhook-handler.js"
 import * as dockerCompose from "../src/docker-compose.js"

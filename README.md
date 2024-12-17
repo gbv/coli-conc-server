@@ -142,13 +142,14 @@ Deno will automatically download and cache all dependency when `srv` is first ru
 In order to cache dependencies ahead of time, run:
 
 ```sh
-deno install
+deno install --entrypoint src/server.js
 ```
 
 In order to update the dependencies (and therefore the lockfile), run:
 
 ```sh
-deno install --reload
+rm deno.lock
+deno install --entrypoint src/server.js
 ```
 
 Make sure everything still works with the updated dependencies, then commit the updated `deno.lock`.

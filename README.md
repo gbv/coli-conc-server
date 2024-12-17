@@ -1,18 +1,27 @@
 # coli-conc Server
-Home folder, setup, and configuration.
+Home folder, setup, and configuration for [coli-conc](https://coli-conc.gbv.de/) services.
 
 Work in progress.
 
-## To-Dos
-- [ ] SETUP.md: Clarify that two terminals, one with sudo user and one with `cocoda`, are necessary
-- [ ] Add services
-- [ ] Consider extending `data` script to support MongoDB as well (instead of having to run docker compose commands manually)
-- [x] Have webhook-handler restart certain services when their configurations are updated
-  - Currently works by assuming base name (name before first `.`) as service name for config files
-  - [ ] We could run `srv init ...` when a service file is added/updated
-  - [ ] Ideally this would be more fine-grained so that only *running* services are restarted
-- [ ] Test Git cloning instructions
-  - [ ] Can we configure our server - safely - so that we can also commit changes right from the server?
+## Table of Contents
+- [Dependencies](#dependencies)
+- [Setup](#setup)
+- [Service Management](#service-management)
+  - [Define a Docker Compose Service](#define-a-docker-compose-service)
+  - [Initialize, Start, Stop, Restart, or Update a Service](#initialize-start-stop-restart-or-update-a-service)
+  - [Special Service: GitHub Webhook Handler](#special-service-github-webhook-handler)
+  - [`srv` Script Dependencies](#srv-script-dependencies)
+- [Data Management for JSKOS Server Instances](#data-management-for-jskos-server-instances)
+- [Data Management for MongoDB](#data-management-for-mongodb)
+  - [Dump Data](#dump-data)
+  - [Restore Data](#restore-data)
+  - [Access MongoDB from the outside](#access-mongodb-from-the-outside)
+- [Other](#other)
+  - [Folder Structure](#folder-structure)
+  - [Docker Troubleshooting](#docker-troubleshooting)
+  - [VSCode Setup](#vscode-setup)
+  - [Restrict Access via Basic Authentication](#restrict-access-via-basic-authentication)
+  - [Serving Static Files](#serving-static-files)
 
 ## Dependencies
 - Deno (v2)
@@ -68,7 +77,7 @@ Later entries override earlier entries. You can check the resulting compose file
 
 **Things to note before committing a new or edited service:**
 
-- Make sure the service name is unique. Duplicate names can cause issues with the reverse proxy.
+- Make sure the service name is unique. Duplicate names **will cause issues** with the reverse proxy.
   - You can run `./src/check.js` to check for this issue.
 - Make sure all services that need to be accessible via the proxy are in the correct (nginx) network.
 - Ideally, set up a local test environment to check whether things work before actually committing a change.

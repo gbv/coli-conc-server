@@ -1,0 +1,23 @@
+services:
+  login-server-cbs-test:
+    image: ghcr.io/gbv/login-server:0.8
+    networks:
+      - default
+      - nginx
+      - mongo
+    volumes:
+      - $SECRETS/login-server-cbs-test:/config
+      - $DATA/login-server/static:/usr/src/app/static
+    env_file:
+      - $CONFIGS/login-server-cbs-test.env
+      - $SECRETS/login-server-cbs-test.env
+    restart: unless-stopped
+
+networks:
+  default:
+  nginx:
+    external: true
+    name: nginx
+  mongo:
+    external: true
+    name: mongo

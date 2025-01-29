@@ -1,4 +1,15 @@
 {
   "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/app/",
-  "auth": "https://coli-conc.gbv.de/login/"
+  "auth": "https://coli-conc.gbv.de/login/",
+  "searchLinks": [
+    {
+      "prefLabel": {
+        "en": "TIB Hannover OPAC"
+      },
+      "schemeUris": [
+        "http://bartoc.org/en/node/20543"
+      ],
+      "url": "https://opac.tib.eu/DB=1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=sst+fbl%3F+and+(sgb+fbl+{notation}+%3F+or+lsy+{notation})"
+    }
+  ]
 }

@@ -60,17 +60,6 @@
       }
     }
   ],
-  "searchLinks": [
-    {
-      "prefLabel": {
-        "en": "TIB Hannover OPAC"
-      },
-      "schemeUris": [
-        "http://bartoc.org/en/node/20543"
-      ],
-      "url": "https://opac.tib.eu/DB=1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=sst+fbl%3F+and+(sgb+fbl+{notation}+%3F+or+lsy+{notation})"
-    }
-  ],
   "conceptLists": [
     "https://stefandesu.github.io/cocoda-test-lists/kxp-ddc-1000.json"
   ]

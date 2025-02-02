@@ -48,6 +48,7 @@ jskos-server    http://bartoc.org/en/node/20454     dhb/dhb-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/745       nbc/nbc-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/1644      crm/crm-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20543     fbl/fbl-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20536     gov-types/gov-types-concepts.ndjson
 
 # DDC German
 jskos-server    http://bartoc.org/en/node/241       ddc/ddc23de.ndjson
@@ -56,8 +57,8 @@ jskos-server    http://bartoc.org/en/node/241       ddc/ddc23de.ndjson
 jskos-server    http://bartoc.org/en/node/20396     msc2020/msc2020-concepts_neu.ndjson
 
 # TODO: Can we handle MSC2020 via BARTOC as well? I think there was an issue with overlapping URIs.
-jskos-server    http://bartoc.org/en/node/474             msc2010/msc2010.ndjson
-jskos-server    msc2020/msc2020-scheme.json    msc2020/msc2020-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/474       msc2010/msc2010.ndjson
+jskos-server    msc2020/msc2020-scheme.json         msc2020/msc2020-concepts.ndjson
 
 # GND - scheme data only
 jskos-server    http://bartoc.org/en/node/430

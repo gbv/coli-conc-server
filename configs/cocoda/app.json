@@ -10,6 +10,15 @@
         "http://bartoc.org/en/node/20543"
       ],
       "url": "https://opac.tib.eu/DB=1/CMD?ACT=SRCHA&IKT=1016&SRT=YOP&TRM=sst+fbl%3F+and+(sgb+fbl+{notation}+%3F+or+lsy+{notation})"
+    },
+    {
+      "prefLabel": {
+        "de": "Universitätsbibliothek Bonn"
+      },
+      "schemeUris": [
+        "http://bartoc.org/en/node/1707"
+      ],
+      "url": "https://bonnus.ulb.uni-bonn.de/discovery/search?query=lds04,contains,\"{notation}\"&tab=Everything&search_scope=MyInst_and_CI&vid=49HBZ_ULB:DEFAULT"
     }
   ]
 }

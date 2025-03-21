@@ -3,6 +3,9 @@
   "_branch": "dev",
   "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/dev/",
   "auth": "https://coli-conc.gbv.de/login/",
+  "cssProperties": {
+    "color-background-primary": "red"
+  },
   "registries": [
     {
       "provider": "ConceptApi",

@@ -1,0 +1,27 @@
+{
+  "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/ts4nfdi/",
+  "title": "TS4nfdi Mapping-Editor",
+  "logos": [
+    {
+      "file": "ts4nfdi-logo-resized.png",
+      "alt": "TS4nfdi",
+      "url": "https://ts4nfdi.github.io/homepage/"
+    }
+  ],
+  "auth": "https://coli-conc.gbv.de/login/",
+  "overrideRegistries": false,
+  "registries": [
+    {
+      "provider": "ConceptApi",
+      "uri": "http://coli-conc.gbv.de/registry/bartoc",
+      "status": "https://bartoc.org/api/status",
+      "schemes": "https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18961",
+      "notation": [
+        "BARTOC"
+      ],
+      "prefLabel": {
+        "en": "BARTOC API"
+      }
+    }
+  ]
+}

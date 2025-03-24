@@ -4,7 +4,18 @@
   "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/dev/",
   "auth": "https://coli-conc.gbv.de/login/",
   "cssProperties": {
-    "color-background-primary": "red"
+    "color-primary-h": "106",
+    "color-primary-s": "28%",
+    "color-primary-l": "25%", 
+    "color-secondary-h": "13",
+    "color-secondary-s": "83%",
+    "color-secondary-l": "82%", 
+    "color-text-h": "250",
+    "color-text-s": "80%",
+    "color-text-l": "19%",
+    "color-background": "#fce5de",
+    "color-background-component": "#fffff9",
+    "color-background-component-heading": "#f0d5c5"
   },
   "registries": [
     {

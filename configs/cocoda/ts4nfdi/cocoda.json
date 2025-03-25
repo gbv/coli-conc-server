@@ -1,26 +1,199 @@
 {
   "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/ts4nfdi/",
-  "title": "TS4nfdi Mapping-Editor",
+  "title": "TS4NFDI Mapping Editor",
   "logos": [
     {
-      "file": "ts4nfdi-logo-resized.png",
-      "alt": "TS4nfdi",
+      "file": "ts4nfdi-logo.png",
+      "alt": "TS4NFDI",
       "url": "https://ts4nfdi.github.io/homepage/"
     }
   ],
   "auth": "https://coli-conc.gbv.de/login/",
-  "overrideRegistries": false,
+  "overrideRegistries": true,
   "registries": [
     {
       "provider": "ConceptApi",
-      "uri": "http://coli-conc.gbv.de/registry/bartoc",
+      "uri": "http://bartoc.org/en/node/18961",
       "status": "https://bartoc.org/api/status",
       "schemes": "https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18961",
       "notation": [
-        "BARTOC"
+        "NFD4Objects"
       ],
       "prefLabel": {
-        "en": "BARTOC API"
+        "en": "NFDI4Objects Terminologies"
+      }
+    },
+    {
+      "provider": "LocalMappings",
+      "uri": "http://coli-conc.gbv.de/registry/local-mappings",
+      "notation": [
+        "L"
+      ],
+      "prefLabel": {
+        "de": "Lokal",
+        "en": "Local"
+      },
+      "definition": {
+        "en": [
+          "Mappings saved locally in the browser"
+        ],
+        "de": [
+          "Mappings, die lokal im Browser gespeichert wurden"
+        ]
+      }
+    },
+    {
+      "provider": "MappingsApi",
+      "uri": "http://coli-conc.gbv.de/registry/coli-conc-mappings",
+      "status": "https://coli-conc.gbv.de/api/status",
+      "notation": [
+        "C"
+      ],
+      "prefLabel": {
+        "de": "Konkordanz-Register",
+        "en": "Concordance Registry"
+      },
+      "definition": {
+        "en": [
+          "Central concordance registry of coli-conc"
+        ],
+        "de": [
+          "Zentrale Konkordanz-Datenbank von coli-conc"
+        ]
+      }
+    },
+    {
+      "provider": "MappingsApi",
+      "uri": "http://coli-conc.gbv.de/registry/wikidata-mappings",
+      "status": "https://coli-conc.gbv.de/services/wikidata/status",
+      "notation": [
+        "W"
+      ],
+      "prefLabel": {
+        "en": "Wikidata-Mappings"
+      },
+      "definition": {
+        "en": [
+          "Access to Wikidata mappings in JSKOS format"
+        ],
+        "de": [
+          "Zugriff auf Wikidata-Mappings im JSKOS-Format"
+        ]
+      }
+    },
+    {
+      "provider": "LabelSearchSuggestion",
+      "uri": "http://coli-conc.gbv.de/registry/coli-conc-recommendations",
+      "excludedSchemes": [
+        {
+          "uri": "http://bartoc.org/en/node/1940"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/430"
+        },
+        {
+          "uri": "http://nomisma.org/id/"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/533"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/18785"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/241"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/1043"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/18797"
+        },
+        {
+          "uri": "http://bartoc.org/en/node/20049"
+        }
+      ],
+      "notation": [
+        "CR"
+      ],
+      "prefLabel": {
+        "en": "coli-conc Suggestions",
+        "de": "coli-conc Vorschläge"
+      }
+    },
+    {
+      "provider": "ReconciliationApi",
+      "uri": "http://coli-conc.gbv.de/registry/wikidata-reconciliation",
+      "api": "https://wikidata.reconci.link/{language}/api",
+      "schemes": [
+        {
+          "uri": "http://bartoc.org/en/node/1940"
+        }
+      ],
+      "notation": [
+        "WR"
+      ],
+      "prefLabel": {
+        "de": "Wikidata-Reconciliation",
+        "en": "Wikidata Reconciliation"
+      },
+      "definition": {
+        "en": [
+          "Wikidata Reconciliation API"
+        ],
+        "de": [
+          "Wikidata-Reconciliation API"
+        ]
+      }
+    },
+    {
+      "provider": "ReconciliationApi",
+      "uri": "http://coli-conc.gbv.de/registry/gnd-reconciliation",
+      "api": "https://lobid.org/gnd/reconcile",
+      "schemes": [
+        {
+          "uri": "http://bartoc.org/en/node/430"
+        }
+      ],
+      "notation": [
+        "GR"
+      ],
+      "prefLabel": {
+        "de": "GND-Reconciliation",
+        "en": "GND Reconciliation"
+      },
+      "definition": {
+        "en": [
+          "GND Reconciliation API (lobid.org)"
+        ],
+        "de": [
+          "GND-Reconciliation API (lobid.org)"
+        ]
+      }
+    },
+    {
+      "provider": "ReconciliationApi",
+      "uri": "http://coli-conc.gbv.de/registry/nomisma-reconciliation",
+      "api": "https://nomisma.org/apis/reconcile",
+      "schemes": [
+        {
+          "uri": "http://nomisma.org/id/"
+        }
+      ],
+      "notation": [
+        "NR"
+      ],
+      "prefLabel": {
+        "de": "Nomisma-Reconciliation",
+        "en": "Nomisma Reconciliation"
+      },
+      "definition": {
+        "en": [
+          "Nomisma Reconciliation API"
+        ],
+        "de": [
+          "Nomisma-Reconciliation API"
+        ]
       }
     }
   ]

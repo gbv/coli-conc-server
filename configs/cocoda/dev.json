@@ -13,6 +13,9 @@
     "color-text-h": "250",
     "color-text-s": "80%",
     "color-text-l": "19%",
+    "color-button-h": "175",
+    "color-button-s": "80%",
+    "color-button-l": "50%",
     "color-background": "#fce5de",
     "color-background-component": "#fffff9",
     "color-background-component-heading": "#f0d5c5"

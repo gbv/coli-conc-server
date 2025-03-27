@@ -8,6 +8,24 @@
       "url": "https://www.nfdi4objects.net/"
     }
   ],
+  "cssProperties": {
+    "color-primary-h": "217",
+    "color-primary-s": "80%",
+    "color-primary-l": "30%", 
+    "color-secondary-h": "126",
+    "color-secondary-s": "50%",
+    "color-secondary-l": "80%", 
+    "color-text-h": "217",
+    "color-text-s": "70%",
+    "color-text-l": "20%",
+    "color-button-h": "217",
+    "color-button-s": "80%",
+    "color-button-l": "30%",
+    "color-background": "#fff",
+    "color-background-component": "#f4f4f4",
+    "color-background-component-heading": "#f4f4f4",
+    "color-background-navbar": "#fff"
+  },
   "auth": "https://coli-conc.gbv.de/login/",
   "overrideRegistries": false,
   "registries": [

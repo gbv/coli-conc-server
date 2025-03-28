@@ -15,9 +15,9 @@
       "provider": "ConceptApi",
       "uri": "http://bartoc.org/en/node/18961",
       "status": "https://bartoc.org/api/status",
-      "schemes": "https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18961",
+      "schemes": "https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18966",
       "notation": [
-        "NFD4Objects"
+        "TS4NFDI"
       ],
       "prefLabel": {
         "en": "NFDI4Objects Terminologies"

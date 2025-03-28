@@ -8,6 +8,11 @@
       "url": "https://ts4nfdi.github.io/homepage/"
     }
   ],
+  "cssProperties": {
+    "color-secondary-h": "215",
+    "color-secondary-s": "21%",
+    "color-secondary-l": "34%" 
+  },
   "auth": "https://coli-conc.gbv.de/login/",
   "overrideRegistries": true,
   "registries": [

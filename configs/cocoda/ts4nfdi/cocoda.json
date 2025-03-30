@@ -9,9 +9,15 @@
     }
   ],
   "cssProperties": {
+    "color-primary": "#0BBBEF",
     "color-secondary-h": "215",
     "color-secondary-s": "21%",
-    "color-secondary-l": "34%" 
+    "color-secondary-l": "34%",
+    "color-text-secondary": "#ffffff",
+    "color-background": "#f8f8f8",
+    "color-link": "#0d6efd",
+    "color-button": "#0BBBEF",
+    "color-button-hover": "#33cfff"
   },
   "auth": "https://coli-conc.gbv.de/login/",
   "overrideRegistries": true,

@@ -1,9 +1,10 @@
 {
   "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/ts4nfdi/",
   "title": "TS4NFDI Mapping Editor",
+  "favicon": "config/favicon.ico",
   "logos": [
     {
-      "file": "ts4nfdi-logo.png",
+      "file": "config/ts4nfdi-logo.png",
       "alt": "TS4NFDI",
       "url": "https://ts4nfdi.github.io/homepage/"
     }

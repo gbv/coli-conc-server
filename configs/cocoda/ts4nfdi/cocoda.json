@@ -4,7 +4,7 @@
   "favicon": "config/favicon.ico",
   "logos": [
     {
-      "file": "config/ts4nfdi-logo.png",
+      "file": "ts4nfdi-logo.png",
       "alt": "TS4NFDI",
       "url": "https://ts4nfdi.github.io/homepage/"
     }

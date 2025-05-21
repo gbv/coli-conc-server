@@ -248,6 +248,17 @@
         "body.workflow_run.path": ".github/workflows/docker.yml",
         "body.workflow_run.conclusion": "success"
       }
+    },
+    {
+      "repository": "gbv/bartoc-search",
+      "command": "srv update bartoc-search-dev",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "dev",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
     }
   ]
 }

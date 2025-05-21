@@ -1,0 +1,29 @@
+services:
+  bartoc-search-dev:
+    image: ghcr.io/gbv/bartoc-search:dev
+    container_name: bartoc-search-dev
+    networks:
+      - nginx
+      - mongo
+      - solr
+    volumes:
+      - $CONFIGS/bartoc-search-dev/config.json:/config/config.json:ro
+    environment:
+      - CONFIG_FILE=/config/config.json
+      - NODE_ENV=development
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_PATH=/bartoc-search/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  nginx:
+    external: true
+    name: nginx
+  mongo:
+    external: true
+    name: mongo
+  solr:
+    external: true
+    name: solr

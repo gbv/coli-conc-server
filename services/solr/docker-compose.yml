@@ -1,0 +1,17 @@
+services:
+  solr:
+      image: solr:8
+      ports:
+        - "8983:8983"
+      volumes:
+        - solr_data:/var/solr
+        - ./solr-config/bartoc-configset:/configsets/bartoc-configset
+      command:
+        - solr-precreate
+        - bartoc
+        - /configsets/bartoc-configset
+  
+networks:
+  default:
+    external: true
+    name: solr

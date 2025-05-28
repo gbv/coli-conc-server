@@ -10,6 +10,7 @@ services:
   
   mongo-setup-replica-set:
     image: mongo:7
+    container_name: mongo-dev-replica-set
     depends_on:
       - mongo-dev
     volumes: 

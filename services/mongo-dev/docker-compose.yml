@@ -3,7 +3,7 @@ services:
     image: mongo:7
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
-      - $DATA/mongo:/data/db
+      - $DATA/mongo-dev:/data/db
       - $HOME/backup:/backup
     restart: unless-stopped
   

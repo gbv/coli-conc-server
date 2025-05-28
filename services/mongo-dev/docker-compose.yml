@@ -1,6 +1,7 @@
 services:
   mongo-dev:
     image: mongo:7
+    container_name: mongo-dev
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
       - $DATA/mongo-dev:/data/db

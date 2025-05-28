@@ -1,5 +1,5 @@
 services:
-  mongo:
+  mongo-dev:
     image: mongo:7
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
@@ -12,7 +12,7 @@ services:
   mongo-setup-replica-set:
     image: mongo:7
     depends_on:
-      - mongo
+      - mongo-dev
     volumes: 
       - $CONFIGS/mongo-initdb.d:/docker-entrypoint-initdb.d
     restart: "no"

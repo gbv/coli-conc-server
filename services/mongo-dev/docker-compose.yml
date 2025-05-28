@@ -1,0 +1,23 @@
+services:
+  mongo-dev:
+    image: mongo:7
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    volumes:
+      - $DATA/mongo:/data/db
+      - $HOME/backup:/backup
+    ports:
+      - 127.0.0.1:27017:27017
+    restart: unless-stopped
+  
+  mongo-setup-replica-set:
+    image: mongo:7
+    depends_on:
+      - mongo-dev
+    volumes: 
+      - $CONFIGS/mongo-initdb.d:/docker-entrypoint-initdb.d
+    restart: "no"
+
+networks:
+  default:
+    external: true
+    name: mongo-dev

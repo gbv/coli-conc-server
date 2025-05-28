@@ -1,11 +1,12 @@
 services:
-  solr:
+  solr-dev:
       image: solr:8
+      container_name: solr-dev
       ports:
         - "8983:8983"
       volumes:
         - $DATA/solr_data:/var/solr
-        - ./solr-config/bartoc-configset:/configsets/bartoc-configset
+        - $CONFIGS/solr-dev/bartoc-configset:/configsets/bartoc-configset
       command:
         - solr-precreate
         - bartoc
@@ -14,4 +15,4 @@ services:
 networks:
   default:
     external: true
-    name: solr
+    name: solr-dev

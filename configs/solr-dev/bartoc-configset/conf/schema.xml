@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="bartoc" version="1.6">
+  <!-- ================================================
+       Field Type Definitions
+       ================================================ -->
+  <types>
+    <!-- A non-tokenized string: used for IDs and keywords -->
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+    <fieldType name="long" class="solr.LongPointField" positionIncrementGap="0"/>
+
+    <fieldType name="text" class="solr.TextField" positionIncrementGap="100" termVectors="true">
+      <analyzer type="index">
+        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-specials.txt" />
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <!-- divide words in components, useful for compound words -->
+        <filter class="solr.WordDelimiterGraphFilterFactory"
+                generateWordParts="1"
+                generateNumberParts="1"
+                catenateWords="1"
+                catenateNumbers="1"
+                catenateAll="0"
+                splitOnCaseChange="1"/>
+        <!-- Reduce syntactical complex structures -->
+        <filter class="solr.FlattenGraphFilterFactory"/>
+        <!-- Normalize unicode (e.g. à → a) -->
+        <filter class="solr.ICUFoldingFilterFactory"/> It needs to be installed!
+        <!-- Protect key words from stemming -->
+        <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+        <!-- Stemming with snowball algorithm for english -->
+        <filter class="solr.SnowballPorterFilterFactory" language="English"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-specials.txt" />
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <!-- Expansion Synonims -->
+        <filter class="solr.SynonymGraphFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+        <filter class="solr.WordDelimiterGraphFilterFactory"
+                generateWordParts="1"
+                generateNumberParts="1"
+                catenateWords="0"
+                catenateNumbers="0"
+                catenateAll="0"
+                splitOnCaseChange="1"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>
+        <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+        <filter class="solr.SnowballPorterFilterFactory" language="English"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+
+    <!-- Date type: based on ISO 8601 -->
+    <fieldType name="pdate" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+
+    <!-- Integer type -->
+    <fieldType name="pint" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+  </types>
+
+  <!-- ================================================
+       Field Definitions
+       ================================================ -->
+  <fields>
+    <!-- SolrCloud-->
+    <field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
+
+    <!-- Unique Identifier -->
+    <field name="id" type="string" indexed="true" stored="true" required="true"/>
+
+    <!-- Multivalued language field -->
+    <field name="languages_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- Multivalued publisher -->
+    <field name="publisher_label" type="text" indexed="true" stored="true"/>
+    <field name="publisher_id" type="string" indexed="true" stored="true" />
+
+    <!-- Multivalued alternative labels -->
+    <field name="alt_labels_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- Multivalued Dewey Decimal Classifications -->
+    <field name="ddc_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- Date fields -->
+    <field name="created_dt" type="pdate" indexed="true" stored="true"/>
+    <field name="modified_dt" type="pdate" indexed="true" stored="true"/>
+
+    <!-- Start Year as integer -->
+    <field name="start_year_i" type="pint" indexed="true" stored="true"/>
+
+    <!-- URL field -->
+    <field name="url_s" type="string" indexed="false" stored="true"/>
+
+    <!-- Multivalued type field -->
+    <field name="type_uri" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <field name="title_search" type="text" indexed="true" stored="false" multiValued="true"/>
+
+  </fields>
+
+  <!-- ================================================
+       Dynamic Field Definitions
+       ================================================ -->
+  <dynamicField name="title_*" type="text" indexed="true" stored="true"/>
+  <dynamicField name="description_*" type="text" indexed="true" stored="true"/>
+  <dynamicField name="subject_*" type="text" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="type_label_*" type="text" indexed="true" stored="true"/>
+
+  <dynamicField name="*_s" type="string" indexed="true" stored="true"/>
+  <dynamicField name="*_i" type="pint" indexed="true" stored="true"/>
+  <dynamicField name="*_dt" type="pdate" indexed="true" stored="true"/>
+
+  <!-- ================================================
+       Copy Field Definitions
+       ================================================ -->
+  <!-- Create a catch-all searchable field -->
+  <field name="allfields" type="text" indexed="true" stored="false" multiValued="true"/>
+
+  <!-- Copy several fields into the catch-all field -->
+  <copyField source="title_*" dest="allfields"/>
+  <copyField source="title_*" dest="title_search"/>
+  <copyField source="description_*" dest="allfields"/>
+  <copyField source="publisher_label" dest="allfields"/>
+  <copyField source="subject_*" dest="allfields"/>
+  <copyField source="alt_labels_ss" dest="allfields"/>
+
+  <!-- ================================================
+       Schema Configuration
+       ================================================ -->
+  <uniqueKey>id</uniqueKey>
+</schema>

@@ -5,7 +5,7 @@ services:
     networks:
       - nginx
       - mongo-dev
-      - solr
+      - solr-dev
     volumes:
       - $CONFIGS/bartoc-search-dev/config.json:/config/config.json:ro
     environment:
@@ -24,6 +24,6 @@ networks:
   mongo-dev:
     external: true
     name: mongo-dev
-  solr:
+  solr-dev:
     external: true
-    name: solr
+    name: solr-dev

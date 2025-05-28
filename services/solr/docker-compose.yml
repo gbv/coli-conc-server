@@ -4,7 +4,7 @@ services:
       ports:
         - "8983:8983"
       volumes:
-        - solr_data:/var/solr
+        - $DATA/solr_data:/var/solr
         - ./solr-config/bartoc-configset:/configsets/bartoc-configset
       command:
         - solr-precreate

@@ -5,8 +5,6 @@ services:
     volumes:
       - $DATA/mongo:/data/db
       - $HOME/backup:/backup
-    ports:
-      - 127.0.0.1:27017:27017
     restart: unless-stopped
   
   mongo-setup-replica-set:

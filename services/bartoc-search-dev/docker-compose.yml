@@ -6,6 +6,9 @@ services:
       - nginx
       - mongo-dev
       - solr-dev
+    ports:
+      - "3000:3000"
+      - "24678:24678"
     volumes:
       - $CONFIGS/bartoc-search-dev/config.json:/config/config.json:ro
     environment:

@@ -10,5 +10,11 @@
       "socketTimeoutMS": 360000,
       "heartbeatFrequencyMS": 10000
     }
+  },
+  "solr": {
+    "batch_size": 500,
+    "host": "solr-dev",
+    "port": 8983,
+    "version": 8.1
   }
 }

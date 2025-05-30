@@ -9,6 +9,7 @@ services:
     volumes:
       - $CONFIGS/bartoc-search-dev/config.json:/config/config.json:ro
     environment:
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.coli-conc.gbv.de
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=development
       - VIRTUAL_HOST=coli-conc.gbv.de

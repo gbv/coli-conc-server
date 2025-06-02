@@ -3,7 +3,7 @@ services:
     image: ghcr.io/gbv/bartoc-search:dev
     container_name: bartoc-search-dev
     networks:
-      - nginx-dev
+      - nginx
       - mongo-dev
       - solr-dev
     ports:
@@ -22,9 +22,9 @@ services:
     restart: unless-stopped
 
 networks:
-  nginx-dev:
+  nginx:
     external: true
-    name: nginx-dev
+    name: nginx
   mongo-dev:
     external: true
     name: mongo-dev

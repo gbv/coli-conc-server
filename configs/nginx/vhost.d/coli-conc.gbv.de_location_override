@@ -1,5 +1,5 @@
 location /bartoc-search-dev/ {
-  proxy_pass http://coli-conc.gbv.de-66498cbd0fd9d56a52c62df973b552d419bce1a9;
+  proxy_pass http://coli-conc.gbv.de-66498cbd0fd9d56a52c62df973b552d419bce1a9/;
   proxy_http_version 1.1;
   proxy_set_header Upgrade $http_upgrade;
   proxy_set_header Connection "upgrade";

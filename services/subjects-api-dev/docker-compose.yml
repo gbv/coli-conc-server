@@ -1,13 +1,10 @@
 services:
   subjects-api-dev:
     image: ghcr.io/gbv/subjects-api:dev
+    env_file:
+      - $CONFIGS/subjects-api-dev.env
     volumes:
       - $DATA/subjects-api-dev:/data
-    environment:
-      - VIRTUAL_HOST=coli-conc.gbv.de
-      - VIRTUAL_PORT=3141
-      - VIRTUAL_PATH=/subjects-dev/
-      - VIRTUAL_DEST=/
     restart: unless-stopped
 
 networks:

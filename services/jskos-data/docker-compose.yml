@@ -3,4 +3,4 @@ services:
     image: ghcr.io/gbv/jskos-data
     volumes:
       - $DATA/jskos-data:/jskos-data
-    restart: unless-stopped
+    restart: no

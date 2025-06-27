@@ -11,6 +11,7 @@ services:
         - solr-precreate
         - bartoc
         - /configsets/bartoc-configset
+      restart: unless-stopped
   
 networks:
   default:

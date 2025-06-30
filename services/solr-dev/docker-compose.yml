@@ -8,7 +8,7 @@ services:
       - SOLR_CORE_NAME=${SOLR_CORE_NAME}
     volumes:
       - $DATA/solr_data:/var/solr
-      - ./solr-config/${SOLR_CORE_NAME}-configset:/configsets/${SOLR_CORE_NAME}-configset
+      - $CONFIGS/solr-dev/${SOLR_CORE_NAME}-configset:/configsets/${SOLR_CORE_NAME}-configset
     command:
       - solr-precreate
       - ${SOLR_CORE_NAME}

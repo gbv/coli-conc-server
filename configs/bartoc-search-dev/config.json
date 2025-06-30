@@ -12,7 +12,8 @@
     }
   },
   "solr": {
-    "batch_size": 500,
+    "batchSize": 500,
+    "coreName": "terminologies",
     "host": "solr-dev",
     "port": 8983,
     "version": 8.1

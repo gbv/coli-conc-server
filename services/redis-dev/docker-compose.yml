@@ -1,0 +1,14 @@
+services:
+   redis:
+    image: redis:7
+    container_name: redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: redis-dev

@@ -33,6 +33,6 @@ networks:
   solr-dev:
     external: true
     name: solr-dev
-  -redis-dev:
+  redis-dev:
     external: true
     name: redis-dev

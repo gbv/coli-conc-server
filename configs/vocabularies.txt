@@ -49,6 +49,13 @@ jskos-server    http://bartoc.org/en/node/745       nbc/nbc-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/1644      crm/crm-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20543     fbl/fbl-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20536     gov-types/gov-types-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20720     datacite-contributortype/datacite-contributortype-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20722     datacite-datetype/datacite-datetype-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20723     datacite-resourcetypegeneral/datacite-resourcetypegeneral-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20724     datacite-relatedidentifiertype/datacite-relatedidentifiertype-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20725     datacite-relationtype/datacite-relationtype-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20726     datacite-descriptiontype/datacite-descriptiontype-concepts.ndjson
+
 
 # DDC German
 jskos-server    http://bartoc.org/en/node/241       ddc/ddc23de.ndjson

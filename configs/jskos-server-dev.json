@@ -2,8 +2,13 @@
   "baseUrl": "https://coli-conc.gbv.de/dev-api/",
   "title": "JSKOS Server Dev",
   "proxies": ["193.174.240.246", "193.174.240.247"],
+  "changesApi" : {
+    "enableChangesApi": true,
+    "rsMaxRetries": 20,
+    "rsRetryInterval": 5000
+  },
   "mongo": {
-    "host": "mongo",
+    "host": "mongo-dev",
     "db": "jskos-server-dev"
   },
   "auth": {

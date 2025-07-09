@@ -3,7 +3,7 @@ services:
     image: ghcr.io/gbv/jskos-server:dev
     networks:
       - nginx
-      - mongo
+      - mongo-dev
     volumes:
       - $CONFIGS/jskos-server-dev.json:/config/config.json
     environment:
@@ -17,6 +17,6 @@ networks:
   nginx:
     external: true
     name: nginx
-  mongo:
+  mongo-dev:
     external: true
-    name: mongo
+    name: mongo-dev

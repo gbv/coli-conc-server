@@ -1,8 +1,13 @@
 {
   "title": "BARTOC API (dev)",
   "mongo": {
-    "host": "mongo",
+    "host": "mongo-dev",
     "db": "bartoc_dev"
+  },
+  "changesApi" : {
+    "enableChangesApi": true,
+    "rsMaxRetries": 20,
+    "rsRetryInterval": 5000
   },
   "baseUrl": "https://dev.bartoc.org/api/",
   "auth": {

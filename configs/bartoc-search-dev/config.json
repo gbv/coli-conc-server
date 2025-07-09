@@ -1,21 +1,27 @@
 {
-  "mongo": {
-    "user": "",
-    "pass": "",
-    "host": "mongo-dev",
-    "port": 27017,
-    "db": "jskos-server",
-    "options": {
-      "connectTimeoutMS": 360000,
-      "socketTimeoutMS": 360000,
-      "heartbeatFrequencyMS": 10000
-    }
+  "redis": {
+    "host": "redis-dev",
+    "pingTimeout": 10000,
+    "pingRetries": 5,
+    "pingRetryDelay": 1000,
+    "port": 6379
   },
   "solr": {
     "batchSize": 500,
     "coreName": "terminologies",
     "host": "solr-dev",
+    "pingTimeout": 10000,
+    "pingRetries": 5,
+    "pingRetryDelay": 1000,
     "port": 8983,
     "version": 8.1
+  },
+  "webSocket": {
+    "host": "wss://coli-conc.gbv.de/dev-api",
+    "port": 443,
+    "path": "/voc/changes",
+    "pingTimeout": 10000,
+    "pingRetries": 5,
+    "pingRetryDelay": 1000
   }
 }

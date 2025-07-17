@@ -4,15 +4,13 @@ services:
     container_name: solr-dev
     ports:
       - "8983:8983"
-    environment:
-      - SOLR_CORE_NAME=${SOLR_CORE_NAME}
     volumes:
       - $DATA/solr_data:/var/solr
-      - $CONFIGS/solr-dev/${SOLR_CORE_NAME}-configset:/configsets/${SOLR_CORE_NAME}-configset
+      - $CONFIGS/solr-dev/terminologies-configset:/configsets/terminologies-configset
     command:
       - solr-precreate
-      - ${SOLR_CORE_NAME}
-      - /configsets/${SOLR_CORE_NAME}-configset
+      - terminologies
+      - /configsets/terminologies-configset
     restart: unless-stopped
 
 networks:

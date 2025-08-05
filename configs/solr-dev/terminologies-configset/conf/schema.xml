@@ -79,6 +79,8 @@
 
     <!-- Multivalued Dewey Decimal Classifications -->
     <field name="ddc_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="ddc_root_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
 
     <!-- Date fields -->
     <field name="created_dt" type="pdate" indexed="true" stored="true"/>
@@ -97,6 +99,30 @@
     <field name="type_uri" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <field name="title_search" type="text" indexed="true" stored="false" multiValued="true"/>
+
+    <!-- Multivalued Listed in field -->
+    <field name="listed_in_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- Multivalued Api types  -->
+    <field name="api_type_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="api_url_ss"  type="string" indexed="false" stored="true" multiValued="true"/>
+
+    <!-- Access type  -->
+    <field name="access_type_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- License type  -->
+    <field name="license_type_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="license_group_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+    <!-- ADDRESS fields  -->
+    <field name="address_country_s" type="string" indexed="true" stored="true"/>
+
+    <!-- FORMAT type  -->
+    <field name="format_type_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="format_group_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+
+
+
 
   </fields>
 

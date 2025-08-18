@@ -19,7 +19,7 @@
       "provider": "ConceptApi",
       "uri": "http://coli-conc.gbv.de/registry/bartoc",
       "status": "https://bartoc.org/api/status",
-      "schemes": "https://bartoc.org/api/voc?uri=http://bartoc.org/en/node/18497|http://bartoc.org/en/node/241|http://bartoc.org/en/node/486|http://bartoc.org/en/node/533|http://bartoc.org/en/node/18785|http://bartoc.org/en/node/1043|http://bartoc.org/en/node/220",
+      "schemes": "https://bartoc.org/api/voc?uri=http://bartoc.org/en/node/20049|http://bartoc.org/en/node/241|http://bartoc.org/en/node/486|http://bartoc.org/en/node/533|http://bartoc.org/en/node/18785|http://bartoc.org/en/node/1043|http://bartoc.org/en/node/220",
       "notation": [
         "BARTOC"
       ],

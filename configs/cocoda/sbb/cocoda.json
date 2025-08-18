@@ -1,4 +1,5 @@
 {
+  "cocodaBaseUrl": "https://coli-conc.gbv.de/cocoda/sbb/",
   "title": "Cocoda SBB",
   "favicon": "config/favicon.svg",
   "logos": [

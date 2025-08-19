@@ -10,6 +10,7 @@
     }
   ],
   "cssProperties": {
+    "color-primary": "#8F243E",
     "color-secondary": "#2f3e65",
     "color-text-secondary": "#ffffff"
   },
@@ -67,25 +68,6 @@
       }
     },
     {
-      "provider": "MappingsApi",
-      "uri": "http://coli-conc.gbv.de/registry/wikidata-mappings",
-      "status": "https://coli-conc.gbv.de/services/wikidata/status",
-      "notation": [
-        "W"
-      ],
-      "prefLabel": {
-        "en": "Wikidata-Mappings"
-      },
-      "definition": {
-        "en": [
-          "Access to Wikidata mappings in JSKOS format"
-        ],
-        "de": [
-          "Zugriff auf Wikidata-Mappings im JSKOS-Format"
-        ]
-      }
-    },
-    {
       "provider": "LabelSearchSuggestion",
       "uri": "http://coli-conc.gbv.de/registry/coli-conc-recommendations",
       "excludedSchemes": [
@@ -127,31 +109,6 @@
     },
     {
       "provider": "ReconciliationApi",
-      "uri": "http://coli-conc.gbv.de/registry/wikidata-reconciliation",
-      "api": "https://wikidata.reconci.link/{language}/api",
-      "schemes": [
-        {
-          "uri": "http://bartoc.org/en/node/1940"
-        }
-      ],
-      "notation": [
-        "WR"
-      ],
-      "prefLabel": {
-        "de": "Wikidata-Reconciliation",
-        "en": "Wikidata Reconciliation"
-      },
-      "definition": {
-        "en": [
-          "Wikidata Reconciliation API"
-        ],
-        "de": [
-          "Wikidata-Reconciliation API"
-        ]
-      }
-    },
-    {
-      "provider": "ReconciliationApi",
       "uri": "http://coli-conc.gbv.de/registry/gnd-reconciliation",
       "api": "https://lobid.org/gnd/reconcile",
       "schemes": [
@@ -174,43 +131,63 @@
           "GND-Reconciliation API (lobid.org)"
         ]
       }
-    },
-    {
-      "provider": "ReconciliationApi",
-      "uri": "http://coli-conc.gbv.de/registry/nomisma-reconciliation",
-      "api": "https://nomisma.org/apis/reconcile",
-      "schemes": [
-        {
-          "uri": "http://nomisma.org/id/"
-        }
-      ],
-      "notation": [
-        "NR"
-      ],
-      "prefLabel": {
-        "de": "Nomisma-Reconciliation",
-        "en": "Nomisma Reconciliation"
-      },
-      "definition": {
-        "en": [
-          "Nomisma Reconciliation API"
-        ],
-        "de": [
-          "Nomisma-Reconciliation API"
-        ]
-      }
     }
-  ],
+   ],
    "conceptLists": [
     {
         "notation": ["BK Top Classes"],
         "prefLabel": { "de": "BK Oberklassen", "en": "BK Top Classes" },
         "scopeNote": {
-        "en": "Use this list to map only to Basisklassifikation top classes."
+          "en": "Use this list to map only to Basisklassifikation top classes."
         },
         "concepts": [
-            { "uri": "http://uri.gbv.de/terminology/bk/0", "notation": ["0"], "prefLabel": { "de": "Allgemeine Werke und Philosophie" }, "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }], "topConceptOf": [{ "uri": "http://uri.gbv.de/terminology/bk/" }], "@context": "https://gbv.github.io/jskos/context.json", "type": ["http://www.w3.org/2004/02/skos/core#Concept"] },
-            { "uri": "http://uri.gbv.de/terminology/bk/7-8", "notation": ["7-8"], "prefLabel": { "de": "SozialWissenschaften" }, "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }], "topConceptOf": [{ "uri": "http://uri.gbv.de/terminology/bk/" }], "@context": "https://gbv.github.io/jskos/context.json", "type": ["http://www.w3.org/2004/02/skos/core#Concept"] }
+            { "uri": "http://uri.gbv.de/terminology/bk/01.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/02.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/05.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/06.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/08.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/10.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/11.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/15.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/18.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/20.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/21.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/24.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/30.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/31.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/33.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/35.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/38.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/39.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/42.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/43.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/44.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/46.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/48.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/49.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/50.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/51.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/52.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/53.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/54.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/55.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/56.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/57.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/58.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/70.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/71.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/73.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/74.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/76.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/77.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/79.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/80.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/81.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/83.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/85.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/86.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/88.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },
+            { "uri": "http://uri.gbv.de/terminology/bk/89.00", "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] }
         ]
     }
     ]

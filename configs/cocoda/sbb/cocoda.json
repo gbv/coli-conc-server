@@ -14,6 +14,7 @@
     "color-secondary": "#2f3e65",
     "color-text-secondary": "#ffffff"
   },
+  "auth": "https://coli-conc.gbv.de/login/",
   "overrideRegistries": true, 
   "registries": [
     {

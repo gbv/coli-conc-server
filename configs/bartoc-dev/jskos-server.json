@@ -5,7 +5,7 @@
     "db": "bartoc_dev"
   },
   "changesApi" : {
-    "enableChangesApi": true,
+    "enableChangesApi": false,
     "rsMaxRetries": 20,
     "rsRetryInterval": 5000
   },

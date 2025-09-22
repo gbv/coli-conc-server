@@ -23,6 +23,6 @@ networks:
   nginx:
     external: true
     name: nginx
-  mongo-dev:
+  mongo:
     external: true
     name: mongo-dev

@@ -1,7 +1,7 @@
 {
   "title": "BARTOC API (dev)",
   "mongo": {
-    "host": "mongo-dev",
+    "host": "mongo",
     "db": "bartoc_dev"
   },
   "changesApi" : {

@@ -3,9 +3,11 @@ services:
     image: ghcr.io/gbv/bartoc.org:dev
     networks:
       - nginx
-      - mongo-dev
+      - mongo
     volumes:
       - $CONFIGS/bartoc-dev:/config
+      - $DATA/bartoc/dumps:/usr/src/app/bartoc/data/dumps
+      - $DATA/bartoc/reports:/usr/src/app/bartoc/data/reports
     environment:
       - BASE_URL=https://dev.bartoc.org/
       - |

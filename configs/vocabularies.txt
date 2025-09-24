@@ -56,6 +56,7 @@ jskos-server    http://bartoc.org/en/node/20724     datacite-relatedidentifierty
 jskos-server    http://bartoc.org/en/node/20725     datacite-relationtype/datacite-relationtype-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/20726     datacite-descriptiontype/datacite-descriptiontype-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/151       bibil/bibil-concepts.ndjson
+jskos-server    http://bartoc.org/en/node/20828     datacite-nametype/datacite-nametype-concepts.ndjson
 
 # DDC German
 jskos-server    http://bartoc.org/en/node/241       ddc/ddc23de.ndjson

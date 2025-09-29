@@ -4,6 +4,10 @@ services:
     env_file:
       - $CONFIGS/coli-ana.env
     restart: unless-stopped
+    labels:
+      description: "A tool and a webservice for analysis and decomposition of synthesized DDC numbers - on work"
+      type: application
+
 
 networks:
   default:

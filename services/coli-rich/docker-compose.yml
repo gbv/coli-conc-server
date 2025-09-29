@@ -6,6 +6,9 @@ services:
     env_file:
       - $CONFIGS/coli-rich.env
     restart: unless-stopped
+    labels:
+      description: "Catalog enrichment via concordances"
+      type: application
 
 networks:
   default:

@@ -11,6 +11,9 @@ services:
       - USE_SUBPATH=true
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PATH=~^/cocoda/.+
+    labels:
+      description: "The Mapping Tool is the main application of the infrastructure we provide"
+      type: application
 
 networks:
   default:

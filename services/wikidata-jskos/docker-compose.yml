@@ -5,6 +5,9 @@ services:
       - $CONFIGS/wikidata-jskos.env
       - $SECRETS/wikidata-jskos.env
     restart: unless-stopped
+    labels:
+      description: "Access Wikidata in JSKOS format with wikidata-jskos"
+      type: api
 
 networks:
   default:

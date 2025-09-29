@@ -20,6 +20,9 @@ services:
               port: 3000
               dest: "/"
     restart: unless-stopped
+    labels:
+      description: "A database of Knowledge Organization Systems and KOS related registries"
+      type: application
 
 networks:
   nginx:

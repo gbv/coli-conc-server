@@ -9,6 +9,9 @@ services:
       - VIRTUAL_PATH=/subjects/
       - VIRTUAL_DEST=/
     restart: unless-stopped
+    labels:
+      description: "Look up subjects and (co-)occurrences of concepts in library catalogs"
+      type: api
 
 networks:
   default:

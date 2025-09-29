@@ -12,6 +12,9 @@ services:
       - $CONFIGS/login-server.env
       - $SECRETS/login-server.env
     restart: unless-stopped
+    labels:
+      description: "Authentication for the offered services via Login Server"
+      type: api
 
 networks:
   default:

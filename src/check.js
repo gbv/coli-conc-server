@@ -22,33 +22,60 @@ const { servicePath } = getEnv("")
 const serviceNamesToComposeFiles = {}
 let ok = true
 
-for await (const { name, isDirectory } of Deno.readDir(servicePath)) {
-  if (!isDirectory) {
-    continue
-  }
+// Get value from environment array in docker-compose.yml
+const envValue = (env, name) => env?.find(e => (new RegExp(`^[\\n\s]*${name}\s*=`).test(e)))?.split(/=\s*/)[1]
+
+// Iterate over every docker-compose.yml
+for await (const { name } of Deno.readDir(servicePath)) {
+  const file = `${servicePath}/${name}/docker-compose.yml`
+  const fileShort = file.replace(servicePath, "")
+  try { await Deno.lstat(file) } catch (_) { continue }  
+  const errors = []
+  const configs = []
   try {
-    // Try to read docker-compose.yml
-    const file = `${servicePath}/${name}/docker-compose.yml`
-    const fileShort = file.replace(servicePath, "")
     const compose = parseYaml(await Deno.readTextFile(file))
-    const errors = []
-    for (const service of Object.keys(compose?.services || {})) {
+    for (const service of Object.keys(compose?.services || {})) {        
       if (serviceNamesToComposeFiles[service]) {
         errors.push(`!!! Service "${service}" is already defined in ${serviceNamesToComposeFiles[service]}`)
-        ok = false
       } else {
         serviceNamesToComposeFiles[service] = fileShort
       }
+      const { image, environment } = compose.services[service]        
+      const urls = []
+      const hosts = (envValue(environment, 'VIRTUAL_HOST'))?.split(",")
+      const path = envValue(environment, 'VIRTUAL_PATH')
+      if (hosts && path && !path.startsWith("~")) { // TODO: support pattern path
+        for (const host of hosts) {
+          urls.push(`http://${host}${path}`)
+        }
+      } else {
+        const multiport = envValue(environment, 'VIRTUAL_HOST_MULTIPORTS')
+        if (multiport) {
+          for (const [ host, pathes ] of Object.entries(parseYaml(multiport))) {
+            for (const path in pathes) {
+              urls.push(`http://${host}${path}`)
+            }
+          }
+        }
+      }
+      const about = {
+        service,
+        config: `https://github.com/gbv/coli-conc-server/tree/main/services${fileShort}`,
+        image,
+      }
+      configs.push(urls.length ? { ...about, urls } : about)
     }
-    if (errors.length) {
-      console.error(`%c${fileShort}`, "color: red")
-      errors.forEach(error => console.error(`%c  ${error}`, "color: red"))
-    } else {
-      console.log(`%c${fileShort}`, "color: green")
-      console.log("%c  All good.", "color: green")
-    }
-  } catch (_) {
-    // Just ignore errors as we are expecting them
+  } catch (e) {
+    errors.push(e)
+  }
+
+  if (errors.length) {
+    console.error(`%c${fileShort}`, "color: red")
+    errors.forEach(error => console.error(`%c  ${error}`, "color: red"))
+    ok = false
+  } else {
+    console.log(`%c${fileShort}`, "color: green")
+    configs.forEach(c => console.log(JSON.stringify(c)))
   }
 }
 

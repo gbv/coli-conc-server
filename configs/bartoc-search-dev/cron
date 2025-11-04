@@ -1,0 +1,5 @@
+# config/cron
+CRON_TZ=Europe/Berlin
+
+# every six hours: updater + reindex (logs to container stdout/stderr)
+0 */6 * * * cd /usr/src/app && npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2

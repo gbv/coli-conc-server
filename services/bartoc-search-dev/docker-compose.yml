@@ -10,7 +10,7 @@ services:
       - "3883:3883"     # HTTP
       - "24678:24678"
     volumes:
-      - $CONFIGS/bartoc-search-dev/config.json:/config/config.json:ro
+      - $CONFIGS/bartoc-search-dev:/config:ro
     environment:
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=coli-conc.gbv.de-66498cbd0fd9d56a52c62df973b552d419bce1a9
       - CONFIG_FILE=/config/config.json

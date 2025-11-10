@@ -24,7 +24,7 @@
         <!-- Reduce syntactical complex structures -->
         <filter class="solr.FlattenGraphFilterFactory"/>
         <!-- Normalize unicode (e.g. à → a) -->
-        <filter class="solr.ICUFoldingFilterFactory"/> It needs to be installed!
+        <filter class="solr.ICUFoldingFilterFactory"/>
         <!-- Protect key words from stemming -->
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
         <!-- Stemming with snowball algorithm for english -->
@@ -63,6 +63,24 @@
 
     <!-- Integer type -->
     <fieldType name="pint" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+
+    <!-- Char-level trigram type -->
+    <fieldType name="text_trigram" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <!-- Char n-grams; 3 is a good default -->
+        <filter class="solr.NGramFilterFactory" minGramSize="3" maxGramSize="3"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <filter class="solr.NGramFilterFactory" minGramSize="3" maxGramSize="3"/>
+      </analyzer>
+    </fieldType>
+
   </types>
 
   <!-- ================================================
@@ -201,6 +219,10 @@
     <!-- identifier -->
     <field name="identifier_ss" type="string" indexed="true" stored="true"  multiValued="true"/>
 
+    <!-- Trigram fields (not stored; just for matching) -->
+    <field name="title_trigram"     type="text_trigram" indexed="true" stored="false" multiValued="true"/>
+    <field name="allfields_trigram" type="text_trigram" indexed="true" stored="false" multiValued="true"/>
+
 
   </fields>
 
@@ -216,7 +238,6 @@
   <dynamicField name="subject_label_*" type="text" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="title_*" type="text" indexed="true" stored="true"/>
   <dynamicField name="type_label_*" type="text" indexed="true" stored="true"/>
-
   <dynamicField name="*_s" type="string" indexed="true" stored="true"/>
   <dynamicField name="*_i" type="pint" indexed="true" stored="true"/>
   <dynamicField name="*_dt" type="pdate" indexed="true" stored="true"/>
@@ -250,6 +271,8 @@
   <copyField source="title_*" dest="title_search"/>
   <copyField source="type_label_*" dest="allfields"/>
 
+  <copyField source="title_*"  dest="title_trigram"/>
+  <copyField source="allfields" dest="allfields_trigram"/>
 
   <!-- ================================================
        Schema Configuration

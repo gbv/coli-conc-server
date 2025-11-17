@@ -1,0 +1,6 @@
+services:
+  bartoc-vocabularies:
+    image: ghcr.io/gbv/bartoc-vocabularies
+    volumes:
+      - $DATA/bartoc-vocabularies:/bartoc-vocabularies
+    restart: no

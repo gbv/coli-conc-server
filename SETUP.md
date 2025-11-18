@@ -291,6 +291,23 @@ srv run jskos-data -it jskos-data /usr/src/app/build.ts
 srv run jskos-data -it jskos-data /usr/src/app/build.ts bk rvk
 ```
 
+### bartoc-vocabularies
+
+This service keeps `~/$DATA/bartoc-vocabularies` in sync with the
+https://github.com/gbv/bartoc-vocabularies repository via a Deno update script
+in the Docker image.
+
+```sh
+# Initialize (pull the image, create data folder, run entrypoint)
+srv init bartoc-vocabularies
+
+# Manually trigger a sync from GitHub into $DATA/bartoc-vocabularies:
+srv run bartoc-vocabularies bartoc-vocabularies /usr/src/app/update.ts
+```
+
+In normal operation there is no need to run this manually, as updates are
+triggered via GitHub webhooks (see configs/webhook-handler.json).
+
 ### Subjects API
 <!-- TODO: Include command to download and extract it as well. -->
 

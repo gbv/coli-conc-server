@@ -67,31 +67,27 @@
       "auth": true,
       "identities": [
         "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
         "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
         "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
-        "https://github.com/mfm2015"
+        "https://orcid.org/0000-0003-1763-3026"
       ]
     },
     "update": {
       "auth": true,
       "crossUser": [
         "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
         "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
+        "https://orcid.org/0000-0003-1763-3026"
       ]
     },
     "delete": {
       "auth": true,
       "crossUser": [
         "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
         "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
+        "https://orcid.org/0000-0003-1763-3026"
       ]
     }
   }

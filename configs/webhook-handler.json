@@ -261,6 +261,17 @@
       }
     },
     {
+      "repository": "gbv/bartoc-search",
+      "command": "srv update bartoc-search",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "main",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
       "repository": "gbv/bartoc-vocabularies",
       "command": "srv update bartoc-vocabularies",
       "event": "workflow_run",

@@ -16,7 +16,7 @@ services:
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=development
       - DATA_DIR=/usr/src/app/data
-      - BARTOC_NDJSON_URL=https://bartoc.org/data/dumps/latest.ndjson
+      - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PORT=3883
       - VIRTUAL_PATH=/bartoc-search-dev/

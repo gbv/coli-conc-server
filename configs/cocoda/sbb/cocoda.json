@@ -136,10 +136,10 @@
    ],
    "conceptLists": [
     {
-      "notation": ["BK Top Classes"],
-      "prefLabel": { "de": "BK Hauptklassen", "en": "BK Top Classes" },
+      "notation": ["BK Main Classes"],
+      "prefLabel": { "de": "BK Hauptklassen", "en": "BK Main Classes" },
       "scopeNote": {
-        "en": "Use this list to map only to Basisklassifikation top classes."
+        "en": "Use this list to map only to Basisklassifikation main classes."
       },
       "concepts": [
         { "uri": "http://uri.gbv.de/terminology/bk/01", "notation": ["01"], "prefLabel": { "de": "Allgemeines" }, "inScheme": [{ "uri": "http://uri.gbv.de/terminology/bk/" }] },

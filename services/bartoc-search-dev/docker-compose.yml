@@ -17,10 +17,12 @@ services:
       - NODE_ENV=development
       - DATA_DIR=/usr/src/app/data
       - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
-      - VIRTUAL_HOST=dev.bartoc.org
-      - VIRTUAL_PORT=3883
-      - VIRTUAL_PATH=/vocabularies
-      - VIRTUAL_DEST=/
+      - |
+        VIRTUAL_HOST_MULTIPORTS=
+          dev.bartoc.org:
+            "/vocabularies/":
+              port: 3883
+              dest: "/"
     restart: unless-stopped
 
 networks:

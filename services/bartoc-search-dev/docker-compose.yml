@@ -17,9 +17,9 @@ services:
       - NODE_ENV=development
       - DATA_DIR=/usr/src/app/data
       - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
-      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_HOST=dev.bartoc.org
       - VIRTUAL_PORT=3883
-      - VIRTUAL_PATH=/bartoc-search-dev/
+      - VIRTUAL_PATH=/vocabularies
       - VIRTUAL_DEST=/
     restart: unless-stopped
 

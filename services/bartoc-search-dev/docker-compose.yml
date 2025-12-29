@@ -12,6 +12,7 @@ services:
     volumes:
       - $CONFIGS/bartoc-search-dev:/config:ro
     environment:
+      - VIRTUAL_PATH=/vocabularies/
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.bartoc.org
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=development

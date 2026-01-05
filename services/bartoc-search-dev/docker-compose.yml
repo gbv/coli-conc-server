@@ -8,15 +8,15 @@ services:
       - redis-dev
     ports:
       - "3883:3883"     # HTTP
-      - "24678:24678"
     volumes:
       - $CONFIGS/bartoc-search-dev:/config:ro
     environment:
       - VIRTUAL_PATH=/vocabularies/
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.bartoc.org
       - CONFIG_FILE=/config/config.json
-      - NODE_ENV=development
+      - NODE_ENV=production
       - DATA_DIR=/usr/src/app/data
+      - BARTOC_SEARCH_ENABLE_WORKERS=true
       - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
       - |
         VIRTUAL_HOST_MULTIPORTS=

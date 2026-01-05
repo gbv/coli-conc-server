@@ -2,12 +2,11 @@ services:
   bartoc-search-dev:
     image: ghcr.io/gbv/bartoc-search:dev
     container_name: bartoc-search-dev
+    command: ["npm", "run", "start:staging"]
     networks:
       - nginx
       - solr-dev
       - redis-dev
-    ports:
-      - "3883:3883"     # HTTP
     volumes:
       - $CONFIGS/bartoc-search-dev:/config:ro
     environment:
@@ -16,7 +15,6 @@ services:
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=production
       - DATA_DIR=/usr/src/app/data
-      - BARTOC_SEARCH_ENABLE_WORKERS=true
       - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
       - |
         VIRTUAL_HOST_MULTIPORTS=

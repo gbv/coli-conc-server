@@ -7,3 +7,16 @@ proxy_set_header Connection "upgrade";
 proxy_buffer_size          128k;
 proxy_buffers              4 256k;
 proxy_busy_buffers_size    256k;
+
+# --- WebSocket upgrade for JSKOS changes (dev.bartoc.org/api -> port 3000) ---
+location ^~ /api/voc/changes {
+  proxy_pass http://dev.bartoc.org-357322ae39f93f572e23cd9edd3307e2ac5a321f/voc/changes;
+
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "upgrade";
+
+  proxy_read_timeout 3600s;
+  proxy_send_timeout 3600s;
+  proxy_buffering off;
+}

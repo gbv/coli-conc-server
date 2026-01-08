@@ -18,7 +18,7 @@ services:
               dest: "/"
             "/api/":
               port: 3000
-              dest: "/"
+              dest: "/api/"
     restart: unless-stopped
 
 networks:

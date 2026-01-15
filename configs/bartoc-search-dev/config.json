@@ -1,4 +1,14 @@
 {
+  "queues": {
+    "terminologiesQueue": {
+      "concurrency": 20,
+      "batchSize": 50,
+      "limiter" : {
+        "max": 100,
+        "duration": 1000
+      }
+    }
+  },
   "redis": {
     "host": "redis-dev",
     "pingTimeout": 10000,
@@ -17,7 +27,7 @@
     "version": 8.1
   },
   "webSocket": {
-    "host": "wss://coli-conc.gbv.de/dev-api",
+    "host": "wss://dev.bartoc.org/api",
     "port": 443,
     "path": "/voc/changes",
     "pingTimeout": 10000,

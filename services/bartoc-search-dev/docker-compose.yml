@@ -16,7 +16,8 @@ services:
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=production
       - DATA_DIR=/usr/src/app/data
-      - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
+      - BARTOC_DUMP=https://dev.bartoc.org/data/dumps/latest.ndjson
+      - REINDEX=0
       - |
         VIRTUAL_HOST_MULTIPORTS=
           dev.bartoc.org:

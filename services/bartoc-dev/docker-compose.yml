@@ -6,8 +6,8 @@ services:
       - mongo-dev
     volumes:
       - $CONFIGS/bartoc-dev:/config
-      - $DATA/bartoc/dumps:/usr/src/app/bartoc/data/dumps
-      - $DATA/bartoc/reports:/usr/src/app/bartoc/data/reports
+      - $DATA/bartoc-dev/dumps:/usr/src/app/bartoc/data/dumps
+      - $DATA/bartoc-dev/reports:/usr/src/app/bartoc/data/reports
     environment:
       - BASE_URL=https://dev.bartoc.org/
       - |

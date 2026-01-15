@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis:7
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1000"]
+    volumes:
+      - $DATA/redis_data:/data
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: redis

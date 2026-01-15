@@ -1,16 +1,10 @@
 services:
   solr:
     image: solr:8
-    container_name: solr
-    ports:
-      - "8983:8983"
     volumes:
       - $DATA/solr_data:/var/solr
-      - $CONFIGS/solr/terminologies-configset:/configsets/terminologies-configset
-    command:
-      - solr-precreate
-      - terminologies
-      - /configsets/terminologies-configset
+      - $CONFIGS/solr/terminologies-configset:/configsets/terminologies-configset:ro
+    command: ["solr-precreate", "terminologies", "/configsets/terminologies-configset"]
     restart: unless-stopped
 
 networks:

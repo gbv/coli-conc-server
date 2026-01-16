@@ -20,6 +20,8 @@ services:
               port: 3000
               dest: "/"
     restart: unless-stopped
+    extra_hosts:
+      - "next.bartoc.org:172.18.0.19"
 
 networks:
   nginx:

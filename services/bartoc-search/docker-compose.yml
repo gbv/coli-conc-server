@@ -25,8 +25,6 @@ services:
               port: 3883
               dest: "/"
     restart: unless-stopped
-  volumes:
-    bartoc-search-data:
 
 networks:
   nginx:

@@ -9,7 +9,7 @@ services:
       - redis
     volumes:
       - $CONFIGS/bartoc-search:/config:ro
-      - $DATA/bartoc-search-data:/usr/src/app/data
+      - bartoc-search-data:/usr/src/app/data
     environment:
       - VIRTUAL_PATH=/vocabularies-next/
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.bartoc.org
@@ -25,6 +25,9 @@ services:
               port: 3883
               dest: "/"
     restart: unless-stopped
+
+volumes:
+  bartoc-search-data:
 
 networks:
   nginx:

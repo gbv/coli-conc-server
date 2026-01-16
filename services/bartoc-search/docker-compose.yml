@@ -9,7 +9,7 @@ services:
       - redis
     volumes:
       - $CONFIGS/bartoc-search:/config:ro
-      - bartoc-search-data:/usr/src/app/data
+      - $DATA/bartoc-search-data:/usr/src/app/data
     environment:
       - VIRTUAL_PATH=/vocabularies-next/
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.bartoc.org

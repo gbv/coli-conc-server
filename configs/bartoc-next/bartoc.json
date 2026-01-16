@@ -1,0 +1,13 @@
+{
+  "name": "NEXT BARTOC.org",
+  "baseUrl": "https://next.bartoc.org/",
+  "port": 80,
+  "backend": {
+    "provider": "ConceptApi",
+    "api": "http://localhost:3000/"
+  },
+  "login": {
+    "api": "bartoc.org/login/",
+    "ssl": true
+  }
+}

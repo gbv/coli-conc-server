@@ -1,10 +1,1 @@
-# config/cron
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-CRON_TZ=Europe/Berlin
-
-# every 6 hours: updater only (fast)
-0 */6 * * * cd /usr/src/app && REINDEX=1 npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2
-
-# every day at 03:30: force enrich + reindex (slow)
-30 3 * * * cd /usr/src/app && FORCE_ENRICH=1 REINDEX=1 npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2
+00 04 * * * cd /usr/src/app/bartoc && npm run dump update > /proc/1/fd/1 2>/proc/1/fd/2

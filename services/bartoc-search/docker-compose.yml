@@ -11,7 +11,7 @@ services:
       - $CONFIGS/bartoc-search:/config:ro
       - bartoc-search-data:/usr/src/app/data
     environment:
-      - VIRTUAL_PATH=/vocabularies-next/
+      - VIRTUAL_PATH=/vocabularies/
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.bartoc.org
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=production
@@ -21,7 +21,7 @@ services:
       - |
         VIRTUAL_HOST_MULTIPORTS=
           bartoc.org:
-            "/vocabularies-next/":
+            "/vocabularies/":
               port: 3883
               dest: "/"
     restart: unless-stopped

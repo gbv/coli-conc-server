@@ -1,9 +1,22 @@
-# Websocket settings
-proxy_set_header X-Forwarded-Proto "https";
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection "upgrade";
-
-# See also https://github.com/nginx-proxy/nginx-proxy/issues/694#issuecomment-316561503
+# Buffers (fine to keep)
 proxy_buffer_size          128k;
 proxy_buffers              4 256k;
 proxy_busy_buffers_size    256k;
+
+# WebSocket (force upgrade)
+location ^~ /api/voc/changes {
+  proxy_pass http://bartoc-search:3883/voc/changes;
+  
+  proxy_http_version 1.1;
+
+  # IMPORTANT: force websocket upgrade (don’t rely on $http_upgrade)
+  proxy_set_header Upgrade "websocket";
+  proxy_set_header Connection "upgrade";
+
+  proxy_set_header Host $host;
+  proxy_set_header X-Forwarded-Proto $scheme;
+
+  proxy_read_timeout 3600s;
+  proxy_send_timeout 3600s;
+  proxy_buffering off;
+}

@@ -1,3 +1,6 @@
+proxy_set_header X-Forwarded-Proto "https";
+proxy_set_header X-Forwarded-Port "443";
+
 # Buffers (fine to keep)
 proxy_buffer_size          128k;
 proxy_buffers              4 256k;
@@ -14,7 +17,7 @@ location ^~ /api/voc/changes {
   proxy_set_header Connection "upgrade";
 
   proxy_set_header Host $host;
-  proxy_set_header X-Forwarded-Proto $scheme;
+  # proxy_set_header X-Forwarded-Proto $scheme;
 
   proxy_read_timeout 3600s;
   proxy_send_timeout 3600s;

@@ -1,6 +1,6 @@
 services:
   jskos-server-test:
-    image: ghcr.io/gbv/jskos-server:2
+    image: ghcr.io/gbv/jskos-server:test
     networks:
       - nginx
       - mongo

@@ -4,10 +4,9 @@
     "host": "mongo-dev",
     "db": "bartoc_dev"
   },
-  "changesApi" : {
-    "enableChangesApi": true,
-    "rsMaxRetries": 20,
-    "rsRetryInterval": 5000
+  "changes" : {
+    "retries": 20,
+    "interval": 5000
   },
   "baseUrl": "https://dev.bartoc.org/api/",
   "auth": {

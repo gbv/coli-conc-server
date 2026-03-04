@@ -4,9 +4,10 @@
     "host": "mongo-prod",
     "db": "bartoc"
   },
-  "changes": {
-    "retries": 20,
-    "interval": 5000
+  "changesApi" : {
+    "enableChangesApi": true,
+    "rsMaxRetries": 20,
+    "rsRetryInterval": 5000
   },
   "baseUrl": "https://bartoc.org/api/",
   "auth": {

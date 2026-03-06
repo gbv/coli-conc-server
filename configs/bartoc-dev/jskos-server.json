@@ -1,8 +1,12 @@
 {
   "title": "BARTOC API (dev)",
   "mongo": {
-    "host": "mongo",
+    "host": "mongo-dev",
     "db": "bartoc_dev"
+  },
+  "changes": {
+    "retries": 20,
+    "interval": 5000
   },
   "baseUrl": "https://dev.bartoc.org/api/",
   "auth": {

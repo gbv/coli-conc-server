@@ -10,7 +10,7 @@
     }
   },
   "redis": {
-    "host": "redis-dev",
+    "host": "redis",
     "pingTimeout": 10000,
     "pingRetries": 5,
     "pingRetryDelay": 1000,
@@ -19,7 +19,7 @@
   "solr": {
     "batchSize": 500,
     "coreName": "terminologies",
-    "host": "solr-dev",
+    "host": "solr",
     "pingTimeout": 10000,
     "pingRetries": 5,
     "pingRetryDelay": 1000,
@@ -27,7 +27,7 @@
     "version": 8.1
   },
   "webSocket": {
-    "host": "wss://dev.bartoc.org/api",
+    "host": "wss://bartoc.org/api",
     "port": 443,
     "path": "/voc/changes",
     "pingTimeout": 10000,
@@ -35,3 +35,4 @@
     "pingRetryDelay": 1000
   }
 }
+

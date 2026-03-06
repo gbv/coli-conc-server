@@ -1,8 +1,13 @@
 {
   "title": "BARTOC API",
   "mongo": {
-    "host": "mongo",
+    "host": "mongo-prod",
     "db": "bartoc"
+  },
+  "changesApi" : {
+    "enableChangesApi": true,
+    "rsMaxRetries": 20,
+    "rsRetryInterval": 5000
   },
   "baseUrl": "https://bartoc.org/api/",
   "auth": {

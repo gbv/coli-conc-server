@@ -1,0 +1,13 @@
+services:
+  solr:
+    image: solr:8
+    volumes:
+      - $DATA/solr_data:/var/solr
+      - $CONFIGS/solr/terminologies-configset:/configsets/terminologies-configset:ro
+    command: ["solr-precreate", "terminologies", "/configsets/terminologies-configset"]
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: solr

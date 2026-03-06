@@ -3,10 +3,10 @@ services:
     image: solr:8
     container_name: solr-dev
     ports:
-      - "8983:8983"
+      - "127.0.0.1:8984:8983"
     volumes:
-      - $DATA/solr_data:/var/solr
-      - $CONFIGS/solr-dev/terminologies-configset:/configsets/terminologies-configset
+      - $DATA/solr_data_dev:/var/solr
+      - $CONFIGS/solr-dev/terminologies-configset:/configsets/terminologies-configset:ro
     command:
       - solr-precreate
       - terminologies

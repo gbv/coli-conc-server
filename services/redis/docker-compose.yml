@@ -1,14 +1,12 @@
 services:
-   redis-dev:
+  redis:
     image: redis:7
-    ports:
-    - "127.0.0.1:6380:6379"
     command: ["redis-server", "--appendonly", "yes", "--save", "60", "1000"]
     volumes:
-      - $DATA/redis_data_dev:/data
+      - $DATA/redis_data:/data
     restart: unless-stopped
 
 networks:
   default:
     external: true
-    name: redis-dev
+    name: redis

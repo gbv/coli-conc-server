@@ -1,41 +1,41 @@
 services:
-  bartoc-search-dev:
-    image: ghcr.io/gbv/bartoc-search:dev
-    container_name: bartoc-search-dev
-    command: ["npm", "run", "start:staging"]
+  bartoc-search:
+    image: ghcr.io/gbv/bartoc-search:main
+    container_name: bartoc-search
+    command: ["npm", "run", "start:prod"]
     networks:
       - nginx
-      - solr-dev
-      - redis-dev
+      - solr
+      - redis
     volumes:
-      - $CONFIGS/bartoc-search-dev:/config:ro
-      - bartoc-search-dev-data:/usr/src/app/data
+      - $CONFIGS/bartoc-search:/config:ro
+      - bartoc-search-data:/usr/src/app/data
     environment:
       - VIRTUAL_PATH=/vocabularies/
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.bartoc.org
       - CONFIG_FILE=/config/config.json
       - NODE_ENV=production
       - DATA_DIR=/usr/src/app/data
-      - BARTOC_DUMP=https://dev.bartoc.org/data/dumps/latest.ndjson
-      - REINDEX=0
+      - BARTOC_DUMP=https://bartoc.org/data/dumps/latest.ndjson
+      - REINDEX=1
       - |
         VIRTUAL_HOST_MULTIPORTS=
-          dev.bartoc.org:
+          bartoc.org:
             "/vocabularies/":
               port: 3883
               dest: "/"
     restart: unless-stopped
 
 volumes:
-  bartoc-search-dev-data:
+  bartoc-search-data:
 
 networks:
   nginx:
     external: true
     name: nginx
-  solr-dev:
+  solr:
     external: true
-    name: solr-dev
-  redis-dev:
+    name: solr
+  redis:
     external: true
-    name: redis-dev
+    name: redis

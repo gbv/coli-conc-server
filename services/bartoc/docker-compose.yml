@@ -3,7 +3,7 @@ services:
     image: ghcr.io/gbv/bartoc.org:main
     networks:
       - nginx
-      - mongo
+      - mongo-prod
     volumes:
       - $CONFIGS/bartoc:/config
       - $DATA/bartoc/dumps:/usr/src/app/bartoc/data/dumps
@@ -28,6 +28,6 @@ networks:
   nginx:
     external: true
     name: nginx
-  mongo:
+  mongo-prod:
     external: true
-    name: mongo
+    name: mongo-prod

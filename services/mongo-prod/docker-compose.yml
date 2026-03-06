@@ -1,0 +1,23 @@
+services:
+  mongo-prod:
+    image: mongo:7
+    container_name: mongo-prod
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    volumes:
+      - $DATA/mongo-prod:/data/db
+      - $HOME/backup:/backup
+    restart: unless-stopped
+
+  mongo-prod-setup-replica-set:
+    image: mongo:7
+    container_name: mongo-prod-replica-set
+    depends_on:
+      - mongo-prod
+    volumes:
+      - $CONFIGS/mongo-initdb.d-prod:/docker-entrypoint-initdb.d
+    restart: "no"
+
+networks:
+  default:
+    external: true
+    name: mongo-prod

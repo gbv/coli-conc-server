@@ -47,12 +47,12 @@ if (!flags.data) {
 
 // Set environment for `docker compose` calls
 import process from "node:process"
-process.env.UID = uid
-process.env.GID = gid
-process.env.HOME = basePath
-process.env.DATA = dataPath
-process.env.CONFIGS = configsPath
-process.env.SECRETS = secretsPath
+process.env.UID = uid || ""
+process.env.GID = gid || ""
+process.env.HOME = basePath || ""
+process.env.DATA = dataPath || ""
+process.env.CONFIGS = configsPath || ""
+process.env.SECRETS = secretsPath || ""
 
 const availableTargets = []
 

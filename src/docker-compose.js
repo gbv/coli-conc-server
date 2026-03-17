@@ -8,12 +8,12 @@ import process from "node:process"
 
 const { uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv("")
 // Set environment for `docker compose` calls
-process.env.UID = uid || ""
-process.env.GID = gid || ""
-process.env.BASE = basePath || ""
-process.env.DATA = dataPath || ""
-process.env.CONFIGS = configsPath || ""
-process.env.SECRETS = secretsPath || ""
+process.env.UID = uid
+process.env.GID = gid
+process.env.BASE = basePath
+process.env.DATA = dataPath
+process.env.CONFIGS = configsPath
+process.env.SECRETS = secretsPath
 
 export async function init() {
   await $`docker compose pull`

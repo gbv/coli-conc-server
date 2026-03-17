@@ -18,8 +18,8 @@ export function getEnv(target) {
     configsPath,
     secretsPath,
     user: Deno.env.get("USER"),
-    uid: Deno.uid(),
-    gid: Deno.gid(),
+    uid: `${Deno.uid()}`,
+    gid: `${Deno.gid()}`,
   }
 }
 

@@ -14,19 +14,12 @@
     "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxQ0PM0Ghui5byBAbmgF+\ndVlN6zaenmqOs9Xj/1r+igMoW5WRxpe9FLNlbbJlAVamAjuAL9SsNme1hr/G6I31\nGrpLhhlvF1hxk7n5qP94BueJ1JF8RuFimUtjhPaclm8KsGsw3QrG+fYoY9P1RYbj\ns0ebuY5b46W4cOjSMchWzMYIBPskNI0rHR/UyfV5caWdziVl6eQpLbmwdttwW2hI\no6683Hgzuml0ww3iLRUClMRSHHfpUGZ3D+C0B1EWrMJEe4kkRyenUOV7H+3H1nro\n51EjYpp27pe39bqoVlRn8bgNHab3uiytzWPb6ds896L5CHSYM3VYJ0+UsL7mJEKg\nVQIDAQAB\n-----END PUBLIC KEY-----"
   },
   "verbosity": "log",
-  "mappings": false,
-  "annotations": false,
-  "concordances": false,
-  "concepts": true,
   "identityGroups": {
     "user:vzg" : {
-      "identities": 
-        [
+      "identities": [
         "https://orcid.org/0000-0002-7613-4123",
         "https://orcid.org/0009-0006-6578-8443",
         "https://orcid.org/0000-0003-1763-3026"
-      ],
-      "claims": [
       ]
     },
     "user:external": {
@@ -59,11 +52,14 @@
         "https://orcid.org/0000-0001-9377-6294",
         "https://orcid.org/0000-0003-2576-1511",
         "https://orcid.org/0000-0002-7476-704X"
-    ],
-      "claims": [
       ]
     }
   },
+  "mappings": true,
+  "registries": true,
+  "annotations": false,
+  "concordances": false,
+  "concepts": true,
   "schemes": {
     "identities": [
       "user:vzg",

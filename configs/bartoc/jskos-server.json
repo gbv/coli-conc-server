@@ -14,26 +14,18 @@
     "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjXZ51rQgM8+37EtRWT94\nHIpV2B5uJNmnTFP8nu/xw17JYSO6Qo4ZC4jYNq0df6h2y4jnpEQNtehtDWFnvaOh\nEwJdaqvQ/0kzyxiHkCbT243vRhppgKIdMTBQ/RsXLlC1qrzquBVA9xz/okoIkN5x\nhR0WpD2hXSGu4lmB5qYFMGUKGCrHmw5OW2OnSoenMo3EFbRNZ/I0vp4ar2QBrFbA\nxrsQPgUJmWsrMSvrNcd9fDzj3/zpWMN5YtMnmwPNfI76pk+Pz1giEVxJ6PoWlJ2M\n9tGmSkti/CcKq833p0yknkfgPRgiI+5gFK4PEUur1h9gAdgMJ+OOO7QuOHHO7q3i\nSQIDAQAB\n-----END PUBLIC KEY-----"
   },
   "verbosity": "warn",
-  "mappings": false,
-  "annotations": false,
-  "concordances": false,
-  "concepts": true,
   "identityGroups": {
     "user:vzg": {
-       "identities": 
-        [
-          "https://orcid.org/0000-0002-6076-9853",
-          "https://orcid.org/0000-0002-7613-4123",
-          "https://orcid.org/0000-0003-1763-3026",
-          "https://orcid.org/0000-0001-7118-3295",
-          "https://orcid.org/0009-0006-6578-8443"
-      ],
-      "claims": [
+      "identities": [
+        "https://orcid.org/0000-0002-6076-9853",
+        "https://orcid.org/0000-0002-7613-4123",
+        "https://orcid.org/0000-0003-1763-3026",
+        "https://orcid.org/0000-0001-7118-3295",
+        "https://orcid.org/0009-0006-6578-8443"
       ]
     },
     "user:external": {
-       "identities": 
-        [
+      "identities": [
         "https://orcid.org/0000-0001-5920-8672",
         "https://orcid.org/0000-0001-7677-4158",
         "https://orcid.org/0000-0001-8796-3923",
@@ -62,11 +54,14 @@
         "https://orcid.org/0000-0003-2576-1511",
         "https://orcid.org/0000-0002-7476-704X",
         "https://orcid.org/0000-0001-5246-9351"
-        ],
-      "claims": [
       ]
     }
   },
+  "mappings": true,
+  "registries": true,
+  "annotations": false,
+  "concordances": false,
+  "concepts": true,
   "schemes": {
     "identities": [
       "user:vzg",

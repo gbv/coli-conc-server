@@ -13,6 +13,12 @@
   },
   "verbosity": "warn",
   "namespace": "523c12f0-1de0-4ce2-9d28-e1563e894c69",
+  "identityGroups": {
+    "user:vzg": {
+      "identities": [
+      ]
+    }
+  },
   "annotations": {
     "moderatingIdentities": [
       "https://github.com/nichtich",
@@ -39,8 +45,6 @@
       "auth": true,
       "crossUser": [
         "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
         "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
         "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
       ]
@@ -49,8 +53,6 @@
       "auth": true,
       "crossUser": [
         "https://github.com/nichtich",
-        "https://github.com/stefandesu",
-        "https://github.com/DavidBRohrer",
         "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
         "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
       ]
@@ -110,9 +112,10 @@
         "https://orcid.org/0000-0003-3459-2211",
         "https://github.com/JPSBB",
         "https://github.com/F-1996-ber",
-         "https://github.com/beatrix-mac",
+        "https://github.com/beatrix-mac",
         "https://github.com/gr-sbb"
       ]
     }
-  }
+  },
+  "registries": false
 }

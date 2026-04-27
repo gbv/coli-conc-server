@@ -10,6 +10,6 @@ wget -O tmp.json 'https://coli-conc.gbv.de/api/mappings?fromScheme=http%3A%2F%2F
 jq -c '.[]|del(.partOf)' tmp.json > ddc-bk-mappings.ndjson
 
 # delete all existing mappings
-yes | npm run reset -- -t mappings
+yes | npm run reset -- -t mappings || true
 
 npm run import mappings ddc-bk-mappings.ndjson

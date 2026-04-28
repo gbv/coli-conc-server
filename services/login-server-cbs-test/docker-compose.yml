@@ -7,6 +7,7 @@ services:
       - mongo
     volumes:
       - $SECRETS/login-server-cbs-test:/config
+      - $CONFIGS/applications.json:/config/applications.json
       - $DATA/login-server/static:/usr/src/app/static
     env_file:
       - $CONFIGS/login-server-cbs-test.env

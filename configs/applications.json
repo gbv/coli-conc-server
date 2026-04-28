@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://coli-conc.gbv.de/cocoda/",
+    "name": "Cocoda"
+  },
+  {
+    "url": "https://bartoc.org/",
+    "name": "BARTOC.org"
+  },
+  {
+    "url": "https://dev.bartoc.org/",
+    "name": "BARTOC.org (dev instance)"
+  },
+  {
+    "url": "https://coli-conc.gbv.de/coli-rich/app/",
+    "name": "coli-rich"
+  },
+  {
+    "url": "https://coli-conc.gbv.de/coli-rich/dev/",
+    "name": "coli-rich (dev instance)"
+  }
+]

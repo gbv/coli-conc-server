@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu
 
+API=https://dev.bartoc.org/api
+
 cd /usr/src/app/jskos-server 
 
 # download relevant mappings
@@ -18,8 +20,9 @@ npm run import mappings ddc-bk-mappings.ndjson
 # check which records to enrich
 enriched=../bartoc/data/bk-enriched.ndjson
 
+echo "Finding enrichment"
 jq -r .uri ../bartoc/data/dumps/latest.ndjson | \
-    node /config/bk-enrich.mjs 2> ../bartoc/data/bk-enrich.log http://dev.bartoc.org/api > $enriched
+    node /config/bk-enrich.mjs $API 2> ../bartoc/data/bk-enrich.log > $enriched
 
 # update records with enrichment
-npm run import schemes $enriched
+npm run import -- schemes $enriched

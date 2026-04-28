@@ -47,7 +47,7 @@ async function processScheme(uri) {
     if (enriched.length > subjects.length) {
       // emit enriched record
       const added = enriched.slice(subjects.length)
-      records[0].subjects = [...subjects, ...added]
+      records[0].subject = [...subjects, ...added]
       console.log(JSON.stringify(records[0]))
     } else {
       console.error(`${uri} no BK enrichment found`)

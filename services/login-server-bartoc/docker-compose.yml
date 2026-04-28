@@ -1,6 +1,6 @@
 services:
   login-server-bartoc:
-    image: ghcr.io/gbv/login-server:0.8
+    image: ghcr.io/gbv/login-server:0.9
     networks:
       - default
       - nginx

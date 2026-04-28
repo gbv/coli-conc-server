@@ -18,7 +18,7 @@ npm run import mappings ddc-bk-mappings.ndjson
 # check which records to enrich
 enriched=../bartoc/data/bk-enriched.ndjson
 
-jq .uri ../bartoc/data/dumps/latest.ndjson | \
+jq -r .uri ../bartoc/data/dumps/latest.ndjson | \
     node /config/bk-enrich.mjs 2> ../bartoc/data/bk-enrich.log http://dev.bartoc.org/api > $enriched
 
 # update records with enrichment

@@ -9,6 +9,7 @@ services:
       - $SECRETS/login-server-cbs-test:/config
       - $CONFIGS/applications.json:/config/applications.json
       - $DATA/login-server/static:/usr/src/app/static
+      - $DATA/login-server-cbs-test/reports:/usr/src/app/reports
     env_file:
       - $CONFIGS/login-server-cbs-test.env
       - $SECRETS/login-server-cbs-test.env

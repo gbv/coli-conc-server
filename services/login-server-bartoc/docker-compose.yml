@@ -8,6 +8,7 @@ services:
     volumes:
       - $SECRETS/login-server-bartoc:/config
       - $DATA/login-server/static:/usr/src/app/static
+      - $DATA/login-server-bartoc/reports:/usr/src/app/reports
     env_file:
       - $CONFIGS/login-server-bartoc.env
       - $SECRETS/login-server-bartoc.env

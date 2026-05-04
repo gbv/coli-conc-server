@@ -7,7 +7,7 @@ services:
       - $CONFIGS/jskos-server-ui-dev.json:/usr/share/nginx/html/config.json:ro
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
-      - VIRTUAL_PORT=8080
+      - VIRTUAL_PORT=80
       - VIRTUAL_PATH=/jskos-server-ui-dev/
       - VIRTUAL_DEST=/
     restart: unless-stopped

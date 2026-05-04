@@ -40,6 +40,17 @@
       }
     },
     {
+      "repository": "gbv/jskos-server-ui",
+      "command": "srv update jskos-server-ui-dev",
+      "event": "workflow_run",
+      "action": "completed",
+      "filter": {
+        "body.workflow_run.head_branch": "dev",
+        "body.workflow_run.path": ".github/workflows/docker.yml",
+        "body.workflow_run.conclusion": "success"
+      }
+    },
+    {
       "repository": "gbv/login-server",
       "command": "srv update login-server",
       "event": "workflow_run",

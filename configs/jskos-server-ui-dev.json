@@ -1,0 +1,19 @@
+{
+  "defaultServer": "https://coli-conc.gbv.de/dev-api/",
+  "footer": {
+    "links": [
+      {
+        "label": "Imprint",
+        "url": "https://www.gbv.de/impressum"
+      },
+      {
+        "label": "Privacy",
+        "url": "https://www.gbv.de/datenschutz"
+      },
+      {
+        "label": "Accessibility",
+        "url": "https://coli-conc.gbv.de/erklaerung-zur-barrierefreiheit/"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+services:
+  jskos-server-ui-dev:
+    image: ghcr.io/gbv/jskos-server-ui:dev
+    networks:
+      - nginx
+    volumes:
+      - $CONFIGS/jskos-server-ui-dev.json:/config/config.json
+    environment:
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PORT=8080
+      - VIRTUAL_PATH=/jskos-server-ui-dev/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+
+networks:
+  nginx:
+    external: true
+    name: nginx

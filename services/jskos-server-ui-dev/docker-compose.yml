@@ -4,7 +4,7 @@ services:
     networks:
       - nginx
     volumes:
-      - $CONFIGS/jskos-server-ui-dev.json:/config/config.json
+      - $CONFIGS/jskos-server-ui-dev.json:/usr/share/nginx/html/config.json:ro
     environment:
       - VIRTUAL_HOST=coli-conc.gbv.de
       - VIRTUAL_PORT=8080

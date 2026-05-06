@@ -2,7 +2,35 @@
   "services": [
     {
       "api": "http://bartoc.org/api-type/jskos",
-      "endpoint": "https://coli-conc-gbv.de/api"
+      "endpoint": "https://coli-conc.gbv.de/api/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "http://api.dante.gbv.de/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://bartoc.org/api/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://coli-conc.gbv.de/dev-api/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://dev.bartoc.org/api/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://coli-conc.gbv.de/rvk/api/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://coli-conc.gbv.de/services/wikidata/"
+    },
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://coli-conc.gbv.de/subjects/"
     }
   ],
   "footer": {

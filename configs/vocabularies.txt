@@ -88,6 +88,17 @@ jskos-server    http://bartoc.org/en/node/454
 # LCNAF - scheme data only
 jskos-server    http://bartoc.org/en/node/18536
 
+# --- BARTOC API (scheme data only) ---
+
+# TS4NFDI vocabularies
+jskos-server    https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18966
+
+# NFDI4objects vocabularies
+jskos-server    https://bartoc.org/api/voc?partOf=http%3A%2F%2Fbartoc.org%2Fen%2Fnode%2F18961
+
+# SBB vocabularies
+jskos-server    https://bartoc.org/api/voc?uri=http://bartoc.org/en/node/20049|http://bartoc.org/en/node/241|http://bartoc.org/en/node/486|http://bartoc.org/en/node/533|http://bartoc.org/en/node/18785|http://bartoc.org/en/node/1043|http://bartoc.org/en/node/220
+
 # TODO: SDNB vs. DDC Sachgruppen. SDNB concepts have the latter as scheme URI.
 jskos-server    http://bartoc.org/en/node/20049     sdnb/sdnb-concepts.ndjson
 jskos-server    http://bartoc.org/en/node/18497

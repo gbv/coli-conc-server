@@ -2,7 +2,7 @@
  * Note: Expects to be in the correct folder (use `cd` from zx).
  */
 
-import { $, cd, fs } from "npm:zx@7"
+import { $, cd, fs } from "npm:zx@8"
 import path from "node:path"
 import { getEnv } from "../src/utils.js"
 import * as hooks from "../configs/hooks.js"

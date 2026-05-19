@@ -17,7 +17,7 @@ import { command, target, additionalArgs } from "../src/args.js"
 import { getEnv } from "../src/utils.js"
 const { targetPath } = getEnv(target)
 
-import { cd } from "npm:zx@7"
+import { cd } from "npm:zx@8"
 import { exists } from "jsr:@std/fs@1"
 
 import * as webhookHandler from "../src/webhook-handler.js"

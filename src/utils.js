@@ -1,4 +1,4 @@
-import { $ } from "npm:zx@7"
+import { $ } from "npm:zx@8"
 
 export function getEnv(target) {
   const homePath = Deno.env.get("HOME")

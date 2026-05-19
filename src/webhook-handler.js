@@ -13,7 +13,7 @@
  * - Remove support for non-Docker services from server.js
  */
 
-import { $, cd } from "npm:zx@7"
+import { $, cd } from "npm:zx@8"
 import { getEnv, manageAdditionalService } from "../src/utils.js"
 import { readJson } from "../src/json.js"
 import { exists } from "jsr:@std/fs@1"

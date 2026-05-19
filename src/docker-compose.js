@@ -2,7 +2,7 @@
  * Note: Expects to be in the correct folder (use `cd` from zx).
  */
 
-import { $ } from "npm:zx@7"
+import { $ } from "npm:zx@8"
 import { getEnv } from "../src/utils.js"
 import process from "node:process"
 

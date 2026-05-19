@@ -4,7 +4,7 @@
  * Currently only supports `configUpdate`.
  */
 
-import { $ } from "npm:zx@7"
+import { $ } from "npm:zx@8"
 
 // deno-lint-ignore no-unused-vars
 export async function configUpdate({ service, updatedFiles }) {

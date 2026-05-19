@@ -14,7 +14,7 @@
 Deno.env.set("FORCE_COLOR", "2")
 import { existsSync } from "jsr:@std/fs@1"
 import { parseArgs } from "jsr:@std/cli@1"
-import { $, cd } from "npm:zx@7"
+import { $, cd } from "npm:zx@8"
 
 const flags = parseArgs(Deno.args, {
   boolean: ["help", "force", "reset"],

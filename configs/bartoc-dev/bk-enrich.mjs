@@ -9,13 +9,16 @@ const bkUri = "http://bartoc.org/en/node/18785"
 const bkConceptsUrl = "https://api.dante.gbv.de/data"
 const bkConceptBatchSize = 20
 const bkConceptFields = ["prefLabel", "notation", "type", "altLabel", "definition", "scopeNote"]
+const bkConcepts = new Map()
 
+// Build an API endpoint URL against the configured BARTOC API base.
 function endpoint(path, params = {}) {
   const url = new URL(path, apiBase)
   Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value))
   return url
 }
 
+// Fetch JSON and turn network/HTTP failures into messages useful in cron logs.
 async function fetchJson(url, options) {
   let response
   try {
@@ -30,17 +33,19 @@ async function fetchJson(url, options) {
   return response.json()
 }
 
+// Merge resolved BK concept data into a mapped subject without losing local fields.
 function materializeBkSubject(subject, concept) {
   if (!concept) {
     return subject
   }
 
-  const materialized = { ...subject }
+  const materialized = {}
   for (const field of bkConceptFields) {
     if (concept[field] !== undefined) {
       materialized[field] = concept[field]
     }
   }
+  Object.assign(materialized, subject)
 
   // Keep the local BARTOC subject shape from mappings/apply. DANTE's concept has
   // its own inScheme URI, while BARTOC needs http://bartoc.org/en/node/18785.
@@ -50,12 +55,24 @@ function materializeBkSubject(subject, concept) {
   return materialized
 }
 
-async function resolveBkConcepts(subjects) {
-  const uris = [...new Set(subjects.map(subject => subject.uri).filter(Boolean))]
-  const concepts = new Map()
+// Treat any non-empty prefLabel object as already usable for display.
+function hasPrefLabel(subject) {
+  return subject.prefLabel && Object.keys(subject.prefLabel).length
+}
 
-  for (let index = 0; index < uris.length; index += bkConceptBatchSize) {
-    const batch = uris.slice(index, index + bkConceptBatchSize)
+// Resolve missing BK labels from DANTE in batches and cache them for this run.
+async function resolveBkConcepts(subjects) {
+  const uris = [
+    ...new Set(subjects
+      .filter(subject => !hasPrefLabel(subject))
+      .map(subject => subject.uri)
+      .filter(Boolean))
+  ]
+  const concepts = new Map()
+  const missing = uris.filter(uri => !bkConcepts.has(uri))
+
+  for (let index = 0; index < missing.length; index += bkConceptBatchSize) {
+    const batch = missing.slice(index, index + bkConceptBatchSize)
     const url = new URL(bkConceptsUrl)
     url.searchParams.set("uri", batch.join("|"))
 
@@ -63,27 +80,42 @@ async function resolveBkConcepts(subjects) {
     try {
       records = await fetchJson(url)
     } catch (e) {
-      console.error(`${e}`)
+      console.error(`DANTE lookup failed for BK batch ${batch.join("|")}: ${e}`)
       continue
     }
     if (!Array.isArray(records)) {
-      console.error(`Unexpected DANTE response for ${url}`)
+      console.error(`Unexpected DANTE response for BK batch ${batch.join("|")}`)
       continue
     }
     for (const concept of records) {
       if (concept?.uri) {
-        concepts.set(concept.uri, concept)
+        bkConcepts.set(concept.uri, concept)
       }
     }
   }
 
   for (const uri of uris) {
-    if (!concepts.has(uri)) {
-      console.error(`BK concept not found in DANTE: ${uri}`)
+    if (bkConcepts.has(uri)) {
+      concepts.set(uri, bkConcepts.get(uri))
     }
   }
 
   return concepts
+}
+
+// Report how many derived BK subjects are display-ready after enrichment.
+function logBkLabelResolution(uri, subjects) {
+  const resolved = subjects.filter(hasPrefLabel).length
+  const missing = subjects
+    .filter(subject => !hasPrefLabel(subject))
+    .map(subject => subject.uri)
+    .filter(Boolean)
+
+  if (missing.length) {
+    console.error(`${uri} BK labels resolved: ${resolved}/${subjects.length}; missing: ${missing.join(", ")}`)
+  } else {
+    console.error(`${uri} BK labels resolved: ${resolved}/${subjects.length}`)
+  }
 }
 
 try {
@@ -102,6 +134,7 @@ readline.createInterface({
   terminal: false
 }).on('line', async line => { try { await processScheme(line) } catch (e) { console.error(`${e}`) } })
 
+// Process one BARTOC scheme URI from stdin and emit it only when BK was added.
 async function processScheme(uri) {
   if (!uri.match(/^http:\/\/bartoc.org\/en\/node\/[0-9]+$/)) {
     throw new Error("Please provide a BARTOC URI")
@@ -131,6 +164,7 @@ async function processScheme(uri) {
       const added = enriched.slice(subjects.length)
       const concepts = await resolveBkConcepts(added)
       const resolved = added.map(subject => materializeBkSubject(subject, concepts.get(subject.uri)))
+      logBkLabelResolution(uri, resolved)
       records[0].subject = [...subjects, ...resolved]
       console.log(JSON.stringify(records[0]))
     } else {

@@ -1,9 +1,30 @@
 import readline from "node:readline"
 
 const [api] = process.argv.slice(2)
+const apiBase = api?.replace(/\/?$/, "/")
+
+function endpoint(path, params = {}) {
+  const url = new URL(path, apiBase)
+  Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value))
+  return url
+}
+
+async function fetchJson(url, options) {
+  let response
+  try {
+    response = await fetch(url, options)
+  } catch (e) {
+    const reason = e.cause?.message || e.message
+    throw new Error(`Fetch failed for ${url}: ${reason}`)
+  }
+  if (!response.ok) {
+    throw new Error(`Fetch failed for ${url}: HTTP ${response.status} ${response.statusText}`)
+  }
+  return response.json()
+}
 
 try {
-    const status = await fetch(`${api}/status`).then(res => res.json())
+    const status = await fetchJson(endpoint("status"))
     if (!status?.ok) {
         throw new Error(`Missing or wrong API: ${api}`)
     }
@@ -12,7 +33,7 @@ try {
   process.exit(1)
 }
 
-const bkUri = "http://bartoc.org/de/node/241"
+const bkUri = "http://bartoc.org/en/node/18785"
 
 readline.createInterface({
   input: process.stdin,
@@ -25,7 +46,7 @@ async function processScheme(uri) {
     throw new Error("Please provide a BARTOC URI")
   }
 
-  const records = await fetch(`${api}/data?uri=${uri}`).then(res => res.json())
+  const records = await fetchJson(endpoint("data", { uri }))
   if (!records.length) {
     throw new Error(`Terminology not found: ${uri}`)
   }
@@ -38,11 +59,11 @@ async function processScheme(uri) {
     const subjects = currentSubjects.filter(s => s.inScheme?.[0]?.uri !== bkUri)
 
     // get enriched subjects
-    const enriched = await fetch(`${api}/mappings/apply?toScheme=${bkUri}`, {
+    const enriched = await fetchJson(endpoint("mappings/apply", { toScheme: bkUri }), {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(subjects)
-    }).then(res => res.json())
+    })
 
     if (enriched.length > subjects.length) {
       // emit enriched record

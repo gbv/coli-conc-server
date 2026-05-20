@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-API=https://dev.bartoc.org/api
+API=http://localhost:3000
 
 cd /usr/src/app/jskos-server 
 

@@ -1,4 +1,5 @@
 import readline from "node:readline"
+import process from "node:process"
 
 const [api] = process.argv.slice(2)
 const apiBase = api?.replace(/\/?$/, "/")
@@ -118,22 +119,6 @@ function logBkLabelResolution(uri, subjects) {
   }
 }
 
-try {
-    const status = await fetchJson(endpoint("status"))
-    if (!status?.ok) {
-        throw new Error(`Missing or wrong API: ${api}`)
-    }
-} catch (e) {
-  console.error(`${e}`)
-  process.exit(1)
-}
-
-readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false
-}).on('line', async line => { try { await processScheme(line) } catch (e) { console.error(`${e}`) } })
-
 // Process one BARTOC scheme URI from stdin and emit it only when BK was added.
 async function processScheme(uri) {
   if (!uri.match(/^http:\/\/bartoc.org\/en\/node\/[0-9]+$/)) {
@@ -170,5 +155,29 @@ async function processScheme(uri) {
     } else {
       console.error(`${uri} no BK enrichment found`)
     }
+  }
+}
+
+try {
+    const status = await fetchJson(endpoint("status"))
+    if (!status?.ok) {
+        throw new Error(`Missing or wrong API: ${api}`)
+    }
+} catch (e) {
+  console.error(`${e}`)
+  process.exit(1)
+}
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+})
+
+for await (const line of rl) {
+  try {
+    await processScheme(line)
+  } catch (e) {
+    console.error(`${e}`)
   }
 }

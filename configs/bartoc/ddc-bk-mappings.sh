@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-API=https://bartoc.org/api
+API=http://localhost:3000
 
 cd /usr/src/app/jskos-server 
 
@@ -22,7 +22,7 @@ enriched=../bartoc/data/bk-enriched.ndjson
 
 echo "Finding enrichment"
 jq -r .uri ../bartoc/data/dumps/latest.ndjson | \
-    node /config/bk-enrich.mjs $API 2> ../bartoc/data/bk-enrich.log > $enriched
+    node /config/bk-enrich.mjs "$API" 2> ../bartoc/data/bk-enrich.log > $enriched
 
 # update records with enrichment
 npm run import -- schemes $enriched

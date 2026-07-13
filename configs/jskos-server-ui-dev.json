@@ -48,5 +48,9 @@
         "url": "https://coli-conc.gbv.de/erklaerung-zur-barrierefreiheit/"
       }
     ]
+  },
+  "login": {
+    "url": "coli-conc.gbv.de/login/",
+    "ssl": true
   }
 }

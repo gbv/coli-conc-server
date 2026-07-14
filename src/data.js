@@ -15,6 +15,7 @@ Deno.env.set("FORCE_COLOR", "2")
 import { existsSync } from "jsr:@std/fs@1"
 import { parseArgs } from "jsr:@std/cli@1"
 import { $, cd } from "npm:zx@8"
+import { getComposeTtyArgs } from "./data-tty.js"
 
 const flags = parseArgs(Deno.args, {
   boolean: ["help", "force", "reset"],
@@ -143,8 +144,9 @@ if (targetService) {
   }
   
   await cd(targetPath)
+  const composeTtyArgs = getComposeTtyArgs()
   try {
-    await $`docker compose run -it ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
+    await $`docker compose run ${composeTtyArgs} ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
   } catch (error) {
     console.error()
     console.error(`An error occurred during import attempt. Details should be in the output above. (exit code: ${error.exitCode})`)

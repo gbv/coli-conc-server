@@ -15,7 +15,10 @@ Deno.env.set("FORCE_COLOR", "2")
 import { existsSync } from "jsr:@std/fs@1"
 import { parseArgs } from "jsr:@std/cli@1"
 import { $, cd } from "npm:zx@8"
-import { getComposeTtyArgs } from "./data-tty.js"
+
+function getComposeTtyArgs() {
+  return Deno.stdin.isTerminal() && Deno.stdout.isTerminal() ? ["-it"] : ["-T"]
+}
 
 const flags = parseArgs(Deno.args, {
   boolean: ["help", "force", "reset"],

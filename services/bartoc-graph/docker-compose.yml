@@ -1,0 +1,19 @@
+services:
+  fuseki:
+    image: ghcr.io/nfdi4objects/n4o-fuseki:main
+    networks:
+      - backend
+    volumes:
+      - $DATA/bartoc-graph/databases:/fuseki/databases
+      - $DATA/bartoc-graph/logs:/fuseki/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null 'http://localhost:3030/n4o?query=ASK%20%7B%7D'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+networks:
+  backend:
+    internal: true

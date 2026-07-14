@@ -1,56 +1,38 @@
 # BARTOC graph: Fuseki
 
-This is the first infrastructure step for
-[`coli-conc-server#72`](https://github.com/gbv/coli-conc-server/issues/72).
-It provides the internal RDF store that the BARTOC graph importer will use in
-a subsequent step.
+Internal RDF store for
+[`coli-conc-server#72`](https://github.com/gbv/coli-conc-server/issues/72),
+using `ghcr.io/nfdi4objects/n4o-fuseki:main`.
 
-The Compose project currently contains only `fuseki`, running
-`ghcr.io/nfdi4objects/n4o-fuseki:main`. Its RDF database is persistent, but no
-port is published and the service is not connected to the public nginx network.
+The database is persistent. Fuseki has no published host port and is not
+connected to the nginx network.
 
-## Initialization
+## Setup
 
-Create the bind-mount directories before starting the service. The upstream
-Fuseki image runs as UID/GID `1000`, so both directories must be writable by
-that user:
+The image runs as UID/GID `1000`. With rootless Docker, set ownership from
+inside the container namespace:
 
 ```sh
-mkdir -p data/bartoc-graph/{databases,logs}
-sudo chown -R 1000:1000 data/bartoc-graph/databases data/bartoc-graph/logs
+mkdir -p "$COLI_CONC_BASE/data/bartoc-graph"/{databases,logs}
 srv configtest bartoc-graph
-srv init bartoc-graph
+srv raw bartoc-graph pull fuseki
+srv run bartoc-graph --rm --user root --entrypoint chown \
+  fuseki -R 1000:1000 /fuseki/databases /fuseki/logs
+srv start bartoc-graph
 ```
 
-The persistent directories are:
-
-```text
-$DATA/bartoc-graph/databases  Fuseki TDB database
-$DATA/bartoc-graph/logs       reserved for Fuseki logs (upstream file logging is currently disabled)
-```
-
-Stopping or restarting the service does not remove the database. Do not use
-`docker compose down --volumes` or delete the directories above if the graph
-must be preserved.
+Persistent data is stored below `$COLI_CONC_BASE/data/bartoc-graph`. Do not
+delete its `databases` directory if the graph must be preserved.
 
 ## Verification
 
-Check that Fuseki is running and healthy:
-
 ```sh
-srv raw bartoc-graph ps
-srv raw bartoc-graph logs --tail=100 fuseki
-```
-
-Run the same minimal SPARQL query used by the healthcheck:
-
-```sh
-srv exec bartoc-graph fuseki wget -q -O - \
+docker inspect bartoc-graph-fuseki-1 --format '{{.State.Health.Status}}'
+docker exec bartoc-graph-fuseki-1 sh -c \
+  'test -w /fuseki/databases && test -w /fuseki/logs && echo "volumes writable"'
+docker exec bartoc-graph-fuseki-1 wget -q -O - \
   'http://localhost:3030/n4o?query=ASK%20%7B%7D'
 ```
 
-The `PORTS` column shown by `srv raw bartoc-graph ps` may contain `3030/tcp`,
-which is the image's internal port, but it must not contain a host mapping such
-as `0.0.0.0:3030->3030/tcp`. Fuseki is deliberately reachable only on the
-project's internal `backend` network; nginx does not need to be changed or
-restarted.
+Expected results are `healthy`, `volumes writable`, and `<boolean>true</boolean>`.
+`3030/tcp` is internal only; nginx requires no changes.

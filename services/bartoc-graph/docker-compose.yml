@@ -43,15 +43,13 @@ services:
       retries: 8
       start_period: 10s
 
-  # Manual job for testing one complete BARTOC metadata update. The profile
-  # keeps it out of normal `srv start` until scheduling is added separately.
+  # Daily pilot update. scheduler.sh keeps cron in the foreground, while
+  # update.sh remains available as a one-off command for manual runs.
   updater:
-    profiles:
-      - manual
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["/config/update.sh"]
+    command: ["/config/scheduler.sh"]
     networks:
       - backend
       - egress
@@ -64,6 +62,7 @@ services:
     environment:
       - BARTOC_DUMP_URL=${BARTOC_GRAPH_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
       - IMPORTER_URL=http://importer:5020
+    restart: unless-stopped
 
 networks:
   backend:

@@ -6,9 +6,8 @@ using `ghcr.io/nfdi4objects/n4o-fuseki:main` and
 `ghcr.io/nfdi4objects/n4o-graph-importer:main`.
 
 Fuseki stores the RDF database, while the importer maintains its registry and
-stage files and writes terminology metadata to Fuseki. A manual updater job
-downloads and registers metadata from the current BARTOC dump. Scheduling will
-be added only after the manual update has been verified.
+stage files and writes terminology metadata to Fuseki. A pilot updater job
+downloads and registers metadata from the current BARTOC dump every day.
 
 The database and importer stage are persistent. Neither service has a
 published host port or is connected to the nginx network.
@@ -84,12 +83,11 @@ therefore performs two independent requests: it checks that `/status.json`
 returns valid JSON and then sends an `ASK {}` query directly to Fuseki. The
 importer is healthy only when both endpoints are reachable.
 
-## Manual BARTOC update
+## Scheduled and manual BARTOC update
 
-The `updater` service currently belongs to the Compose profile `manual`, so a
-normal `srv start bartoc-graph` does not run it. This keeps the first updater
-implementation separate from scheduling and allows one complete update to be
-observed and verified before cron is introduced.
+The `updater` service installs `/config/cron` and keeps `crond` in the
+foreground. The cron job runs `update.sh` every day at 05:00 UTC. Starting or
+restarting the container does not trigger an additional update.
 
 Before downloading data, `update.sh` acquires a non-blocking lock on
 `/data/update.lock`. If another update is already running, the new invocation
@@ -116,11 +114,18 @@ The updater joins the internal `backend` network to reach the importer and the
 regular `egress` network to download the public dump. It has no published port
 and does not access Fuseki directly.
 
-Build the small Alpine image and run one update with:
+Build the small Alpine image and start the scheduled service with:
 
 ```sh
 srv raw bartoc-graph build updater
-srv run bartoc-graph --rm updater
+srv start bartoc-graph
+srv raw bartoc-graph logs --follow updater
+```
+
+Run an additional update manually with:
+
+```sh
+srv run bartoc-graph --rm updater /config/update.sh
 ```
 
 The download is converted completely into `/data/.bartoc.json.tmp` before

@@ -1,4 +1,4 @@
-# BARTOC graph: Fuseki and importer
+# BARTOC graph: Fuseki, importer, and updater
 
 Internal RDF store and metadata importer for
 [`coli-conc-server#72`](https://github.com/gbv/coli-conc-server/issues/72),
@@ -6,8 +6,9 @@ using `ghcr.io/nfdi4objects/n4o-fuseki:main` and
 `ghcr.io/nfdi4objects/n4o-graph-importer:main`.
 
 Fuseki stores the RDF database, while the importer maintains its registry and
-stage files and writes terminology metadata to Fuseki. Automated download and
-import of the BARTOC dump will be added separately.
+stage files and writes terminology metadata to Fuseki. A manual updater job
+downloads and registers metadata from the current BARTOC dump. Scheduling will
+be added only after the manual update has been verified.
 
 The database and importer stage are persistent. Neither service has a
 published host port or is connected to the nginx network.
@@ -83,6 +84,81 @@ therefore performs two independent requests: it checks that `/status.json`
 returns valid JSON and then sends an `ASK {}` query directly to Fuseki. The
 importer is healthy only when both endpoints are reachable.
 
+## Manual BARTOC update
+
+The `updater` service currently belongs to the Compose profile `manual`, so a
+normal `srv start bartoc-graph` does not run it. This keeps the first updater
+implementation separate from scheduling and allows one complete update to be
+observed and verified before cron is introduced.
+
+This manual-only version has no execution lock. A small lock will be added
+together with cron, when scheduled and manual runs could otherwise overlap.
+
+The job performs five operations:
+
+```text
+download latest.ndjson
+  -> convert the NDJSON records to one JSON array
+  -> reject an empty dump or records without numeric BARTOC node URIs
+  -> atomically replace /data/bartoc.json
+  -> PUT the first 10 records to importer /terminology/
+```
+
+The complete dump remains available in `bartoc.json`, but this prototype sends
+only its first 10 records while the upstream batch performance is being
+evaluated. The updater can send complete records because the importer uses
+their `uri` fields to build its registry and reads the metadata from the shared
+file. A separate URI-only file is therefore unnecessary.
+
+The updater joins the internal `backend` network to reach the importer and the
+regular `egress` network to download the public dump. It has no published port
+and does not access Fuseki directly.
+
+Build the small Alpine image and run one update with:
+
+```sh
+srv raw bartoc-graph build updater
+srv run bartoc-graph --rm updater
+```
+
+The download is converted completely into `/data/.bartoc.json.tmp` before
+`bartoc.json` is replaced. Because both paths are on the same filesystem, the
+rename is atomic and download or JSON errors preserve the previous file. The
+importer rebuild itself is not transactional: if its request fails after the
+file replacement, run the updater again to rebuild the registry.
+
+The script reports the total dump size and the selected batch before the PUT,
+then prints completed and remaining counts when it returns. The importer batch
+endpoint does not stream per-record progress, so the simple client cannot show
+intermediate completion without adding a separate polling loop.
+
+## `bartoc.json` format
+
+The public dump is newline-delimited JSON: each line contains one complete
+BARTOC record. The updater uses `jq --slurp` to convert those lines into the
+single JSON array stored as `/data/bartoc.json`. An abbreviated real record
+looks like:
+
+```json
+[
+  {
+    "uri": "http://bartoc.org/en/node/10",
+    "prefLabel": {
+      "en": "Australian Public Affairs Information Service Thesaurus",
+      "und": "APAIS Thesaurus"
+    },
+    "type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme",
+      "http://w3id.org/nkos/nkostype#thesaurus"
+    ]
+  }
+]
+```
+
+Actual records contain additional JSKOS/BARTOC metadata. The importer mounts
+the file read-only at `/app/data/bartoc.json` and looks up records by their
+numeric BARTOC node URI.
+
 ## Setup
 
 The image runs as UID/GID `1000`. With rootless Docker, set ownership from
@@ -103,7 +179,7 @@ Persistent data is stored below `$COLI_CONC_BASE/data/bartoc-graph`:
 databases  Fuseki database
 logs       Fuseki logs
 stage      importer registry and stage files
-data       local importer data, including the future bartoc.json
+data       local importer data, including bartoc.json
 ```
 
 Do not delete `databases` if the graph must be preserved. The importer mounts

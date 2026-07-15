@@ -43,6 +43,30 @@ services:
       retries: 8
       start_period: 10s
 
+  # Manual job for testing one complete BARTOC metadata update. The profile
+  # keeps it out of normal `srv start` until scheduling is added separately.
+  updater:
+    profiles:
+      - manual
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["/config/update.sh"]
+    networks:
+      - backend
+      - egress
+    depends_on:
+      importer:
+        condition: service_healthy
+    volumes:
+      - $CONFIGS/bartoc-graph:/config:ro
+      - $DATA/bartoc-graph/data:/data
+    environment:
+      - BARTOC_DUMP_URL=${BARTOC_GRAPH_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
+      - IMPORTER_URL=http://importer:5020
+
 networks:
   backend:
     internal: true
+  # Only the updater needs outbound access to download the public dump.
+  egress:

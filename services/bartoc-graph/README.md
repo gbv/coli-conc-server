@@ -130,7 +130,9 @@ file replacement, run the updater again to rebuild the registry.
 The script reports the total dump size and the selected batch before the PUT,
 then prints completed and remaining counts when it returns. The importer batch
 endpoint does not stream per-record progress, so the simple client cannot show
-intermediate completion without adding a separate polling loop.
+intermediate completion without adding a separate polling loop. These progress
+messages are written to standard error so they remain visible through `srv run`;
+standard output is left free for possible machine-readable results.
 
 ## `bartoc.json` format
 

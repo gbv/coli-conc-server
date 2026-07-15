@@ -10,13 +10,19 @@ DATA_DIR=/data
 # rewrites the metadata graph once per record.
 RECORD_LIMIT=10
 
+# Write operational messages to stderr: this is the stream reliably forwarded
+# by `srv run`, while stdout remains available for machine-readable output.
+log() {
+  printf '%s\n' "$*" >&2
+}
+
 # Keep the temporary file beside bartoc.json so the final rename stays on one
 # filesystem and is atomic. A failed download or conversion leaves the current
 # bartoc.json untouched.
 tmp_file="$DATA_DIR/.bartoc.json.tmp"
 trap 'rm -f "$tmp_file"' 0
 
-echo "Downloading BARTOC metadata from $BARTOC_DUMP_URL"
+log "Downloading BARTOC metadata from $BARTOC_DUMP_URL"
 curl --fail --show-error --silent --location \
   --retry 3 \
   --connect-timeout 10 \
@@ -33,14 +39,14 @@ curl --fail --show-error --silent --location \
 
 total_count=$(jq 'length' "$tmp_file")
 mv "$tmp_file" "$DATA_DIR/bartoc.json"
-echo "Stored $total_count BARTOC records in $DATA_DIR/bartoc.json"
+log "Stored $total_count BARTOC records in $DATA_DIR/bartoc.json"
 
 # PUT accepts complete BARTOC records, so jq can select a prototype-sized batch
 # directly from bartoc.json without creating a second URI-only file.
 import_count=$(jq ".[0:$RECORD_LIMIT] | length" "$DATA_DIR/bartoc.json")
 skipped_count=$((total_count - import_count))
-echo "Sending $import_count of $total_count BARTOC records to the importer"
-echo "Batch progress: 0/$import_count complete, $import_count remaining; $skipped_count intentionally skipped"
+log "Sending $import_count of $total_count BARTOC records to the importer"
+log "Batch progress: 0/$import_count complete, $import_count remaining; $skipped_count intentionally skipped"
 
 # The batch endpoint responds only after the entire request has been processed,
 # so this simple client can report start and completion counts but not live
@@ -55,4 +61,4 @@ jq --compact-output ".[0:$RECORD_LIMIT]" "$DATA_DIR/bartoc.json" \
     --output /dev/null \
     "$IMPORTER_URL/terminology/"
 
-echo "Batch progress: $import_count/$import_count complete, 0 remaining; $skipped_count intentionally skipped"
+log "Batch progress: $import_count/$import_count complete, 0 remaining; $skipped_count intentionally skipped"

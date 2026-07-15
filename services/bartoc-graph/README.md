@@ -91,8 +91,10 @@ normal `srv start bartoc-graph` does not run it. This keeps the first updater
 implementation separate from scheduling and allows one complete update to be
 observed and verified before cron is introduced.
 
-This manual-only version has no execution lock. A small lock will be added
-together with cron, when scheduled and manual runs could otherwise overlap.
+Before downloading data, `update.sh` acquires a non-blocking lock on
+`/data/update.lock`. If another update is already running, the new invocation
+prints one message and exits successfully. The lock is released automatically
+when the process exits; the empty lock file can remain in the data directory.
 
 The job performs five operations:
 

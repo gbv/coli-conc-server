@@ -16,6 +16,15 @@ log() {
   printf '%s\n' "$*" >&2
 }
 
+# The kernel releases this lock automatically when the process exits. The file
+# itself may remain in /data; only the active lock on it indicates a running job.
+lock_file="$DATA_DIR/update.lock"
+exec 9>"$lock_file"
+if ! flock --nonblock 9; then
+  log "Another BARTOC update is already running; skipping this run"
+  exit 0
+fi
+
 # Keep the temporary file beside bartoc.json so the final rename stays on one
 # filesystem and is atomic. A failed download or conversion leaves the current
 # bartoc.json untouched.

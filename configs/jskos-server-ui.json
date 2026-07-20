@@ -1,0 +1,28 @@
+{
+  "services": [
+    {
+      "api": "http://bartoc.org/api-type/jskos",
+      "endpoint": "https://coli-conc.gbv.de/api/"
+    }
+  ],
+  "footer": {
+    "links": [
+      {
+        "label": "Imprint",
+        "url": "https://www.gbv.de/impressum"
+      },
+      {
+        "label": "Privacy",
+        "url": "https://www.gbv.de/datenschutz"
+      },
+      {
+        "label": "Accessibility",
+        "url": "https://coli-conc.gbv.de/erklaerung-zur-barrierefreiheit/"
+      }
+    ]
+  },
+  "login": {
+    "url": "coli-conc.gbv.de/login/",
+    "ssl": true
+  }
+}

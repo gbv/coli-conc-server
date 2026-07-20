@@ -1,0 +1,21 @@
+services:
+  jskos-server-ui:
+    image: ghcr.io/gbv/jskos-server-ui:main
+    networks:
+      - nginx
+    volumes:
+      - $CONFIGS/jskos-server-ui.json:/usr/share/nginx/html/config.json:ro
+    environment:
+      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_PORT=80
+      - VIRTUAL_PATH=/jskos-server-ui/
+      - VIRTUAL_DEST=/
+    restart: unless-stopped
+    labels:
+      description: "Web-based frontend for browsing JSKOS data on JSKOS Server instances"
+      type: application
+
+networks:
+  nginx:
+    external: true
+    name: nginx

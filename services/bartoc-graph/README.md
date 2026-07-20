@@ -101,14 +101,13 @@ download latest.ndjson
   -> convert the NDJSON records to one JSON array
   -> reject an empty dump or records without numeric BARTOC node URIs
   -> atomically replace /data/bartoc.json
-  -> PUT the first 10 records to importer /terminology/
+  -> PUT all records to importer /terminology/
 ```
 
-The complete dump remains available in `bartoc.json`, but this prototype sends
-only its first 10 records while the upstream batch performance is being
-evaluated. The updater can send complete records because the importer uses
-their `uri` fields to build its registry and reads the metadata from the shared
-file. A separate URI-only file is therefore unnecessary.
+The complete dump remains available in `bartoc.json` and the updater sends all
+of its records. It can send complete records because the importer uses their
+`uri` fields to build its registry and reads the metadata from the shared file.
+A separate URI-only file is therefore unnecessary.
 
 The updater joins the internal `backend` network to reach the importer and the
 regular `egress` network to download the public dump. It has no published port
@@ -134,11 +133,18 @@ rename is atomic and download or JSON errors preserve the previous file. The
 importer rebuild itself is not transactional: if its request fails after the
 file replacement, run the updater again to rebuild the registry.
 
-The script reports the total dump size and the selected batch before the PUT,
-then prints completed and remaining counts when it returns. The importer batch
-endpoint does not stream per-record progress, so the simple client cannot show
-intermediate completion without adding a separate polling loop. These progress
-messages are written to standard error so they remain visible through `srv run`;
+The importer batch endpoint does not stream per-record progress. While the PUT
+is running, the updater therefore samples the importer's `stage` directory,
+mounted read-only at `/stage`, every 60 seconds. Each log line contains a UTC
+timestamp, elapsed seconds, the number of staged terminology records, and the
+target count. During replacement the count may first decrease while the old
+registry is purged and then increase while the new registry is built. The
+interval can be changed with `BARTOC_GRAPH_PROGRESS_INTERVAL_SECONDS`.
+
+The PUT has no total timeout because a full rebuild can take longer than the
+previous six-hour pilot limit. The update lock prevents the following scheduled
+run from starting concurrently if a rebuild is still active. Progress messages
+are written to standard error so they remain visible through `srv run`;
 standard output is left free for possible machine-readable results.
 
 ## `bartoc.json` format

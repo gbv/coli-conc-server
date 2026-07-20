@@ -43,7 +43,7 @@ services:
       retries: 8
       start_period: 10s
 
-  # Daily pilot update. scheduler.sh keeps cron in the foreground, while
+  # Daily graph update. scheduler.sh keeps cron in the foreground, while
   # update.sh remains available as a one-off command for manual runs.
   updater:
     build:
@@ -59,9 +59,11 @@ services:
     volumes:
       - $CONFIGS/bartoc-graph:/config:ro
       - $DATA/bartoc-graph/data:/data
+      - $DATA/bartoc-graph/stage:/stage:ro
     environment:
       - BARTOC_DUMP_URL=${BARTOC_GRAPH_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
       - IMPORTER_URL=http://importer:5020
+      - PROGRESS_INTERVAL_SECONDS=${BARTOC_GRAPH_PROGRESS_INTERVAL_SECONDS:-60}
     restart: unless-stopped
 
 networks:

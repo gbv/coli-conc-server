@@ -1,16 +1,18 @@
-# BARTOC graph: Fuseki, importer, and updater
+# BARTOC graph: Fuseki, importer, query API, and updater
 
 Internal RDF store and metadata importer for
 [`coli-conc-server#72`](https://github.com/gbv/coli-conc-server/issues/72),
 using `ghcr.io/nfdi4objects/n4o-fuseki:main` and
-`ghcr.io/nfdi4objects/n4o-graph-importer:main`.
+`ghcr.io/nfdi4objects/n4o-graph-importer:main`, with
+`ghcr.io/nfdi4objects/n4o-graph-apis:main` as its public query-only API.
 
 Fuseki stores the RDF database, while the importer maintains its registry and
 stage files and writes terminology metadata to Fuseki. An updater job downloads
 and registers all metadata from the current BARTOC dump every day.
 
-The database and importer stage are persistent. Neither service has a
-published host port or is connected to the nginx network.
+The database and importer stage are persistent. Fuseki and the importer have
+no published host ports and remain on the internal backend network. Only the
+query API also joins the nginx network.
 
 ## Importer process
 
@@ -82,6 +84,34 @@ that would test the SPARQL connection is commented out. The Compose healthcheck
 therefore performs two independent requests: it checks that `/status.json`
 returns valid JSON and then sends an `ASK {}` query directly to Fuseki. The
 importer is healthy only when both endpoints are reachable.
+
+## Public SPARQL query API
+
+The `query-api` service publishes one endpoint through nginx:
+
+```text
+https://bartoc.org/api/sparql
+```
+
+It forwards SPARQL queries internally to `http://fuseki:3030/n4o`. The public
+service accepts GET and POST query requests and passes through result formats
+for SELECT, ASK, CONSTRUCT, and DESCRIBE. SPARQL Update content, update form
+parameters, and Graph Store methods are rejected. Fuseki itself remains only on
+the internal `backend` network and port 3030 is not published.
+
+The upstream API returns `Access-Control-Allow-Origin: *`, which includes
+`https://bartoc.org` and is appropriate for this public read-only endpoint. The
+BARTOC configuration value for
+[`bartoc.org#317`](https://github.com/gbv/bartoc.org/issues/317) is therefore:
+
+```json
+{
+  "sparql": "https://bartoc.org/api/sparql"
+}
+```
+
+The service's healthcheck sends `ASK {}` through the public API process to the
+internal Fuseki endpoint. No optional stage or report data is enabled.
 
 ## Scheduled and manual BARTOC update
 
@@ -230,7 +260,7 @@ inside the container namespace:
 ```sh
 mkdir -p "$COLI_CONC_BASE/data/bartoc-graph"/{databases,logs,stage,data}
 srv configtest bartoc-graph
-srv raw bartoc-graph pull fuseki importer
+srv raw bartoc-graph pull fuseki importer query-api
 srv run bartoc-graph --rm --user root --entrypoint chown \
   fuseki -R 1000:1000 /fuseki/databases /fuseki/logs
 srv start bartoc-graph
@@ -258,6 +288,7 @@ public interface.
 
 ```sh
 docker inspect bartoc-graph-fuseki-1 bartoc-graph-importer-1 \
+  bartoc-graph-query-api-1 \
   --format '{{.Name}} {{.State.Health.Status}}'
 docker exec bartoc-graph-fuseki-1 sh -c \
   'test -w /fuseki/databases && test -w /fuseki/logs && echo "volumes writable"'
@@ -265,9 +296,19 @@ docker exec bartoc-graph-fuseki-1 wget -q -O - \
   'http://localhost:3030/n4o?query=ASK%20%7B%7D'
 docker exec bartoc-graph-importer-1 python -c \
   "import urllib.request; print(urllib.request.urlopen('http://localhost:5020/status.json').read().decode())"
+curl --fail --show-error --silent --get \
+  --data-urlencode 'query=ASK {}' \
+  --header 'Accept: application/sparql-results+json' \
+  https://bartoc.org/api/sparql
+curl --silent --output /dev/null --write-out '%{http_code}\n' \
+  --request POST \
+  --header 'Content-Type: application/sparql-update' \
+  --data 'INSERT DATA { <urn:test:s> <urn:test:p> <urn:test:o> }' \
+  https://bartoc.org/api/sparql
 ```
 
-Both containers must be `healthy`. The remaining expected results are
-`volumes writable`, `<boolean>true</boolean>`, and importer status containing
-`"sparql": "http://fuseki:3030/n4o"`. Ports `3030/tcp` and `5020/tcp` are
-internal only; nginx requires no changes.
+All three containers must be `healthy`. The remaining expected results are
+`volumes writable`, `<boolean>true</boolean>`, importer status containing
+`"sparql": "http://fuseki:3030/n4o"`, a public ASK result with `true`, and HTTP
+status `400` for the attempted update. Ports `3030/tcp` and `5020/tcp` remain
+internal; nginx discovers the query API from its container environment.

@@ -43,6 +43,34 @@ services:
       retries: 8
       start_period: 10s
 
+  query-api:
+    image: ghcr.io/nfdi4objects/n4o-graph-apis:main
+    networks:
+      - backend
+      - nginx
+    depends_on:
+      fuseki:
+        condition: service_healthy
+    volumes:
+      - $CONFIGS/bartoc-graph/graph-api.yaml:/app/config.yaml:ro
+    environment:
+      - SPARQL=http://fuseki:3030/n4o
+      - STAGE=
+      - VIRTUAL_HOST=bartoc.org
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=/api/sparql
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.parse, urllib.request; urllib.request.urlopen('http://localhost:8000/api/sparql?' + urllib.parse.urlencode({'query': 'ASK {}'}), timeout=5).read()"
+      interval: 15s
+      timeout: 10s
+      retries: 8
+      start_period: 10s
+
   # Daily graph update. scheduler.sh keeps cron in the foreground, while
   # update.sh remains available as a one-off command for manual runs.
   updater:
@@ -69,5 +97,8 @@ services:
 networks:
   backend:
     internal: true
+  nginx:
+    external: true
+    name: nginx
   # Only the updater needs outbound access to download the public dump.
   egress:

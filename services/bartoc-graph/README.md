@@ -6,8 +6,8 @@ using `ghcr.io/nfdi4objects/n4o-fuseki:main` and
 `ghcr.io/nfdi4objects/n4o-graph-importer:main`.
 
 Fuseki stores the RDF database, while the importer maintains its registry and
-stage files and writes terminology metadata to Fuseki. A pilot updater job
-downloads and registers metadata from the current BARTOC dump every day.
+stage files and writes terminology metadata to Fuseki. An updater job downloads
+and registers all metadata from the current BARTOC dump every day.
 
 The database and importer stage are persistent. Neither service has a
 published host port or is connected to the nginx network.
@@ -86,7 +86,7 @@ importer is healthy only when both endpoints are reachable.
 ## Scheduled and manual BARTOC update
 
 The `updater` service installs `/config/cron` and keeps `crond` in the
-foreground. The cron job runs `update.sh` every day at 05:00 UTC. Starting or
+foreground. The cron job runs `update.sh` every day at 04:15 UTC. Starting or
 restarting the container does not trigger an additional update.
 
 Before downloading data, `update.sh` acquires a non-blocking lock on
@@ -94,20 +94,24 @@ Before downloading data, `update.sh` acquires a non-blocking lock on
 prints one message and exits successfully. The lock is released automatically
 when the process exits; the empty lock file can remain in the data directory.
 
-The job performs five operations:
+The job performs these operations:
 
 ```text
 download latest.ndjson
-  -> convert the NDJSON records to one JSON array
+  -> preserve the unmodified response as /data/bartoc.raw.ndjson
+  -> inspect all nested JSON-LD contexts
+  -> remove only the known nested JSKOS context from an importer copy
+  -> convert that NDJSON copy to one JSON array
   -> reject an empty dump or records without numeric BARTOC node URIs
   -> atomically replace /data/bartoc.json
   -> PUT all records to importer /terminology/
 ```
 
-The complete dump remains available in `bartoc.json` and the updater sends all
-of its records. It can send complete records because the importer uses their
-`uri` fields to build its registry and reads the metadata from the shared file.
-A separate URI-only file is therefore unnecessary.
+The exact downloaded dump remains available in `bartoc.raw.ndjson`.
+`bartoc.json` contains all the same records, normalized only as described below,
+and is the file sent to the importer. The importer uses each record's `uri` to
+build its registry and reads the metadata from the shared file, so a separate
+URI-only file is unnecessary.
 
 The updater joins the internal `backend` network to reach the importer and the
 regular `egress` network to download the public dump. It has no published port
@@ -127,11 +131,21 @@ Run an additional update manually with:
 srv run bartoc-graph --rm updater /config/update.sh
 ```
 
-The download is converted completely into `/data/.bartoc.json.tmp` before
-`bartoc.json` is replaced. Because both paths are on the same filesystem, the
-rename is atomic and download or JSON errors preserve the previous file. The
-importer rebuild itself is not transactional: if its request fails after the
-file replacement, run the updater again to rebuild the registry.
+To see the output live and retain a separate log for analysis, run it from a
+shell that supports `pipefail`:
+
+```sh
+set -o pipefail
+srv run bartoc-graph --rm updater /config/update.sh 2>&1 \
+  | tee bartoc-graph-manual-import.log
+```
+
+The download and normalized JSON are written completely to temporary files in
+`/data` before their final paths are replaced. Each rename is atomic because
+its source and destination are on the same filesystem. Download, validation,
+and JSON errors therefore preserve the previous importer input. The importer
+rebuild itself is not transactional: if its request fails after the file
+replacement, run the updater again to rebuild the registry.
 
 The importer batch endpoint does not stream per-record progress. While the PUT
 is running, the updater therefore samples the importer's `stage` directory,
@@ -147,12 +161,46 @@ run from starting concurrently if a rebuild is still active. Progress messages
 are written to standard error so they remain visible through `srv run`;
 standard output is left free for possible machine-readable results.
 
+### Local nested-context workaround
+
+Some BARTOC records contain the canonical JSKOS context URL not only at the
+record root but also inside nested concepts:
+
+```json
+{
+  "@context": "https://gbv.github.io/jskos/context.json",
+  "subject": [
+    {
+      "uri": "http://dewey.info/class/321/e23/",
+      "@context": "https://gbv.github.io/jskos/context.json"
+    }
+  ]
+}
+```
+
+The importer replaces the root context with its bundled JSKOS context, but
+PyLD still tries to download the nested context. That request fails because the
+importer is deliberately confined to the internal network, causing the entire
+batch request to return HTTP 500.
+
+As a local workaround, the updater removes only nested declarations whose value
+is exactly `https://gbv.github.io/jskos/context.json` from the importer copy.
+Root `@context` declarations are retained. The raw NDJSON is never modified.
+For the currently affected records, comparison with online JSON-LD expansion
+showed identical RDF triples before and after this normalization.
+
+This is intentionally not a generic context remover. If the dump contains any
+other nested context value, the updater stops before replacing persistent input
+files or calling the importer. The upstream fix should make PyLD resolve the
+canonical JSKOS URL from the importer's bundled context; once that is available,
+this local normalization can be removed.
+
 ## `bartoc.json` format
 
 The public dump is newline-delimited JSON: each line contains one complete
-BARTOC record. The updater uses `jq --slurp` to convert those lines into the
-single JSON array stored as `/data/bartoc.json`. An abbreviated real record
-looks like:
+BARTOC record. The updater stores those bytes as `/data/bartoc.raw.ndjson`, then
+uses `jq --slurp` to normalize the known nested contexts and create the single
+JSON array stored as `/data/bartoc.json`. An abbreviated real record looks like:
 
 ```json
 [
@@ -194,7 +242,7 @@ Persistent data is stored below `$COLI_CONC_BASE/data/bartoc-graph`:
 databases  Fuseki database
 logs       Fuseki logs
 stage      importer registry and stage files
-data       local importer data, including bartoc.json
+data       raw BARTOC dump and normalized bartoc.json importer input
 ```
 
 Do not delete `databases` if the graph must be preserved. The importer mounts

@@ -5,6 +5,7 @@ set -o pipefail
 
 BARTOC_DUMP_URL=${BARTOC_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
 IMPORTER_URL=${IMPORTER_URL:-http://importer:5020}
+JSKOS_CONTEXT_URL=https://gbv.github.io/jskos/context.json
 PROGRESS_INTERVAL_SECONDS=${PROGRESS_INTERVAL_SECONDS:-60}
 DATA_DIR=${DATA_DIR:-/data}
 STAGE_DIR=${STAGE_DIR:-/stage}
@@ -37,9 +38,10 @@ if ! flock --nonblock 9; then
   exit 0
 fi
 
-# Keep the temporary file beside bartoc.json so the final rename stays on one
-# filesystem and is atomic. A failed download or conversion leaves the current
-# bartoc.json untouched.
+# Keep temporary files beside their final paths so both renames stay on one
+# filesystem and are atomic. A failed download or conversion leaves the current
+# files untouched.
+raw_tmp_file="$DATA_DIR/.bartoc.raw.ndjson.tmp"
 tmp_file="$DATA_DIR/.bartoc.json.tmp"
 
 cleanup() {
@@ -51,7 +53,7 @@ cleanup() {
     kill "$import_pid" 2>/dev/null || true
     wait "$import_pid" 2>/dev/null || true
   fi
-  rm -f "$tmp_file"
+  rm -f "$raw_tmp_file" "$tmp_file"
 }
 
 trap cleanup 0
@@ -89,19 +91,41 @@ curl --fail --show-error --silent --location \
   --retry 3 \
   --connect-timeout 10 \
   --max-time 600 \
-  "$BARTOC_DUMP_URL" \
-  | jq --slurp --compact-output --exit-status '
+  --output "$raw_tmp_file" \
+  "$BARTOC_DUMP_URL"
+
+# PyLD cannot download nested contexts from the importer's internal network.
+# Collect their paths in the slurped array, reject every value except the known
+# JSKOS URL, and remove the accepted paths in the same jq transformation. Root
+# contexts have paths of length two ([record index, "@context"]) and remain.
+jq --slurp --compact-output --exit-status --arg context "$JSKOS_CONTEXT_URL" '
       if length > 0 and all(.[];
         type == "object"
         and ((.uri? // "") | test("^http://bartoc[.]org/en/node/[1-9][0-9]*$"))
-      ) then .
-      else error("expected non-empty BARTOC records with numeric node URIs")
+      ) then
+        .
+      else
+        error("expected non-empty BARTOC records with numeric node URIs")
       end
-    ' > "$tmp_file"
+      | . as $records
+      | [
+          paths as $path
+          | select(($path | length) > 2 and $path[-1] == "@context")
+          | {path: $path, value: getpath($path)}
+        ] as $nested_contexts
+      | [$nested_contexts[] | select(.value != $context)] as $unsupported
+      | if ($unsupported | length) > 0 then
+          error("unsupported nested JSON-LD context: \($unsupported[0].value | tojson)")
+        else
+          $records | delpaths([$nested_contexts[].path])
+        end
+    ' "$raw_tmp_file" > "$tmp_file"
 
 total_count=$(jq 'length' "$tmp_file")
+mv "$raw_tmp_file" "$DATA_DIR/bartoc.raw.ndjson"
 mv "$tmp_file" "$DATA_DIR/bartoc.json"
-log "Stored $total_count BARTOC records in $DATA_DIR/bartoc.json"
+log "Stored unmodified BARTOC dump in $DATA_DIR/bartoc.raw.ndjson"
+log "Stored $total_count normalized BARTOC records in $DATA_DIR/bartoc.json"
 
 initial_stage_count=$(stage_record_count)
 log "Sending all $total_count BARTOC records to the importer"

@@ -10,8 +10,8 @@ services:
       - $DATA/bartoc-graph/databases:/fuseki/databases
       - $DATA/bartoc-graph/logs:/fuseki/logs
     environment:
-      JAVA_OPTIONS: >-
-        -Xms256m
+      - >-
+        JAVA_OPTIONS=-Xms256m
         -Xmx2g
         -XX:+HeapDumpOnOutOfMemoryError
         -XX:HeapDumpPath=/fuseki/logs
@@ -108,7 +108,7 @@ services:
       - BARTOC_DUMP_URL=${BARTOC_GRAPH_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
       - IMPORTER_URL=http://importer:5020
       - PROGRESS_INTERVAL_SECONDS=${BARTOC_GRAPH_PROGRESS_INTERVAL_SECONDS:-60}
-      - RECORD_LIMIT=${BARTOC_GRAPH_RECORD_LIMIT:-50}
+      - RECORD_LIMIT=${BARTOC_GRAPH_RECORD_LIMIT:-1000}
     restart: unless-stopped
 
 networks:

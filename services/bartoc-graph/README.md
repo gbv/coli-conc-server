@@ -8,7 +8,7 @@ using `ghcr.io/nfdi4objects/n4o-fuseki:main` and
 
 Fuseki stores the RDF database, while the importer maintains its registry and
 stage files and writes terminology metadata to Fuseki. An updater job downloads
-and registers all metadata from the current BARTOC dump every day.
+the current BARTOC dump and registers a configurable pilot subset every day.
 
 The database and importer stage are persistent. Fuseki and the importer have
 no published host ports and remain on the internal backend network. Only the
@@ -45,16 +45,19 @@ returns `true` for an empty database, so the service can become healthy before
 any BARTOC metadata has been imported.
 
 The command discards the response body and succeeds only when `wget` receives
-a successful HTTP response. Docker runs it every 10 seconds, allows 5 seconds
-for each attempt, ignores failures during the first 20 seconds, and marks the
-container unhealthy after 12 consecutive failures. The importer uses
+a successful HTTP response. Docker runs it every 30 seconds, allows 5 seconds
+for each attempt, ignores failures during the first 30 seconds, and marks the
+container unhealthy after 5 consecutive failures. The importer uses
 `depends_on` with `condition: service_healthy`, so it is not started until this
 check succeeds.
 
-This healthcheck confirms SPARQL endpoint availability, but it does not verify
-the number of triples, the presence of specific BARTOC records, or persistence
-and filesystem permissions. Those properties require the separate verification
-commands below.
+The image's `config.ttl` does not enable the Fuseki `/$/ping` endpoint: its
+`fuseki:Server` declaration is commented out. The healthcheck therefore retains
+the `ASK {}` query instead of assuming that `/$/ping` exists, but runs it only
+every 30 seconds. This confirms SPARQL endpoint availability, but it does not
+verify the number of triples, the presence of specific BARTOC records, or
+persistence and filesystem permissions. Those properties require the separate
+verification commands below.
 
 ## Importer status and healthcheck
 
@@ -80,10 +83,10 @@ The useful diagnostic fields are `base`, `data`, `sparql`, `stage`, and
 changes between processes and must not be used for health checks.
 
 In the current upstream image, `connected` is always set to `true`; the code
-that would test the SPARQL connection is commented out. The Compose healthcheck
-therefore performs two independent requests: it checks that `/status.json`
-returns valid JSON and then sends an `ASK {}` query directly to Fuseki. The
-importer is healthy only when both endpoints are reachable.
+that would test the SPARQL connection is commented out. The importer
+healthcheck deliberately checks only that its local `/status.json` endpoint
+returns valid JSON. Fuseki has its own healthcheck, and Compose already starts
+the importer only after Fuseki is healthy.
 
 ## Public SPARQL query API
 
@@ -110,13 +113,28 @@ BARTOC configuration value for
 }
 ```
 
-The service's healthcheck sends `ASK {}` through the public API process to the
-internal Fuseki endpoint. No optional stage or report data is enabled.
+The service has no dedicated health endpoint. Its local `/` route renders the
+index page without issuing a SPARQL query, so the healthcheck uses that route
+every 60 seconds. No optional stage or report data is enabled.
+
+## Memory limits
+
+Compose overrides the Fuseki image's fixed 6 GiB initial and maximum heap with
+`-Xms256m -Xmx2g`. Heap dumps and rotating GC logs are written to the existing
+`/fuseki/logs` volume. Fuseki has a 3 GiB hard container limit and a one-minute
+shutdown grace period so that normal stops have time to close the TDB1 dataset.
+
+The remaining services are bounded independently: 768 MiB for the importer,
+512 MiB for the query API, and 1 GiB for the updater. Each service's
+`memswap_limit` equals its `mem_limit`, preventing this stack from consuming
+additional host swap beyond those memory allocations. These limits protect the
+host but do not imply that this stack was the only source of the observed global
+memory pressure.
 
 ## Scheduled and manual BARTOC update
 
 The `updater` service installs `/config/cron` and keeps `crond` in the
-foreground. The cron job runs `update.sh` every day at 04:15 UTC. Starting or
+foreground. The cron job runs `update.sh` every day at 06:00 UTC. Starting or
 restarting the container does not trigger an additional update.
 
 Before downloading data, `update.sh` acquires a non-blocking lock on
@@ -129,19 +147,22 @@ The job performs these operations:
 ```text
 download latest.ndjson
   -> preserve the unmodified response as /data/bartoc.raw.ndjson
+  -> select the first configured number of records (50 by default)
   -> inspect all nested JSON-LD contexts
   -> remove only the known nested JSKOS context from an importer copy
   -> convert that NDJSON copy to one JSON array
   -> reject an empty dump or records without numeric BARTOC node URIs
   -> atomically replace /data/bartoc.json
-  -> PUT all records to importer /terminology/
+  -> PUT the selected records to importer /terminology/
 ```
 
 The exact downloaded dump remains available in `bartoc.raw.ndjson`.
-`bartoc.json` contains all the same records, normalized only as described below,
-and is the file sent to the importer. The importer uses each record's `uri` to
-build its registry and reads the metadata from the shared file, so a separate
-URI-only file is unnecessary.
+`bartoc.json` contains the first `BARTOC_GRAPH_RECORD_LIMIT` records (50 by
+default), normalized only as described below, and is the file sent to the
+importer. Applying the limit before `jq --slurp` bounds memory use in both the
+updater and importer. The importer uses each record's `uri` to build its
+registry and reads the metadata from the shared file, so a separate URI-only
+file is unnecessary.
 
 The updater joins the internal `backend` network to reach the importer and the
 regular `egress` network to download the public dump. It has no published port

@@ -7,6 +7,7 @@ BARTOC_DUMP_URL=${BARTOC_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
 IMPORTER_URL=${IMPORTER_URL:-http://importer:5020}
 JSKOS_CONTEXT_URL=https://gbv.github.io/jskos/context.json
 PROGRESS_INTERVAL_SECONDS=${PROGRESS_INTERVAL_SECONDS:-60}
+RECORD_LIMIT=${RECORD_LIMIT:-50}
 DATA_DIR=${DATA_DIR:-/data}
 STAGE_DIR=${STAGE_DIR:-/stage}
 job_started_at=$(date +%s)
@@ -16,6 +17,13 @@ import_pid=
 case "$PROGRESS_INTERVAL_SECONDS" in
   ''|*[!0-9]*|0)
     printf 'PROGRESS_INTERVAL_SECONDS must be a positive integer\n' >&2
+    exit 1
+    ;;
+esac
+
+case "$RECORD_LIMIT" in
+  ''|*[!0-9]*|0)
+    printf 'RECORD_LIMIT must be a positive integer\n' >&2
     exit 1
     ;;
 esac
@@ -98,7 +106,8 @@ curl --fail --show-error --silent --location \
 # Collect their paths in the slurped array, reject every value except the known
 # JSKOS URL, and remove the accepted paths in the same jq transformation. Root
 # contexts have paths of length two ([record index, "@context"]) and remain.
-jq --slurp --compact-output --exit-status --arg context "$JSKOS_CONTEXT_URL" '
+head -n "$RECORD_LIMIT" "$raw_tmp_file" \
+  | jq --slurp --compact-output --exit-status --arg context "$JSKOS_CONTEXT_URL" '
       if length > 0 and all(.[];
         type == "object"
         and ((.uri? // "") | test("^http://bartoc[.]org/en/node/[1-9][0-9]*$"))
@@ -119,13 +128,13 @@ jq --slurp --compact-output --exit-status --arg context "$JSKOS_CONTEXT_URL" '
         else
           $records | delpaths([$nested_contexts[].path])
         end
-    ' "$raw_tmp_file" > "$tmp_file"
+    ' > "$tmp_file"
 
 total_count=$(jq 'length' "$tmp_file")
 mv "$raw_tmp_file" "$DATA_DIR/bartoc.raw.ndjson"
 mv "$tmp_file" "$DATA_DIR/bartoc.json"
 log "Stored unmodified BARTOC dump in $DATA_DIR/bartoc.raw.ndjson"
-log "Stored $total_count normalized BARTOC records in $DATA_DIR/bartoc.json"
+log "Stored $total_count normalized BARTOC records in $DATA_DIR/bartoc.json (limit=$RECORD_LIMIT)"
 
 initial_stage_count=$(stage_record_count)
 log "Sending all $total_count BARTOC records to the importer"

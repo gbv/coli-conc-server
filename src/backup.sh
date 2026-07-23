@@ -5,8 +5,22 @@ umask 022
 
 repo=${BACKUP_REPO:-/home/cocoda/backup}
 repo_mounted=${BACKUP_REPO_MOUNTED:-/backup}
+lock_file=${BACKUP_LOCK_FILE:-/home/cocoda/.backup.lock}
 backup_failed=0
 backup_succeeded=0
+
+# Keep the descriptor open to hold the lock for the entire backup.
+exec 9>"$lock_file" || exit 1
+flock -n -E 75 9
+lock_status=$?
+if (( lock_status == 75 ))
+then
+  printf 'Backup already running\n'
+  exit 0
+elif (( lock_status != 0 ))
+then
+  exit "$lock_status"
+fi
 
 # Run Git without automatic garbage collection or maintenance
 git_repo() {

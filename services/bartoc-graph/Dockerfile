@@ -1,4 +1,5 @@
 FROM alpine:3.23
 
-# The updater only needs curl for HTTP and jq for NDJSON/JSON conversion.
-RUN apk add --no-cache curl jq
+# The updater uses curl for HTTP, jq for NDJSON/JSON conversion, and flock to
+# serialize scheduled and manual runs.
+RUN apk add --no-cache curl jq flock

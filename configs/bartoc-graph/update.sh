@@ -3,11 +3,15 @@
 # Step 1: enable strict shell behavior so command, variable, and pipeline
 # failures are not silently ignored.
 set -eu
+# BusyBox ash supports pipefail although it is not part of POSIX sh.
+# shellcheck disable=SC3040
 set -o pipefail
 
 # Load the effective runtime configuration and initialize process state.
 BARTOC_DUMP_URL=${BARTOC_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
 IMPORTER_URL=${IMPORTER_URL:-http://importer:5020}
+FUSEKI_URL=${FUSEKI_URL:-http://fuseki:3030/n4o}
+GRAPH_BASE=${GRAPH_BASE:-https://bartoc.org/graph/}
 JSKOS_CONTEXT_URL=https://gbv.github.io/jskos/context.json
 RECORD_LIMIT=${RECORD_LIMIT:-1000}
 DATA_DIR=${DATA_DIR:-/data}
@@ -132,4 +136,19 @@ if [ "$import_status" -ne 0 ]; then
   exit "$import_status"
 fi
 
-log "Batch completed: target_records=$total_count"
+# The importer responds only after processing the complete batch. Record that
+# successful completion in a small, dedicated graph for SPARQL clients.
+completed_at=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+metadata_graph="${GRAPH_BASE}metadata/"
+
+log "Recording successful graph update at $completed_at"
+printf '<%s> <http://purl.org/dc/terms/modified> "%s"^^<http://www.w3.org/2001/XMLSchema#dateTime> .\n' \
+  "$GRAPH_BASE" "$completed_at" \
+  | curl --fail --show-error --silent \
+      --request PUT \
+      --header 'Content-Type: text/turtle' \
+      --data-binary @- \
+      --url-query "graph=$metadata_graph" \
+      "$FUSEKI_URL"
+
+log "Batch completed: target_records=$total_count updated=$completed_at"

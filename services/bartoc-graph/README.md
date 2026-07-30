@@ -27,6 +27,7 @@ flowchart LR
     fuseki["Fuseki / n4o<br/>port 3030"]
 
     updater -->|"PUT /terminology/"| importer
+    updater -->|"write update timestamp"| fuseki
     importer -->|"SPARQL"| fuseki
     query -->|"read-only SPARQL"| fuseki
   end
@@ -140,6 +141,37 @@ owns its stage and updates Fuseki.
 
 Concurrent runs are prevented by a lock. The importer batch is not
 transactional, so rerun the updater after resolving a failed import.
+
+After the importer successfully processes the complete request, the updater
+replaces a small, dedicated metadata graph with the current UTC timestamp. If
+the importer request fails, the previous timestamp remains unchanged.
+
+The timestamp is publicly available through the query API:
+
+```sparql
+PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT ?updated {
+  GRAPH <https://bartoc.org/graph/metadata/> {
+    <https://bartoc.org/graph/> dct:modified ?updated
+  }
+}
+```
+
+### Upstream timestamp handling
+
+The direct timestamp write is intentionally local to the updater for now.
+Upstream [`n4o-graph-importer#52`](https://github.com/nfdi4objects/n4o-graph-importer/issues/52)
+tracks changing registry replacement so that `update_metadata()` runs once,
+after all records have been registered. That final publication is also the
+natural place to add a graph-level `dct:modified` statement to the generated
+terminology metadata.
+
+Keeping the timestamp in the same Graph Store PUT as the complete terminology
+metadata would make both values describe the same published graph version. Once
+an importer image with that behavior is available and verified, remove the
+updater's direct Fuseki write, its `FUSEKI_URL` and `GRAPH_BASE` settings, and
+query the timestamp from the terminology metadata graph instead.
 
 Build, start, and inspect the scheduled updater:
 

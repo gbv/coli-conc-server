@@ -7,7 +7,7 @@ The stack combines:
 - `ghcr.io/nfdi4objects/n4o-fuseki:main` as the RDF store;
 - `ghcr.io/nfdi4objects/n4o-graph-importer:main` as the registry and importer;
 - `ghcr.io/nfdi4objects/n4o-graph-apis:main` as the public query-only API;
-- a local updater that registers a configurable subset of the BARTOC dump.
+- a local updater that registers the complete BARTOC dump.
 
 Fuseki and the importer remain on the internal network. Only the query API is
 reachable through nginx.
@@ -59,7 +59,7 @@ The three host-mounted storage areas have different owners and lifecycles:
 
 | Directory | Owner | Purpose |
 | --- | --- | --- |
-| `data` | updater; read by importer | Unmodified BARTOC dump and normalized `bartoc.json`. |
+| `data` | updater; read by importer | Unmodified BARTOC dump and the complete `bartoc.json` array. |
 | `stage` | importer | Persistent registry, per-item staging files, reports, and generated metadata. |
 | `databases` and `logs` | Fuseki | TDB database, heap dumps, and rotating GC logs. |
 
@@ -134,17 +134,18 @@ rotating GC logs to its persistent `logs` directory.
 The updater runs `/config/update.sh` every day at 06:00 UTC. Starting or
 restarting its container does not trigger an immediate update.
 
-It preserves the complete BARTOC dump, creates `/data/bartoc.json` from the
-first `BARTOC_GRAPH_RECORD_LIMIT` records (`1000` by default), and sends them
-to the importer. The updater writes only the shared `data` volume; the importer
-owns its stage and updates Fuseki.
+It preserves the complete BARTOC dump, converts all records to the JSON array
+in `/data/bartoc.json`, and sends the complete array to the importer. The
+updater writes only the shared `data` volume; the importer owns its stage and
+updates Fuseki.
 
 Concurrent runs are prevented by a lock. The importer batch is not
 transactional, so rerun the updater after resolving a failed import.
 
-After the importer successfully processes the complete request, the updater
-replaces a small, dedicated metadata graph with the current UTC timestamp. If
-the importer request fails, the previous timestamp remains unchanged.
+The importer validates all records before replacing the registry, resolves
+supported JSON-LD contexts from local copies, and publishes the terminology
+metadata graph once after processing the complete batch. That publication adds
+a `dct:modified` timestamp to the graph.
 
 The timestamp is publicly available through the query API:
 
@@ -152,26 +153,15 @@ The timestamp is publicly available through the query API:
 PREFIX dct: <http://purl.org/dc/terms/>
 
 SELECT ?updated {
-  GRAPH <https://bartoc.org/graph/metadata/> {
-    <https://bartoc.org/graph/> dct:modified ?updated
+  GRAPH <https://bartoc.org/graph/terminology/> {
+    <https://bartoc.org/graph/terminology/> dct:modified ?updated
   }
 }
 ```
 
-### Upstream timestamp handling
-
-The direct timestamp write is intentionally local to the updater for now.
-Upstream [`n4o-graph-importer#52`](https://github.com/nfdi4objects/n4o-graph-importer/issues/52)
-tracks changing registry replacement so that `update_metadata()` runs once,
-after all records have been registered. That final publication is also the
-natural place to add a graph-level `dct:modified` statement to the generated
-terminology metadata.
-
-Keeping the timestamp in the same Graph Store PUT as the complete terminology
-metadata would make both values describe the same published graph version. Once
-an importer image with that behavior is available and verified, remove the
-updater's direct Fuseki write, its `FUSEKI_URL` and `GRAPH_BASE` settings, and
-query the timestamp from the terminology metadata graph instead.
+This timestamp is written by the importer in the same Graph Store request as
+the complete terminology metadata, as implemented for
+[`n4o-graph-importer#60`](https://github.com/nfdi4objects/n4o-graph-importer/issues/60).
 
 Build, start, and inspect the scheduled updater:
 

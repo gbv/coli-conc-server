@@ -106,9 +106,6 @@ services:
     environment:
       - BARTOC_DUMP_URL=${BARTOC_GRAPH_DUMP_URL:-https://bartoc.org/data/dumps/latest.ndjson}
       - IMPORTER_URL=http://importer:5020
-      - FUSEKI_URL=http://fuseki:3030/n4o
-      - GRAPH_BASE=${BARTOC_GRAPH_BASE:-https://bartoc.org/graph/}
-      - RECORD_LIMIT=${BARTOC_GRAPH_RECORD_LIMIT:-1000}
     restart: unless-stopped
 
 networks:

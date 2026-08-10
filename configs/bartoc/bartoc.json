@@ -9,5 +9,6 @@
   "login": {
     "api": "bartoc.org/login/",
     "ssl": true
-  }
+  },
+  "sparql": "https://bartoc.org/api/sparql"
 }

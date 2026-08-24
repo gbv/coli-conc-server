@@ -23,7 +23,7 @@
       "event": "workflow_run",
       "action": "completed",
       "filter": {
-        "body.workflow_run.head_branch": "master",
+        "body.workflow_run.head_branch": "main",
         "body.workflow_run.path": ".github/workflows/docker.yml",
         "body.workflow_run.conclusion": "success"
       }
@@ -67,7 +67,7 @@
       "event": "workflow_run",
       "action": "completed",
       "filter": {
-        "body.workflow_run.head_branch": "master",
+        "body.workflow_run.head_branch": "main",
         "body.workflow_run.path": ".github/workflows/docker.yml",
         "body.workflow_run.conclusion": "success"
       }

@@ -6,7 +6,7 @@ services:
     environment:
       - URL=https://coli-conc.gbv.de
       - PATHPREFIX=
-      - VIRTUAL_HOST=coli-conc.gbv.de
+      - VIRTUAL_HOST=coli-conc.gbv.de,www.gbv.de
       - VIRTUAL_PATH=/
     restart: unless-stopped
 

@@ -60,35 +60,37 @@
     }
   },
   "schemes": {
-    "identities": [ "user:admin" ],
-    "crossUser": [ "user:admin" ],
     "read": {
       "auth": false
     },
     "create": {
-      "auth": true
+      "auth": true,
+      "identities": [ "user:admin" ]
     },
     "update": {
-      "auth": true
+      "auth": true,
+      "crossUser": [ "user:admin" ]
     },
     "delete": {
-      "auth": true
+      "auth": true,
+      "crossUser": [ "user:admin" ]
     }
   },
   "registries": {
-    "identities": [ "user:admin" ],
-    "crossUser": [ "user:admin" ],
     "read": {
       "auth": false
     },
     "create": {
-      "auth": true
+      "auth": true,
+      "identities": [ "user:admin" ]
     },
     "update": {
-      "auth": true
+      "auth": true,
+      "crossUser": [ "user:admin" ]
     },
     "delete": {
-      "auth": true
+      "auth": true,
+      "crossUser": [ "user:admin" ]
     }
   }
 }

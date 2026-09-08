@@ -89,6 +89,10 @@ jskos-server    http://bartoc.org/en/node/454
 # LCNAF - scheme data only
 jskos-server    http://bartoc.org/en/node/18536
 
+# Required for concordances by NFDI4Objects
+jskos-server    http://bartoc.org/en/node/21156
+jskos-server    http://bartoc.org/en/node/21157
+
 # --- BARTOC API (scheme data only) ---
 
 # TS4NFDI vocabularies

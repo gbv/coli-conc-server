@@ -17,18 +17,6 @@
   },
   "verbosity": "warn",
   "namespace": "e4479369-32e8-44ca-ac9f-c9b9d1e84238",
-  "identityGroups": {
-    "user:admin": {
-      "identities": [
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
-        "https://github.com/nichtich",
-        "https://orcid.org/0000-0003-1763-3026",
-        "https://orcid.org/0009-0006-6578-8443",
-        "https://orcid.org/0000-0003-4389-5871",
-        "https://orcid.org/0000-0002-5042-1087"
-      ]
-    }
-  },
   "annotations": {
     "moderatingIdentities": [
       "https://github.com/nichtich"
@@ -57,40 +45,6 @@
     "delete": {
       "auth": true,
       "crossUser": false
-    }
-  },
-  "schemes": {
-    "read": {
-      "auth": false
-    },
-    "create": {
-      "auth": true,
-      "identities": [ "user:admin" ]
-    },
-    "update": {
-      "auth": true,
-      "crossUser": [ "user:admin" ]
-    },
-    "delete": {
-      "auth": true,
-      "crossUser": [ "user:admin" ]
-    }
-  },
-  "registries": {
-    "read": {
-      "auth": false
-    },
-    "create": {
-      "auth": true,
-      "identities": [ "user:admin" ]
-    },
-    "update": {
-      "auth": true,
-      "crossUser": [ "user:admin" ]
-    },
-    "delete": {
-      "auth": true,
-      "crossUser": [ "user:admin" ]
     }
   }
 }

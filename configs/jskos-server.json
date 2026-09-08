@@ -15,37 +15,20 @@
   "verbosity": "warn",
   "namespace": "523c12f0-1de0-4ce2-9d28-e1563e894c69",
   "identityGroups": {
-    "user:admin": {
+    "user:vzg": {
       "identities": [
-        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
-        "https://github.com/nichtich",
-        "https://orcid.org/0000-0003-1763-3026",
-        "https://orcid.org/0009-0006-6578-8443"
-      ]
-    },
-    "user:concordances": {
-      "identities": [
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
-        "https://coli-conc.gbv.de/login/users/b2db45dd-6b26-41da-8205-e0257d758cd9",
-        "https://orcid.org/0009-0006-6578-8443",
-        "https://orcid.org/0000-0003-3732-3682",
-        "https://orcid.org/0000-0003-3459-2211",
-        "https://github.com/JPSBB",
-        "https://github.com/F-1996-ber",
-        "https://github.com/beatrix-mac",
-        "https://github.com/gr-sbb",
-        "https://orcid.org/0009-0005-3991-1025"
       ]
     }
   },
   "annotations": {
     "moderatingIdentities": [
-      "user:admin",
+      "https://github.com/nichtich",
       "https://github.com/mfm2015",
       "https://github.com/pamx",
       "https://orcid.org/0000-0002-8115-6044",
       "https://www.wikidata.org/wiki/User:AOKempf",
-      "https://www.wikidata.org/wiki/User:Callmejonah"
+      "https://www.wikidata.org/wiki/User:Callmejonah",
+      "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
     ],
     "mismatchTagVocabulary": {
       "uri": "https://uri.gbv.de/terminology/mismatch/"
@@ -61,37 +44,22 @@
     "update": {
       "auth": true,
       "crossUser": [
-        "user:admin",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49"
+        "https://github.com/nichtich",
+        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
       ]
     },
     "delete": {
       "auth": true,
       "crossUser": [
-        "user:admin",
-        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49"
+        "https://github.com/nichtich",
+        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280"
       ]
     },
     "fromSchemeWhitelist": null,
     "toSchemeWhitelist": null,
     "cardinality": "1-to-n"
-  },
-  "schemes": {
-    "read": {
-      "auth": false
-    },
-    "create": {
-      "auth": true,
-      "identities": [ "user:admin" ]
-    },
-    "update": {
-      "auth": true,
-      "crossUser": [ "user:admin" ]
-    },
-    "delete": {
-      "auth": true,
-      "crossUser": [ "user:admin" ]
-    }
   },
   "concordances": {
     "read": {
@@ -99,15 +67,57 @@
     },
     "create": {
       "auth": true,
-      "identities": [ "user:admin", "user:concordances" ]
+      "identities": [
+        "https://github.com/nichtich",
+        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
+        "https://orcid.org/0000-0003-1763-3026",
+        "https://coli-conc.gbv.de/login/users/b2db45dd-6b26-41da-8205-e0257d758cd9",
+        "https://orcid.org/0009-0006-6578-8443",
+        "https://orcid.org/0000-0003-3732-3682",
+        "https://orcid.org/0000-0003-3459-2211",
+        "https://github.com/JPSBB",
+        "https://github.com/F-1996-ber",
+        "https://github.com/beatrix-mac",
+        "https://github.com/gr-sbb",
+        "https://orcid.org/0009-0005-3991-1025"
+      ]
     },
     "update": {
       "auth": true,
-      "crossUser": [ "user:admin" ]
+      "crossUser": [
+        "https://github.com/nichtich",
+        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
+        "https://orcid.org/0000-0003-1763-3026",
+        "https://coli-conc.gbv.de/login/users/b2db45dd-6b26-41da-8205-e0257d758cd9",
+        "https://orcid.org/0009-0006-6578-8443",
+        "https://orcid.org/0000-0003-3732-3682",
+        "https://orcid.org/0000-0003-3459-2211",
+        "https://github.com/JPSBB",
+        "https://github.com/F-1996-ber",
+        "https://github.com/beatrix-mac",
+        "https://github.com/gr-sbb",
+        "https://orcid.org/0009-0005-3991-1025"
+      ]
     },
     "delete": {
       "auth": true,
-      "crossUser": [ "user:admin" ]
+      "crossUser": [
+        "https://github.com/nichtich",
+        "https://coli-conc.gbv.de/login/users/d89dce6e-8995-49f5-9a2c-54d8aef7cd49",
+        "https://coli-conc.gbv.de/login/users/bf445064-200f-4734-849c-4c0d10657280",
+        "https://orcid.org/0000-0003-1763-3026",
+        "https://coli-conc.gbv.de/login/users/b2db45dd-6b26-41da-8205-e0257d758cd9",
+        "https://orcid.org/0009-0006-6578-8443",
+        "https://orcid.org/0000-0003-3732-3682",
+        "https://orcid.org/0000-0003-3459-2211",
+        "https://github.com/JPSBB",
+        "https://github.com/F-1996-ber",
+        "https://github.com/beatrix-mac",
+        "https://github.com/gr-sbb",
+        "https://orcid.org/0009-0005-3991-1025"
+      ]
     }
   },
   "registries": false

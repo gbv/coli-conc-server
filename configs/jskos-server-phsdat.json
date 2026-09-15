@@ -1,0 +1,115 @@
+{
+  "baseUrl": "https://coli-conc.gbv.de/phsdat/api/",
+  "title": "JSKOS Server PHS-Dat",
+  "env": "production",
+  "proxies": ["193.174.240.246", "193.174.240.247"],
+  "mongo": {
+    "host": "mongo",
+    "db": "jskos-server-phsdat"
+  },
+  "auth": {
+    "algorithm": "RS256",
+    "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxQ0PM0Ghui5byBAbmgF+\ndVlN6zaenmqOs9Xj/1r+igMoW5WRxpe9FLNlbbJlAVamAjuAL9SsNme1hr/G6I31\nGrpLhhlvF1hxk7n5qP94BueJ1JF8RuFimUtjhPaclm8KsGsw3QrG+fYoY9P1RYbj\ns0ebuY5b46W4cOjSMchWzMYIBPskNI0rHR/UyfV5caWdziVl6eQpLbmwdttwW2hI\no6683Hgzuml0ww3iLRUClMRSHHfpUGZ3D+C0B1EWrMJEe4kkRyenUOV7H+3H1nro\n51EjYpp27pe39bqoVlRn8bgNHab3uiytzWPb6ds896L5CHSYM3VYJ0+UsL7mJEKg\nVQIDAQAB\n-----END PUBLIC KEY-----",
+    "server": "https://coli-conc.gbv.de/login/"
+  },
+  "verbosity": "warn",
+  "namespace": "523c12f0-1de0-4ce2-9d28-e1563e894c69",
+  "annotations": {
+    "read": {
+      "auth": false
+    },
+    "create": {
+      "auth": true,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "update": {
+      "auth": true,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "delete": {
+      "auth": true,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    }
+  },
+  "mappings": {
+    "read": {
+      "auth": false,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "create": {
+      "auth": true,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "update": {
+      "auth": true,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "delete": {
+      "auth": true,
+      "identities": [
+        "https://orcid.org/0000-0002-7387-7247",
+        "https://orcid.org/0009-0009-6945-1014",
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    }
+  },
+  "concordances": false,
+  "schemes": {
+    "read": {
+      "auth": false
+    },
+    "create": {
+      "auth": true,
+      "identities": [
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "update": {
+      "auth": true,
+      "crossUser": [
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    },
+    "delete": {
+      "auth": true,
+      "crossUser": [
+        "https://github.com/nichtich",
+        "https://orcid.org/0000-0003-1763-3026"
+      ]
+    }
+  },
+  "registries": false
+}

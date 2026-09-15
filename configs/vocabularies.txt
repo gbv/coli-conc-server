@@ -111,6 +111,16 @@ jskos-server    http://bartoc.org/en/node/18497
 ### RVK ###
 jskos-server-rvk  http://bartoc.org/en/node/533     rvk/2023_4/rvko_2023_4.ndjson
 
+### PHS-Dat
+jskos-server-phsdat     http://bartoc.org/en/node/21156
+jskos-server-phsdat     http://bartoc.org/en/node/21157
+jskos-server-phsdat     http://bartoc.org/en/node/1683
+jskos-server-phsdat     http://bartoc.org/en/node/451
+jskos-server-phsdat     http://bartoc.org/en/node/20491
+jskos-server-phsdat     http://bartoc.org/en/node/20468
+jskos-server-phsdat     http://bartoc.org/en/node/20832
+
+
 ### Dev ###
 
 # Import scheme entries for all coli-conc vocabularies (so that they are supported by mappings and concordances)

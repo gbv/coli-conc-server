@@ -149,7 +149,8 @@ if (targetService) {
   await cd(targetPath)
   const composeTtyArgs = getComposeTtyArgs()
   try {
-    await $`docker compose run ${composeTtyArgs} ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
+    // Docker must receive the same terminal that getComposeTtyArgs() checks.
+    await $({ stdio: "inherit" })`docker compose run ${composeTtyArgs} ${runArgs} ${targetService.service} /usr/src/app/bin/${command}.js ${args}`
   } catch (error) {
     console.error()
     console.error(`An error occurred during import attempt. Details should be in the output above. (exit code: ${error.exitCode})`)

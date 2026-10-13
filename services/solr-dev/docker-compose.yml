@@ -6,11 +6,8 @@ services:
       - "127.0.0.1:8984:8983"
     volumes:
       - $DATA/solr_data_dev:/var/solr
-      - $CONFIGS/solr-dev/terminologies-configset:/configsets/terminologies-configset:ro
-    command:
-      - solr-precreate
-      - terminologies
-      - /configsets/terminologies-configset
+    # srv init/update bartoc-search-dev installs the core from its Docker image.
+    command: ["solr-foreground"]
     restart: unless-stopped
 
 networks:

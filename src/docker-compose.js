@@ -5,6 +5,7 @@
 import { $ } from "npm:zx@8"
 import { getEnv } from "../src/utils.js"
 import process from "node:process"
+import * as hooks from "../configs/hooks.js"
 
 const { uid, gid, basePath, dataPath, configsPath, secretsPath } = getEnv("")
 // Set environment for `docker compose` calls
@@ -15,7 +16,10 @@ process.env.DATA = dataPath
 process.env.CONFIGS = configsPath
 process.env.SECRETS = secretsPath
 
-export async function init() {
+export async function init(target) {
+  if (await hooks.serviceDeploy({ service: target })) {
+    return
+  }
   await $`docker compose pull`
   await start()
 }
@@ -25,13 +29,13 @@ export async function start() {
 export async function status() {
   await $`docker compose ps`
 }
-export async function restart(_target) {
+export async function restart(target) {
   const isRunning = !!`${await $`docker compose ps --services --filter "status=running"`.quiet()}`.trim()
   if (isRunning) {
     await $`docker compose stop`
     await $`docker compose up -d --remove-orphans`
   } else {
-    console.warn(`Service ${_target} is not running. Please start the service: srv start ${_target}`)
+    console.warn(`Service ${target} is not running. Please start the service: srv start ${target}`)
   }
 }
 export async function stop() {
@@ -43,9 +47,13 @@ export async function logs() {
 export async function log() {
   await logs()
 }
-export async function update() {
+export async function update(target) {
+  // A service-specific hook can replace the normal pull-and-restart flow.
+  if (await hooks.serviceDeploy({ service: target })) {
+    return
+  }
   await $`docker compose pull`
-  await restart()
+  await restart(target)
 }
 export async function configtest() {
   await $`docker compose config`

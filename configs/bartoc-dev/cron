@@ -1,6 +1,6 @@
 # All times are UTC (container time).
 # Import production vocabularies before creating the development dump.
 00 05 * * * /bin/sh /config/import-prod-dump.sh > /proc/1/fd/1 2>/proc/1/fd/2
-00 06 * * * cd /usr/src/app/bartoc && npm run dump update > /proc/1/fd/1 2>/proc/1/fd/2
+00 06 * * * cd /usr/src/app/bartoc && npm run dump > /proc/1/fd/1 2>/proc/1/fd/2
 # Enrich development data after the dump; the next search update runs at 12:00.
 00 09 * * * /config/ddc-bk-mappings.sh

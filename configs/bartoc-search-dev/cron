@@ -1,10 +1,9 @@
 # config/cron
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-CRON_TZ=Europe/Berlin
 
-# every 6 hours: updater only (fast)
-0 */6 * * * cd /usr/src/app && REINDEX=1 npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2
+# All times are UTC (container time). Refresh between daily full updates.
+0 0,12,18 * * * cd /usr/src/app && REINDEX=1 npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2
 
-# every day at 05:30: force enrich + reindex (slow)
-30 5 * * * cd /usr/src/app && FORCE_ENRICH=1 REINDEX=1 npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2
+# Use the development dump created at 06:00; leave time for it to finish.
+0 7 * * * cd /usr/src/app && FORCE_ENRICH=1 REINDEX=1 npm run update-data > /proc/1/fd/1 2>/proc/1/fd/2

@@ -25,7 +25,7 @@ services:
       start_period: 30s
 
   importer:
-    image: ghcr.io/nfdi4objects/n4o-graph-importer:main
+    image: ghcr.io/nfdi4objects/grimpo:main
     command: ["python", "./app.py", "--wsgi"]
     mem_limit: 768m
     memswap_limit: 768m

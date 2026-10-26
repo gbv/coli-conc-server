@@ -5,7 +5,7 @@ Internal RDF store and terminology metadata importer for
 The stack combines:
 
 - `ghcr.io/nfdi4objects/n4o-fuseki:main` as the RDF store;
-- `ghcr.io/nfdi4objects/n4o-graph-importer:main` as the registry and importer;
+- `ghcr.io/nfdi4objects/grimpo:main` as the registry and importer;
 - `ghcr.io/nfdi4objects/n4o-graph-apis:main` as the public query-only API;
 - a local updater that registers the complete BARTOC dump.
 
@@ -159,9 +159,7 @@ SELECT ?updated {
 }
 ```
 
-This timestamp is written by the importer in the same Graph Store request as
-the complete terminology metadata, as implemented for
-[`n4o-graph-importer#60`](https://github.com/nfdi4objects/n4o-graph-importer/issues/60).
+This timestamp is written by the importer in the same Graph Store request.
 
 Build, start, and inspect the scheduled updater:
 

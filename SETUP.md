@@ -326,14 +326,6 @@ Alternatively, you can copy over the previous database file into `~/data/subject
 git clone https://github.com/stefandesu/Nginx-Fancyindex-Theme.git ~/data/nginx-fancyindex-theme
 ```
 
-### typesense-suggest
-
-```sh
-srv init typesense-suggest
-# Setup for specified vocabularies in configuration as targets
-srv exec typesense-suggest -it typesense-suggest npm run setup
-```
-
 ## Others
 
 ### Docker "Error response from daemon"

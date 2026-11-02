@@ -17,6 +17,7 @@ services:
       - NODE_ENV=production
       - DATA_DIR=/usr/src/app/data
       - BARTOC_DUMP=https://dev.bartoc.org/data/dumps/latest.ndjson
+      - QUALITY_REPORT_URL=https://dev.bartoc.org/data/reports/summary.json
       - REINDEX=0
       - |
         VIRTUAL_HOST_MULTIPORTS=

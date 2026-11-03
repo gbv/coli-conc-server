@@ -14,10 +14,21 @@ const bartocSearchDev = {
   solrData: "solr_data_dev",
 }
 
+const bartocSearch = {
+  appService: "bartoc-search",
+  solrService: "solr",
+  image: "ghcr.io/gbv/bartoc-search:main",
+  solrData: "solr_data",
+}
+
 /** Return true when a service has its own init or update flow. */
 export async function serviceDeploy({ service }) {
   if (service === bartocSearchDev.appService) {
     await deployBartocSearch(bartocSearchDev)
+    return true
+  }
+  if (service === bartocSearch.appService) {
+    await deployBartocSearch(bartocSearch)
     return true
   }
   return false

@@ -89,7 +89,7 @@ mapfile -t names <<< "$vocs"
 # bartoc-dev only reads the selected files and runs its local JSKOS CLI.
 # Run the mounted script by path: srv exec can hang with a script on stdin.
 echo "Importing ${#names[@]} dev vocabularies."
-srv exec bartoc-dev -T bartoc-dev bash /vocabulary-import/update-vocabularies.sh "${names[@]}"
+srv exec bartoc-dev -T bartoc-dev bash /config/import-vocabularies.sh "${names[@]}"
 
 # A failure above leaves the previous SHA in place for a complete retry.
 write_state

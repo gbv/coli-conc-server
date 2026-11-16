@@ -1,0 +1,5 @@
+services:
+  bartoc-vocabularies-dev:
+    image: ghcr.io/gbv/bartoc-vocabularies:dev
+    volumes:
+      - $DATA/bartoc-vocabularies-dev:/bartoc-vocabularies

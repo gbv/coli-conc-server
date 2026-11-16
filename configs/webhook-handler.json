@@ -295,7 +295,7 @@
     },
     {
       "repository": "gbv/bartoc-vocabularies",
-      "command": "bash $COLI_CONC_BASE/src/bartoc-vocabularies-deploy.sh",
+      "command": "export BARTOC_TARGET_SHA && bash $COLI_CONC_BASE/src/bartoc-vocabularies-deploy.sh",
       "event": "workflow_run",
       "action": "completed",
       "env": {

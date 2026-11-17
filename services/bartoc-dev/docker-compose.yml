@@ -6,7 +6,8 @@ services:
       - mongo-dev
     volumes:
       - $CONFIGS/bartoc-dev:/config
-      - $DATA/bartoc-vocabularies-dev:/bartoc-vocabularies-dev:ro
+      - $CONFIGS/bartoc-vocabularies-import.sh:/config/import-vocabularies.sh:ro
+      - $DATA/bartoc-vocabularies-dev:/bartoc-vocabularies:ro
       - $DATA/bartoc-dev/dumps:/usr/src/app/bartoc/data/dumps
       - $DATA/bartoc-dev/reports:/usr/src/app/bartoc/data/reports
     environment:

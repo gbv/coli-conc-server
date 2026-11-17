@@ -309,21 +309,17 @@
     },
     {
       "repository": "gbv/bartoc-vocabularies",
-      "command": "srv update bartoc-vocabularies",
+      "command": "export BARTOC_TARGET_SHA && bash $COLI_CONC_BASE/src/bartoc-vocabularies-deploy.sh main",
       "event": "workflow_run",
       "action": "completed",
+      "env": {
+        "body.workflow_run.head_sha": "BARTOC_TARGET_SHA"
+      },
       "filter": {
         "body.workflow_run.head_branch": "main",
         "body.workflow_run.path": ".github/workflows/docker.yml",
         "body.workflow_run.conclusion": "success"
       }
-    },
-    {
-      "repository": "gbv/bartoc-vocabularies",
-      "command": "srv run bartoc-vocabularies bartoc-vocabularies /usr/src/app/update.ts",
-      "ref": "refs/heads/main",
-      "event": "push",
-      "delay": 0
     }
   ]
 }

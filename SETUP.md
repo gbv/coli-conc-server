@@ -293,20 +293,27 @@ srv run jskos-data -it jskos-data /usr/src/app/build.ts bk rvk
 
 ### bartoc-vocabularies
 
-This service keeps `~/$DATA/bartoc-vocabularies` in sync with the
-https://github.com/gbv/bartoc-vocabularies repository via a Deno update script
-in the Docker image.
+These services keep separate `dev` and `main` checkouts of https://github.com/gbv/bartoc-vocabularies. After a successful Docker build, a GitHub webhook updates the matching checkout and imports changed vocabularies.
 
 ```sh
-# Initialize (pull the image, create data folder, run entrypoint)
+# Initialize both checkouts.
+srv init bartoc-vocabularies-dev
 srv init bartoc-vocabularies
 
-# Manually trigger a sync from GitHub into $DATA/bartoc-vocabularies:
+# Manually update the main checkout.
 srv run bartoc-vocabularies bartoc-vocabularies /usr/src/app/update.ts
 ```
 
-In normal operation there is no need to run this manually, as updates are
-triggered via GitHub webhooks (see configs/webhook-handler.json).
+The checkouts and state files are:
+
+- `$DATA/bartoc-vocabularies-dev`
+- `$DATA/bartoc-vocabularies-dev.last-imported-commit`
+- `$DATA/bartoc-vocabularies`
+- `$DATA/bartoc-vocabularies.last-imported-commit`
+
+The webhook checks all commits after the saved state. Repository-only changes do not import data. A changed scheme or concepts NDJSON file imports the full vocabulary. No JWT or other import secret is required.
+
+In normal operation there is no need to run the update manually. See `configs/webhook-handler.json` for the webhook configuration.
 
 ### Subjects API
 <!-- TODO: Include command to download and extract it as well. -->

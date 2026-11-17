@@ -182,7 +182,20 @@ data import -r
 data import -t jskos-server -s http://bartoc.org/en/node/1707 -r
 ```
 
-Data import is currently not integrated with any webhooks and needs to be manually triggered.
+These general data imports must be started manually. BARTOC vocabularies use a separate automatic import described below.
+
+### Automatic BARTOC vocabulary imports
+
+Changes in [gbv/bartoc-vocabularies](https://github.com/gbv/bartoc-vocabularies) are imported after a successful Docker build:
+
+- `dev` imports into `dev.bartoc.org`.
+- `main` imports into `bartoc.org`.
+
+The importer checks all changes since the last successful import. It only imports vocabularies with a changed scheme or concepts NDJSON file.
+
+For each selected vocabulary, the scheme is replaced and all concepts are deleted and imported again. The scheme file must contain all metadata that should be kept. `--set-api` adds the local BARTOC API and keeps other APIs from the scheme file.
+
+The last imported commit is stored separately for `dev` and `main`. A failed import does not update this state, so the complete change can be tried again.
 
 ## Data Management for MongoDB
 The easiest way to dump and restore data with MongoDB running in Docker is using a single-file archive via `--archive`.

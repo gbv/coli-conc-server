@@ -1,0 +1,38 @@
+{
+  "uri": "https://coli-conc.gbv.de/api/concordances/datacite",
+  "notation": [ "datacite" ],
+  "fromScheme": {
+    "uri": "http://bartoc.org/en/node/21149",
+    "prefLabel": {
+      "en": "DataCite Metadata Schema"
+    },
+    "notation": [
+      "dcdle"
+    ]
+  },
+  "toScheme": {
+    "uri": "http://bartoc.org/en/node/1691"
+  },
+  "scopeNote": {
+    "en": [
+      "Mappings from DataCite Metadata Schema"
+    ]
+  },
+  "creator": [
+    {
+      "uri": "https://orcid.org/0000-0003-1378-5495",
+      "prefLabel": { "en": "Sara El-Gebali" }
+    }
+  ],
+  "note": {
+    "und": [
+      "Curated from source definitions and official target documentation. Wikidata evidence is a dated lookup, not an immutable vocabulary release."
+    ]
+  },
+  "created": "2026-10-06",
+  "license": [
+    {
+      "uri": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}

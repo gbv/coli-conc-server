@@ -1,5 +1,5 @@
 {
-  "name": "BARTOC.org",
+  "name": "BARTOC",
   "baseUrl": "https://bartoc.org/",
   "port": 80,
   "backend": {
